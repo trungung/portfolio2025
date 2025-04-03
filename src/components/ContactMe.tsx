@@ -51,7 +51,7 @@ const ContactItem = ({
         title={`Copy ${label}`}
       >
         {copied ? (
-          <Check className="text-emerald-700" />
+          <Check className="text-green-700" />
         ) : (
           <Copy className="inline-block cursor-pointer" />
         )}
@@ -75,7 +75,7 @@ export const ContactMe = () => {
           mind, an opportunity to share, or just want to say hi, I&apos;d love
           to hear from you.
         </p>
-        <div className="mt-9 flex flex-col items-start gap-2">
+        <div className="mt-9 flex flex-col items-start gap-4">
           <ContactItem
             href="mailto:ungkientrung@gmail.com"
             copyText="ungkientrung@gmail.com"
