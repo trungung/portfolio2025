@@ -90,7 +90,12 @@ export default function RootLayout({
           </Button>
         </nav>
         {children}
-        <footer className="mx-auto w-full max-w-screen-md pb-12"> </footer>
+        <footer className="mx-auto w-full max-w-screen-md pb-9">
+          <hr className="border-border mb-5 border-t" />
+          <div className="text-muted-foreground">
+            &copy; 2025 Trung Ung. All rights reserved.
+          </div>
+        </footer>
       </body>
     </html>
   );
