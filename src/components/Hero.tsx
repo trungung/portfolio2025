@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export const Hero = () => {
@@ -14,17 +13,11 @@ export const Hero = () => {
           are scalable, maintainable, and feel great to use.
         </p>
         <div className="mt-9 flex flex-row flex-wrap gap-4">
-          <Button variant="default" asChild size="lg" className="group">
-            <Link href="#contact">
-              Contact me
-              <ArrowRight className="duration-200 group-hover:translate-x-1" />
-            </Link>
+          <Button asChild size="lg" className="group shiny-hover">
+            <Link href="#contact">Contact me</Link>
           </Button>
           <Button variant="secondary" asChild size="lg" className="group">
-            <Link href="#about">
-              More about me
-              <ArrowRight className="duration-200 group-hover:translate-x-1" />
-            </Link>
+            <Link href="#about">More about me</Link>
           </Button>
         </div>
       </div>

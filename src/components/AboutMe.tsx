@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import Link from "next/link";
 
 export const AboutMe = () => {
@@ -28,18 +28,14 @@ export const AboutMe = () => {
         </p>
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
-        <Button variant="default" asChild size="lg" className="group">
+        <Button asChild size="lg" className="group shiny-hover">
           <a href="/cv.pdf" target="_blank">
-            <Download />
+            <Download className="duration-200 group-hover:translate-y-0.5" />
             Download CV
-            <ArrowRight className="duration-200 group-hover:translate-x-1" />
           </a>
         </Button>
         <Button variant="secondary" asChild size="lg" className="group">
-          <Link href="#contact">
-            Contact me
-            <ArrowRight className="duration-200 group-hover:translate-x-1" />
-          </Link>
+          <Link href="#contact">Contact me</Link>
         </Button>
       </div>
     </section>
