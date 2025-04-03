@@ -47,67 +47,67 @@ export const Technologies = () => {
   const buttons = [
     {
       href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-      icon: <SiJavascript color="default" className="inline-block" />,
+      icon: <SiJavascript color="default" />,
       name: "JavaScript",
     },
     {
       href: "https://typescriptlang.org/",
-      icon: <SiTypescript color="default" className="inline-block" />,
+      icon: <SiTypescript color="default" />,
       name: "TypeScript",
     },
     {
       href: "https://reactjs.org/",
-      icon: <SiReact color="default" className="inline-block" />,
+      icon: <SiReact color="default" />,
       name: "React",
     },
     {
       href: "https://nextjs.org/",
-      icon: <SiNextdotjs color="default" className="inline-block" />,
+      icon: <SiNextdotjs color="default" />,
       name: "Next.js",
     },
     {
       href: "https://vuejs.org/",
-      icon: <SiVuedotjs color="default" className="inline-block" />,
+      icon: <SiVuedotjs color="default" />,
       name: "Vue.js",
     },
     {
       href: "https://tailwindcss.com/",
-      icon: <SiTailwindcss color="default" className="inline-block" />,
+      icon: <SiTailwindcss color="default" />,
       name: "Tailwind CSS",
     },
     {
       href: "https://mui.com/",
-      icon: <SiMui color="default" className="inline-block" />,
+      icon: <SiMui color="default" />,
       name: "Material UI",
     },
     {
       href: "https://nodejs.org/",
-      icon: <SiNodedotjs color="default" className="inline-block" />,
+      icon: <SiNodedotjs color="default" />,
       name: "Node.js",
     },
     {
       href: "https://expressjs.com/",
-      icon: <SiExpress color="default" className="inline-block" />,
+      icon: <SiExpress color="default" />,
       name: "Express.js",
     },
     {
       href: "https://git-scm.com/",
-      icon: <SiGit color="default" className="inline-block" />,
+      icon: <SiGit color="default" />,
       name: "Git",
     },
     {
       href: "https://github.com/ung-trung",
-      icon: <SiGithub color="default" className="inline-block" />,
+      icon: <SiGithub color="default" />,
       name: "GitHub",
     },
     {
       href: "https://azure.microsoft.com/",
-      icon: <AzureIcon className="inline-block" />,
+      icon: <AzureIcon />,
       name: "Azure",
     },
     {
       href: "https://aws.amazon.com/",
-      icon: <AwsIcon className="inline-block" />,
+      icon: <AwsIcon />,
       name: "AWS",
     },
     {
@@ -117,42 +117,42 @@ export const Technologies = () => {
     },
     {
       href: "https://graphql.org/",
-      icon: <SiGraphql color="default" className="inline-block" />,
+      icon: <SiGraphql color="default" />,
       name: "GraphQL",
     },
     {
       href: "https://www.postgresql.org/",
-      icon: <SiPostgresql color="default" className="inline-block" />,
+      icon: <SiPostgresql color="default" />,
       name: "PostgreSQL",
     },
     {
       href: "https://www.mysql.com/",
-      icon: <SiMysql color="default" className="inline-block" />,
+      icon: <SiMysql color="default" />,
       name: "MySQL",
     },
     {
       href: "https://www.mongodb.com/",
-      icon: <SiMongodb color="default" className="inline-block" />,
+      icon: <SiMongodb color="default" />,
       name: "MongoDB",
     },
     {
       href: "https://redis.io/",
-      icon: <SiRedis color="default" className="inline-block" />,
+      icon: <SiRedis color="default" />,
       name: "Redis",
     },
     {
       href: "https://jestjs.io/",
-      icon: <SiJest color="default" className="inline-block" />,
+      icon: <SiJest color="default" />,
       name: "Jest",
     },
     {
       href: "https://playwright.dev/",
-      icon: <PlaywrightIcon className="inline-block" />,
+      icon: <PlaywrightIcon />,
       name: "Playwright",
     },
     {
       href: "https://www.cypress.io/",
-      icon: <SiCypress color="default" className="inline-block" />,
+      icon: <SiCypress color="default" />,
       name: "Cypress",
     },
   ];
