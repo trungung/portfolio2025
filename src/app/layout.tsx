@@ -28,12 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="!scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth px-6`}
+        className={`${geistSans.variable} ${geistMono.variable} px-6 antialiased`}
       >
         <nav className="z-50 mx-auto flex w-full max-w-screen-md items-center gap-4 pt-9 font-mono">
-          <Link href="/" className="text-lg font-black text-gray-800">
+          <Link href="/" className="text-lg font-bold text-gray-800">
             TU.
           </Link>
           <Button
