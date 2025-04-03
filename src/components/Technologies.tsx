@@ -166,9 +166,8 @@ export const Technologies = () => {
       </h2>
       <div className="max-w-prose">
         <p className="mt-4">
-          I work across the stack with modern frameworks, libraries, and tools.
-          Below is a selection of the technologies I use regularly in
-          development.
+          Over the past 5 years, I&apos;ve gained experience across the stack.
+          Below are some of the technologies I&apos;ve used along the way.
         </p>
       </div>
       <div className="mt-4 flex flex-wrap gap-4">
