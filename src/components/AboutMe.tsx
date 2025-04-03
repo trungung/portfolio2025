@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { SiGithub } from "@icons-pack/react-simple-icons";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 
 export const AboutMe = () => {
@@ -30,9 +29,9 @@ export const AboutMe = () => {
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
         <Button variant="default" asChild size="lg" className="group">
-          <a href="https://github.com/ung-trung" target="_blank">
-            <SiGithub className="inline-block" />
-            View my Github
+          <a href="/cv.pdf" target="_blank">
+            <Download />
+            Download CV
             <ArrowRight className="duration-200 group-hover:translate-x-1" />
           </a>
         </Button>
