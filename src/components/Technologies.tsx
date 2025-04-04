@@ -17,6 +17,7 @@ import {
   SiVuedotjs,
   SiGraphql,
   SiRedis,
+  SiDocker,
 } from "@icons-pack/react-simple-icons";
 
 import { Button } from "./ui/button";
@@ -45,6 +46,16 @@ const TechnologyButton = ({
 
 export const Technologies = () => {
   const buttons = [
+    {
+      href: "https://azure.microsoft.com/",
+      icon: <AzureIcon />,
+      name: "Azure",
+    },
+    {
+      href: "https://aws.amazon.com/",
+      icon: <AwsIcon />,
+      name: "AWS",
+    },
     {
       href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
       icon: <SiJavascript color="default" />,
@@ -101,16 +112,6 @@ export const Technologies = () => {
       name: "GitHub",
     },
     {
-      href: "https://azure.microsoft.com/",
-      icon: <AzureIcon />,
-      name: "Azure",
-    },
-    {
-      href: "https://aws.amazon.com/",
-      icon: <AwsIcon />,
-      name: "AWS",
-    },
-    {
       href: "https://restapi.com/",
       icon: null,
       name: "REST API",
@@ -119,6 +120,11 @@ export const Technologies = () => {
       href: "https://graphql.org/",
       icon: <SiGraphql color="default" />,
       name: "GraphQL",
+    },
+    {
+      href: "https://www.docker.com/",
+      icon: <SiDocker color="default" />,
+      name: "Docker",
     },
     {
       href: "https://www.postgresql.org/",

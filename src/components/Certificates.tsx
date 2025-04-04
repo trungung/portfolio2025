@@ -1,6 +1,6 @@
 import { AwsIcon } from "./icons/aws";
 import { AzureIcon } from "./icons/azure";
-
+import { ExternalLink } from "lucide-react";
 export const Certificates = () => {
   const certs = [
     {
@@ -41,21 +41,25 @@ export const Certificates = () => {
           .
         </span>
       </h2>
-      <div className="mt-4 flex flex-col items-start gap-2">
+      <ul className="mt-4 flex flex-col items-start gap-2">
         {certs.map((cert) => (
-          <div key={cert.name} className="inline-flex items-center gap-2">
-            {cert.icon}
+          <li key={cert.name}>
             <a
               href={cert.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="group inline-flex items-center gap-2 hover:underline"
             >
+              {cert.icon}
               {cert.name}
+              <ExternalLink
+                size={14}
+                className="hidden duration-200 group-hover:translate-x-1 sm:block"
+              />
             </a>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 };

@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  ArrowRight,
   Copy,
   Mail,
   Phone,
   Check,
   MailOpen,
   PhoneCall,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
@@ -49,7 +49,7 @@ const ContactItem = ({
       <Button variant="outline" asChild className="group">
         <a href={href} target={target}>
           {icon} {label}
-          <ArrowRight className="duration-200 group-hover:translate-x-1" />
+          <ExternalLink className="duration-200 group-hover:translate-x-1" />
         </a>
       </Button>
       <Button
@@ -69,6 +69,52 @@ const ContactItem = ({
 };
 
 export const ContactMe = () => {
+  const contactItems = [
+    {
+      href: "mailto:ungkientrung@gmail.com",
+      copyText: "ungkientrung@gmail.com",
+      icon: (
+        <span>
+          <Mail className="group-hover:hidden" />
+          <MailOpen className="hidden group-hover:block" />
+        </span>
+      ),
+      label: "ungkientrung@gmail.com",
+    },
+    {
+      href: "tel:+358469305489",
+      copyText: "+358 46 930 5489",
+      icon: (
+        <span>
+          <Phone className="group-hover:hidden" />
+          <PhoneCall className="hidden group-hover:block" />
+        </span>
+      ),
+      label: "+358 46 930 5489",
+    },
+    {
+      href: "https://www.linkedin.com/in/trung-ung/",
+      copyText: "https://www.linkedin.com/in/trung-ung/",
+      icon: (
+        <Image
+          src={LinkedinIcon}
+          alt="LinkedIn"
+          width={20}
+          height={20}
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
+      label: "https://www.linkedin.com/in/trung-ung/",
+      target: "_blank",
+    },
+    {
+      href: "https://github.com/ung-trung",
+      copyText: "https://github.com/ung-trung",
+      icon: <SiGithub className="duration-200 group-hover:-rotate-12" />,
+      label: "https://github.com/ung-trung",
+      target: "_blank",
+    },
+  ];
   return (
     <section id="contact" className="mt-20 mb-16 scroll-mt-20">
       <h2 className="mb-2 box-decoration-clone bg-clip-text text-[1.7rem] font-bold">
@@ -84,53 +130,16 @@ export const ContactMe = () => {
           to hear from you.
         </p>
         <div className="mt-9 flex flex-col items-start gap-4">
-          <ContactItem
-            href="mailto:ungkientrung@gmail.com"
-            copyText="ungkientrung@gmail.com"
-            icon={
-              <span>
-                <Mail className="group-hover:hidden" />
-                <MailOpen className="hidden group-hover:block" />
-              </span>
-            }
-            label="ungkientrung@gmail.com"
-          />
-
-          <ContactItem
-            href="tel:+358469305489"
-            copyText="+358469305489"
-            icon={
-              <span>
-                <Phone className="group-hover:hidden" />
-                <PhoneCall className="hidden group-hover:block" />
-              </span>
-            }
-            label="+358 46 930 5489"
-          />
-
-          <ContactItem
-            href="https://www.linkedin.com/in/trung-ung/"
-            copyText="https://www.linkedin.com/in/trung-ung/"
-            icon={
-              <Image
-                src={LinkedinIcon}
-                alt="LinkedIn"
-                width={20}
-                height={20}
-                className="duration-200 group-hover:-rotate-12"
-              />
-            }
-            label="https://www.linkedin.com/in/trung-ung/"
-            target="_blank"
-          />
-
-          <ContactItem
-            href="https://github.com/ung-trung"
-            copyText="https://github.com/ung-trung"
-            icon={<SiGithub className="duration-200 group-hover:-rotate-12" />}
-            label="https://github.com/ung-trung"
-            target="_blank"
-          />
+          {contactItems.map((item) => (
+            <ContactItem
+              key={item.href}
+              href={item.href}
+              copyText={item.copyText}
+              icon={item.icon}
+              label={item.label}
+              target={item.target}
+            />
+          ))}
         </div>
       </div>
     </section>
