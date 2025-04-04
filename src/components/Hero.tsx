@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ScrambleHero } from "./ScrambleHero";
 
 export const Hero = () => {
   return (
     <section id="hero" className="mt-20 mb-16">
       <h1 className="text-4xl font-bold tracking-[-0.03em]">
-        Hey, I&apos;m Trung Ung
+       Hey, <ScrambleHero />
       </h1>
       <div className="max-w-prose">
         <p className="mt-2 text-lg">
