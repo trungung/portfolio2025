@@ -21,9 +21,9 @@ import {
 } from "@icons-pack/react-simple-icons";
 
 import { Button } from "./ui/button";
-import { PlaywrightIcon } from "./icons/playwright";
-import { AzureIcon } from "./icons/azure";
-import { AwsIcon } from "./icons/aws";
+import { PlaywrightIcon } from "../icons/playwright";
+import { AzureIcon } from "../icons/azure";
+import { AwsIcon } from "../icons/aws";
 
 const TechnologyButton = ({
   href,

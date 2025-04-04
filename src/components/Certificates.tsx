@@ -1,5 +1,5 @@
-import { AwsIcon } from "./icons/aws";
-import { AzureIcon } from "./icons/azure";
+import { AwsIcon } from "../icons/aws";
+import { AzureIcon } from "../icons/azure";
 import { ExternalLink } from "lucide-react";
 export const Certificates = () => {
   const certs = [

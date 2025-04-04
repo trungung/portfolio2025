@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import LinkedinIcon from "@/components/icons/linkedin.png";
+import LinkedinIcon from "@/icons/linkedin.png";
 import { useState, ReactNode } from "react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 
