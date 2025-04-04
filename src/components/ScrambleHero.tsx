@@ -4,11 +4,17 @@ import { useScramble } from "use-scramble";
 export const ScrambleHero = () => {
   const { ref } = useScramble({
     text: "I'm Trung Ung",
-    speed: 0.5,
-    tick: 2,
-    chance: 0.15,
-    
+    range: [65, 125],
+    speed: 1,
+    tick: 1,
+    step: 5,
+    scramble: 5,
+    seed: 2,
+    chance: 1,
+    overdrive: false,
+    overflow: false,
   });
+
   return (
     <>
       <span
