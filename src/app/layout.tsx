@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} px-6 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-[url('/noise.png')] bg-repeat px-6 antialiased`}
       >
         <nav className="z-50 mx-auto flex w-full max-w-screen-md items-center gap-4 pt-9 font-mono">
           <Link href="/" className="text-lg font-bold text-gray-800">
