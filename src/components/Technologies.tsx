@@ -36,7 +36,13 @@ const TechnologyButton = ({
   name: string;
 }) => {
   return (
-    <Button asChild variant="outline" size="sm" className="text-md group">
+    <Button
+      asChild
+      variant="outline"
+      size="sm"
+      className="text-md group"
+      tabIndex={-1}
+    >
       <a href={href} target="_blank" rel="noopener noreferrer">
         {icon}
         {name}
