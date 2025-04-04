@@ -146,4 +146,43 @@
       left: 130%;
     }
   }
+
+  .color-rays {
+    @apply pointer-events-none absolute top-0 left-0 z-0 h-[400px] w-full overflow-hidden bg-[length:150%_150%] opacity-40 mix-blend-multiply blur-[80px];
+    background-image: linear-gradient(
+      120deg,
+      #f472b6,
+      #a78bfa,
+      #facc15,
+      #4ade80,
+      #22d3ee,
+      #a78bfa,
+      #f472b6
+    );
+    animation:
+      slide-rays 30s ease-in-out infinite,
+      pulse-rays 16s ease-in-out infinite;
+  }
+
+  @keyframes slide-rays {
+    0% {
+      background-position: 100% 0%;
+    }
+    50% {
+      background-position: 0% 100%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+
+  @keyframes pulse-rays {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
 }
