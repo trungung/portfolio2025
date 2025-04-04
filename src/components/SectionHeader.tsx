@@ -9,7 +9,7 @@ export const SectionHeader = ({ title }: { title: string }) => {
         className="bg-primary h-[1.7rem] w-1 origin-bottom"
         initial={{ scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
-        transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
         viewport={{ once: true }}
         aria-hidden="true"
       />
