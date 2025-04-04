@@ -34,7 +34,7 @@ export const AboutMe = () => {
             Download CV
           </a>
         </Button>
-        <Button variant="secondary" asChild size="lg" className="group">
+        <Button variant="outline" asChild size="lg" className="group">
           <Link href="#contact">Contact me</Link>
         </Button>
       </div>

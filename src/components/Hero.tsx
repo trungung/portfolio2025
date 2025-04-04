@@ -6,7 +6,7 @@ export const Hero = () => {
   return (
     <section id="hero" className="mt-20 mb-16">
       <h1 className="text-4xl font-bold tracking-[-0.03em]">
-       Hey, <ScrambleHero />
+        Hey, <ScrambleHero />
       </h1>
       <div className="max-w-prose">
         <p className="mt-2 text-lg">
@@ -17,7 +17,7 @@ export const Hero = () => {
           <Button asChild size="lg" className="group shiny-hover">
             <Link href="#contact">Contact me</Link>
           </Button>
-          <Button variant="secondary" asChild size="lg" className="group">
+          <Button variant="outline" asChild size="lg" className="group">
             <Link href="#about">More about me</Link>
           </Button>
         </div>
