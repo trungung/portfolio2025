@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Download, PanelLeft, Settings } from "lucide-react";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,6 +94,7 @@ export default function RootLayout({
             &copy; 2025 Trung Ung. All rights reserved.
           </div>
         </footer>
+        <Toaster />
       </body>
     </html>
   );

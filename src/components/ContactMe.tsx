@@ -14,6 +14,7 @@ import Image from "next/image";
 import LinkedinIcon from "@/icons/linkedin.png";
 import { useState, ReactNode } from "react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { toast } from "sonner";
 
 type ContactItemProps = {
   href: string;
@@ -21,6 +22,7 @@ type ContactItemProps = {
   icon: ReactNode;
   label: string;
   target?: string;
+  context?: string;
 };
 
 const ContactItem = ({
@@ -29,6 +31,7 @@ const ContactItem = ({
   icon,
   label,
   target,
+  context,
 }: ContactItemProps) => {
   const [copied, setCopied] = useState(false);
 
@@ -39,8 +42,10 @@ const ContactItem = ({
       setTimeout(() => {
         setCopied(false);
       }, 700);
+      toast.success(`${context} copied to clipboard`);
     } catch (err) {
       console.error("Failed to copy text: ", err);
+      toast.error("Failed to copy text");
     }
   };
 
@@ -80,6 +85,7 @@ export const ContactMe = () => {
         </span>
       ),
       label: "ungkientrung@gmail.com",
+      context: "Email",
     },
     {
       href: "tel:+358469305489",
@@ -91,6 +97,7 @@ export const ContactMe = () => {
         </span>
       ),
       label: "+358 46 930 5489",
+      context: "Phone number",
     },
     {
       href: "https://www.linkedin.com/in/trung-ung/",
@@ -106,6 +113,7 @@ export const ContactMe = () => {
       ),
       label: "https://www.linkedin.com/in/trung-ung/",
       target: "_blank",
+      context: "LinkedIn profile",
     },
     {
       href: "https://github.com/ung-trung",
@@ -113,6 +121,7 @@ export const ContactMe = () => {
       icon: <SiGithub className="duration-200 group-hover:-rotate-12" />,
       label: "https://github.com/ung-trung",
       target: "_blank",
+      context: "GitHub profile",
     },
   ];
   return (
@@ -138,6 +147,7 @@ export const ContactMe = () => {
               icon={item.icon}
               label={item.label}
               target={item.target}
+              context={item.context}
             />
           ))}
         </div>
