@@ -9,18 +9,17 @@ export const AboutMe = () => {
       <SectionHeader title="About me" />
       <div className="max-w-prose">
         <p className="mt-4">
-          I build web platforms that solve real problems. My work has helped
-          streamline pricing operations, modernize hotel booking systems, and
-          ship scalable SaaS products.
+          I&apos;m a web developer with experience across both <b>startups</b>{" "}
+          and <b>large corporations</b>. I care deeply about clean code,
+          intuitive UX, and building with purpose. I&apos;ve built{" "}
+          <b>cloud-native</b> apps, automated workflows, and used <b>AI</b> to
+          optimize development.
         </p>
         <p className="mt-4">
-          I care about clean code, intuitive UX, and building with purpose. I
-          design cloud-native apps, automate workflows, and use AI to optimize
-          development.
-        </p>
-        <p className="mt-4">
-          I&apos;ve mentored junior developers and love working in
-          collaborative, fast-moving teams where ideas turn into real impact.
+          My work has improved pricing operations, modernized hotel booking
+          systems, and helped scale SaaS products. I&apos;ve also{" "}
+          <b>mentored junior developers</b> and thrive in fast-moving,
+          collaborative teams where ideas quickly turn into real impact.
         </p>
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
