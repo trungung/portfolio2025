@@ -35,7 +35,7 @@ const TechnologyButton = ({
   name: string;
 }) => {
   return (
-    <Button asChild variant="outline" size="sm" className="text-md">
+    <Button asChild variant="outline" size="sm" className="text-md group">
       <a href={href} target="_blank" rel="noopener noreferrer">
         {icon}
         {name}
@@ -48,67 +48,122 @@ export const Technologies = () => {
   const buttons = [
     {
       href: "https://azure.microsoft.com/",
-      icon: <AzureIcon />,
+      icon: <AzureIcon className="duration-200 group-hover:-rotate-12" />,
       name: "Azure",
     },
     {
       href: "https://aws.amazon.com/",
-      icon: <AwsIcon />,
+      icon: <AwsIcon className="duration-200 group-hover:-rotate-12" />,
       name: "AWS",
     },
     {
       href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-      icon: <SiJavascript color="default" />,
+      icon: (
+        <SiJavascript
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "JavaScript",
     },
     {
       href: "https://typescriptlang.org/",
-      icon: <SiTypescript color="default" />,
+      icon: (
+        <SiTypescript
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "TypeScript",
     },
     {
       href: "https://reactjs.org/",
-      icon: <SiReact color="default" />,
+      icon: (
+        <SiReact
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "React",
     },
     {
       href: "https://nextjs.org/",
-      icon: <SiNextdotjs color="default" />,
+      icon: (
+        <SiNextdotjs
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Next.js",
     },
     {
       href: "https://vuejs.org/",
-      icon: <SiVuedotjs color="default" />,
+      icon: (
+        <SiVuedotjs
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Vue.js",
     },
     {
       href: "https://tailwindcss.com/",
-      icon: <SiTailwindcss color="default" />,
+      icon: (
+        <SiTailwindcss
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Tailwind CSS",
     },
     {
       href: "https://mui.com/",
-      icon: <SiMui color="default" />,
+      icon: (
+        <SiMui
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Material UI",
     },
     {
       href: "https://nodejs.org/",
-      icon: <SiNodedotjs color="default" />,
+      icon: (
+        <SiNodedotjs
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Node.js",
     },
     {
       href: "https://expressjs.com/",
-      icon: <SiExpress color="default" />,
+      icon: (
+        <SiExpress
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Express.js",
     },
     {
       href: "https://git-scm.com/",
-      icon: <SiGit color="default" />,
+      icon: (
+        <SiGit
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Git",
     },
     {
       href: "https://github.com/ung-trung",
-      icon: <SiGithub color="default" />,
+      icon: (
+        <SiGithub
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "GitHub",
     },
     {
@@ -118,47 +173,87 @@ export const Technologies = () => {
     },
     {
       href: "https://graphql.org/",
-      icon: <SiGraphql color="default" />,
+      icon: (
+        <SiGraphql
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "GraphQL",
     },
     {
       href: "https://www.docker.com/",
-      icon: <SiDocker color="default" />,
+      icon: (
+        <SiDocker
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Docker",
     },
     {
       href: "https://www.postgresql.org/",
-      icon: <SiPostgresql color="default" />,
+      icon: (
+        <SiPostgresql
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "PostgreSQL",
     },
     {
       href: "https://www.mysql.com/",
-      icon: <SiMysql color="default" />,
+      icon: (
+        <SiMysql
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "MySQL",
     },
     {
       href: "https://www.mongodb.com/",
-      icon: <SiMongodb color="default" />,
+      icon: (
+        <SiMongodb
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "MongoDB",
     },
     {
       href: "https://redis.io/",
-      icon: <SiRedis color="default" />,
+      icon: (
+        <SiRedis
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Redis",
     },
     {
       href: "https://jestjs.io/",
-      icon: <SiJest color="default" />,
+      icon: (
+        <SiJest
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Jest",
     },
     {
       href: "https://playwright.dev/",
-      icon: <PlaywrightIcon />,
+      icon: <PlaywrightIcon className="duration-200 group-hover:-rotate-12" />,
       name: "Playwright",
     },
     {
       href: "https://www.cypress.io/",
-      icon: <SiCypress color="default" />,
+      icon: (
+        <SiCypress
+          color="default"
+          className="duration-200 group-hover:-rotate-12"
+        />
+      ),
       name: "Cypress",
     },
   ];
