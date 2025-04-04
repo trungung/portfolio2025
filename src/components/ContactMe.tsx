@@ -130,8 +130,8 @@ export const ContactMe = () => {
       <SectionHeader title="Contact me" />
       <div className="max-w-prose">
         <p className="mt-4">
-          I&apos;m always happy to connect. Whether you&apos;ve got a project in
-          mind, an opportunity to share, or just want to say hi, I&apos;d love
+          Let’s make something great together. Whether it&apos;s building a
+          product, solving a real problem, or exploring an idea. I&apos;d love
           to hear from you.
         </p>
         <div className="mt-9 flex flex-col items-start gap-4">
