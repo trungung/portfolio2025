@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, PanelLeft, Settings } from "lucide-react";
+import { Download, PanelLeft, Settings } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,18 +65,11 @@ export default function RootLayout({
               size="sm"
               variant="ghost"
               asChild
-              className="text-md text-gray-800"
+              className="text-md group text-gray-800"
             >
-              <Link href="/cv">CV</Link>
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              asChild
-              className="text-md text-gray-800"
-            >
-              <Link href="/">
-                More <ChevronRight />
+              <Link href="/cv">
+                <Download className="duration-200 group-hover:translate-y-0.5" />
+                Download CV
               </Link>
             </Button>
           </div>
