@@ -39,12 +39,12 @@ export default function RootLayout({
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="sm:hidden"
             aria-label="Open menu"
           >
             <PanelLeft className="!h-5 !w-5" />
           </Button>
-          <div className="mr-auto hidden lg:inline-flex">
+          <div className="mr-auto hidden sm:inline-flex">
             <Button
               size="sm"
               variant="ghost"
