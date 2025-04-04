@@ -24,6 +24,7 @@ import { Button } from "./ui/button";
 import { PlaywrightIcon } from "../icons/playwright";
 import { AzureIcon } from "../icons/azure";
 import { AwsIcon } from "../icons/aws";
+import { SectionHeader } from "./SectionHeader";
 
 const TechnologyButton = ({
   href,
@@ -259,12 +260,7 @@ export const Technologies = () => {
   ];
   return (
     <section id="technologies" className="mt-20 mb-16 scroll-mt-20">
-      <h2 className="mb-2 box-decoration-clone bg-clip-text text-[1.7rem] font-bold">
-        Technologies I use
-        <span className="bg-gradient-to-r from-yellow-300 to-yellow-600 box-decoration-clone bg-clip-text text-transparent">
-          .
-        </span>
-      </h2>
+      <SectionHeader title="Technologies I use" />
       <div className="max-w-prose">
         <p className="mt-4">
           Over the past 5 years, I&apos;ve gained experience across the stack.
