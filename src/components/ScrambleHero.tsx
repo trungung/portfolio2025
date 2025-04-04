@@ -1,9 +1,9 @@
 "use client";
 import { useScramble } from "use-scramble";
 
-export const ScrambleHero = () => {
+export const ScrambleHero = ({ text }: { text: string }) => {
   const { ref } = useScramble({
-    text: "I'm Trung Ung",
+    text,
     range: [65, 125],
     speed: 1,
     tick: 1,
@@ -22,7 +22,7 @@ export const ScrambleHero = () => {
         className="inline-block min-w-[15ch]"
         aria-hidden="true"
       />
-      <span className="sr-only">I&apos;m Trung Ung</span>
+      <span className="sr-only">{text}</span>
     </>
   );
 };
