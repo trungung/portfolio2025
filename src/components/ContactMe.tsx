@@ -1,6 +1,14 @@
 "use client";
 
-import { ArrowRight, Copy, Mail, Phone, Check } from "lucide-react";
+import {
+  ArrowRight,
+  Copy,
+  Mail,
+  Phone,
+  Check,
+  MailOpen,
+  PhoneCall,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import LinkedinIcon from "@/components/icons/linkedin.png";
@@ -79,14 +87,24 @@ export const ContactMe = () => {
           <ContactItem
             href="mailto:ungkientrung@gmail.com"
             copyText="ungkientrung@gmail.com"
-            icon={<Mail />}
+            icon={
+              <span>
+                <Mail className="group-hover:hidden" />
+                <MailOpen className="hidden group-hover:block" />
+              </span>
+            }
             label="ungkientrung@gmail.com"
           />
 
           <ContactItem
             href="tel:+358469305489"
             copyText="+358469305489"
-            icon={<Phone />}
+            icon={
+              <span>
+                <Phone className="group-hover:hidden" />
+                <PhoneCall className="hidden group-hover:block" />
+              </span>
+            }
             label="+358 46 930 5489"
           />
 
@@ -94,7 +112,13 @@ export const ContactMe = () => {
             href="https://www.linkedin.com/in/trung-ung/"
             copyText="https://www.linkedin.com/in/trung-ung/"
             icon={
-              <Image src={LinkedinIcon} alt="LinkedIn" width={20} height={20} />
+              <Image
+                src={LinkedinIcon}
+                alt="LinkedIn"
+                width={20}
+                height={20}
+                className="duration-200 group-hover:-rotate-12"
+              />
             }
             label="https://www.linkedin.com/in/trung-ung/"
             target="_blank"
@@ -103,7 +127,7 @@ export const ContactMe = () => {
           <ContactItem
             href="https://github.com/ung-trung"
             copyText="https://github.com/ung-trung"
-            icon={<SiGithub />}
+            icon={<SiGithub className="duration-200 group-hover:-rotate-12" />}
             label="https://github.com/ung-trung"
             target="_blank"
           />
