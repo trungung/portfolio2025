@@ -37,6 +37,21 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-gradient: linear-gradient(
+    60deg,
+    var(--color-yellow-200),
+    var(--color-yellow-300),
+    var(--color-amber-300),
+    var(--color-orange-300),
+    var(--color-pink-300),
+    var(--color-pink-400),
+    var(--color-violet-300),
+    var(--color-indigo-300),
+    var(--color-sky-300),
+    var(--color-cyan-200),
+    var(--color-teal-200),
+    var(--color-emerald-200)
+  );
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -148,25 +163,7 @@
   }
 
   .color-rays {
-    @apply pointer-events-none absolute top-0 left-0 z-0 h-[400px] w-full overflow-hidden bg-[length:180%_180%] opacity-40 mix-blend-multiply blur-[80px];
-    background-image: linear-gradient(
-      60deg,
-      var(--color-red-400),
-      var(--color-red-500),
-      var(--color-orange-400),
-      var(--color-orange-500),
-      var(--color-yellow-400),
-      var(--color-yellow-500),
-      var(--color-green-400),
-      var(--color-green-500),
-      var(--color-blue-400),
-      var(--color-blue-500),
-      var(--color-violet-400),
-      var(--color-violet-500),
-      var(--color-pink-400),
-      var(--color-pink-500)
-    );
-
+    @apply pointer-events-none absolute top-0 left-0 z-0 overflow-hidden bg-[image:var(--color-gradient)] bg-[length:180%_180%] opacity-40 blur-[80px];
     animation:
       slide-rays 13s ease-in-out infinite,
       pulse-rays 16s ease-in-out infinite;
@@ -174,13 +171,13 @@
 
   @keyframes slide-rays {
     0% {
-      background-position: 100% 0%;
-    }
-    50% {
       background-position: 0% 100%;
     }
-    100% {
+    50% {
       background-position: 100% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
     }
   }
 

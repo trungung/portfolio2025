@@ -90,7 +90,10 @@ export default function RootLayout({
           </Button>
         </nav>
         {children}
-        <div className="color-rays" />
+        <div
+          aria-hidden
+          className="color-rays h-[400px] w-full mix-blend-multiply"
+        />
         <footer className="mx-auto w-full max-w-screen-md pb-9">
           <hr className="border-border mb-5 border-t" />
           <div className="text-muted-foreground">

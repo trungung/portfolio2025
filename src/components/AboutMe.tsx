@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const AboutMe = () => {
   return (
-    <section id="about" className="mt-20 mb-16 scroll-mt-20">
+    <section id="about" className="relative mt-20 mb-16 scroll-mt-20">
       <h2 className="mb-2 box-decoration-clone bg-clip-text text-[1.7rem] font-bold">
         About me
         <span className="bg-gradient-to-r from-yellow-300 to-yellow-600 box-decoration-clone bg-clip-text text-transparent">
@@ -38,6 +38,7 @@ export const AboutMe = () => {
           <Link href="#contact">Contact me</Link>
         </Button>
       </div>
+      <div aria-hidden className="color-rays h-full w-full mix-blend-screen" />
     </section>
   );
 };
