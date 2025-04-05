@@ -71,7 +71,7 @@ const buttons = [
     href: "https://nextjs.org/",
     icon: (
       <SiNextdotjs
-        color="default"
+        // color="default"
         className="duration-200 group-hover:-rotate-12"
       />
     ),
@@ -118,7 +118,7 @@ const buttons = [
     href: "https://expressjs.com/",
     icon: (
       <SiExpress
-        color="default"
+        // color="default"
         className="duration-200 group-hover:-rotate-12"
       />
     ),
@@ -135,7 +135,7 @@ const buttons = [
     href: "https://github.com/ung-trung",
     icon: (
       <SiGithub
-        color="default"
+        // color="default"
         className="duration-200 group-hover:-rotate-12"
       />
     ),

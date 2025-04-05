@@ -33,7 +33,10 @@ export const AboutMe = () => {
           <Link href="#contact">Contact me</Link>
         </Button>
       </div>
-      <div aria-hidden className="color-rays h-full w-full mix-blend-screen" />
+      <div
+        aria-hidden
+        className="color-rays h-full w-full mix-blend-screen dark:hidden"
+      />
     </section>
   );
 };
