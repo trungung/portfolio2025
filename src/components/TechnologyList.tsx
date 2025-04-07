@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { MotionAware } from "./MotionAware";
 
 type TechnologyButtonProps = {
   href: string;
@@ -41,24 +42,35 @@ export const TechnologyList = ({
   buttons: TechnologyButtonProps[];
 }) => {
   return (
-    <motion.div
-      className="mt-4 flex flex-wrap gap-4"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.05,
-            delayChildren: 0.1,
-          },
-        },
-      }}
-    >
-      {buttons.map((button) => (
-        <TechnologyButton key={button.name} {...button} />
-      ))}
-    </motion.div>
+    <MotionAware
+      motionSafe={
+        <motion.div
+          className="mt-4 flex flex-wrap gap-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.05,
+                delayChildren: 0.1,
+              },
+            },
+          }}
+        >
+          {buttons.map((button) => (
+            <TechnologyButton key={button.name} {...button} />
+          ))}
+        </motion.div>
+      }
+      motionReduce={
+        <div className="mt-4 flex flex-wrap gap-4">
+          {buttons.map((button) => (
+            <TechnologyButton key={button.name} {...button} />
+          ))}
+        </div>
+      }
+    />
   );
 };

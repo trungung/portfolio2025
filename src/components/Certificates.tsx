@@ -3,6 +3,7 @@ import { AzureIcon } from "../icons/azure";
 import { CalendarDays, ExternalLink } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
+import { MotionAware } from "./MotionAware";
 
 export const Certificates = () => {
   const certs = [
@@ -72,12 +73,12 @@ export const Certificates = () => {
                   <span className="underline decoration-dotted underline-offset-4">
                     {cert.name}
                   </span>
-                  <span className="hidden transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:inline-block">
+                  <span className="hidden transition-transform group-hover:translate-x-1 sm:inline-block">
                     <ExternalLink size={12} />
                   </span>
                 </button>
               </HoverCardTrigger>
-              <HoverCardContent className="border-border w-80 rounded-md border bg-white p-4 shadow-xl">
+              <HoverCardContent className="border-border w-80 rounded-md border p-4 shadow-xl">
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2 font-semibold">
                     {cert.icon} {cert.issuedBy}
@@ -95,7 +96,7 @@ export const Certificates = () => {
                     href={cert.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:under inline-flex items-center gap-1 text-xs font-medium transition-colors"
+                    className="inline-flex items-center gap-1 text-xs font-medium transition-colors hover:underline"
                   >
                     Go to certificate <ExternalLink size={12} />
                   </a>

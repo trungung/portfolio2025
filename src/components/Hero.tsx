@@ -7,7 +7,10 @@ export const Hero = () => {
   return (
     <section id="hero" className="mt-20 mb-16">
       <h1 className="text-4xl font-bold tracking-[-0.03em]">
-        <ScrambleHero text="Hey, I'm Trung Ung" />
+        <MotionAware
+          motionSafe={<ScrambleHero text="Hey, I'm Trung Ung" />}
+          motionReduce={<span>Hey, I&apos;m Trung Ung</span>}
+        />
       </h1>
       <div className="max-w-prose">
         <p className="mt-2 text-lg">

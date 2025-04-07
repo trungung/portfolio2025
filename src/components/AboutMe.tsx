@@ -34,9 +34,9 @@ export const AboutMe = () => {
             </Button>
           }
           motionReduce={
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="group">
               <Link href="/cv.pdf" target="_blank">
-                <Download />
+                <Download className="duration-200 group-hover:translate-y-0.5" />
                 Download CV
               </Link>
             </Button>
