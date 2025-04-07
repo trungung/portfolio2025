@@ -15,6 +15,7 @@ import {
   DiamondMinus,
   Laptop,
   Moon,
+  RotateCcw,
   Settings,
   Sparkles,
   SunMoon,
@@ -34,6 +35,11 @@ import { useTheme } from "next-themes";
 export const SettingDialogButton = () => {
   const { motion, setMotion, minimalMode, toggleMinimalMode } = useSettings();
   const { theme, setTheme } = useTheme();
+  const handleReset = () => {
+    setMotion("system");
+    setTheme("system");
+    if (minimalMode) toggleMinimalMode();
+  };
 
   return (
     <Dialog>
@@ -112,6 +118,10 @@ export const SettingDialogButton = () => {
         </div>
 
         <DialogFooter>
+          <Button className="group" onClick={handleReset}>
+            <RotateCcw className="duration-500 group-hover:-rotate-360" />
+            Reset to defaults
+          </Button>
           <DialogClose asChild>
             <Button type="submit" variant="secondary">
               Close
