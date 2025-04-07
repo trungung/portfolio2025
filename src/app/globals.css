@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant force-motion-reduce (&:is(.force-motion-reduce *));
+@custom-variant force-motion-safe (&:is(.force-no-motion-reduce *));
+@custom-variant minimal (&:is(.minimal *));
 
 @theme inline {
   --color-background: var(--background);
@@ -164,9 +167,6 @@
 
   .color-rays {
     @apply pointer-events-none absolute top-0 left-0 z-0 overflow-hidden bg-[image:var(--color-gradient)] bg-[length:180%_180%] opacity-40 blur-[80px];
-    animation:
-      slide-rays 13s ease-in-out infinite,
-      pulse-rays 16s ease-in-out infinite;
   }
 
   @keyframes slide-rays {
@@ -178,16 +178,6 @@
     }
     100% {
       background-position: 0% 100%;
-    }
-  }
-
-  @keyframes pulse-rays {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
     }
   }
 }

@@ -35,7 +35,7 @@ export const AboutMe = () => {
       </div>
       <div
         aria-hidden
-        className="color-rays h-full w-full mix-blend-screen dark:hidden"
+        className="color-rays minimal:hidden force-motion-reduce:animate-none force-motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] h-full w-full mix-blend-screen motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] motion-reduce:animate-none dark:hidden"
       />
     </section>
   );

@@ -2,8 +2,9 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { storeName } from "@/lib/configs";
 
-type Motion = "system" | "no-reference" | "reduce";
+type Motion = "system" | "no-preference" | "reduce";
 
 type SettingsStore = {
   motion: Motion;
@@ -22,7 +23,7 @@ export const useSettings = create<SettingsStore>()(
         set((state) => ({ minimalMode: !state.minimalMode })),
     }),
     {
-      name: "ui-settings",
+      name: storeName,
     },
   ),
 );

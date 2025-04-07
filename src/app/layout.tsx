@@ -7,6 +7,8 @@ import { Download, PanelLeft } from "lucide-react";
 import { Toaster } from "sonner";
 import { SettingDialogButton } from "@/components/SettingDialogButton";
 import { ThemeProvider } from "next-themes";
+import { MotionPreferenceProvider } from "@/lib/providers/MotionPreferenceProvider";
+import { MinimalModeProvider } from "@/lib/providers/MinimalModeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,51 +43,55 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="z-50 mx-auto flex w-full max-w-screen-md items-center gap-4 pt-9 font-mono">
-            <Link href="/" className="text-lg font-bold">
-              TU.
-            </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="sm:hidden"
-              aria-label="Open menu"
-            >
-              <PanelLeft className="!h-5 !w-5" />
-            </Button>
-            <div className="mr-auto hidden sm:inline-flex">
-              <Button size="sm" variant="ghost" asChild className="text-md">
-                <Link href="/">Home</Link>
-              </Button>
-              <Button size="sm" variant="ghost" asChild className="text-md">
-                <Link href="/work">My work</Link>
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                asChild
-                className="text-md group"
-              >
-                <Link href="/cv">
-                  <Download className="duration-200 group-hover:translate-y-0.5" />
-                  Download CV
+          <MotionPreferenceProvider>
+            <MinimalModeProvider>
+              <nav className="z-50 mx-auto flex w-full max-w-screen-md items-center gap-4 pt-9 font-mono">
+                <Link href="/" className="text-lg font-bold">
+                  TU.
                 </Link>
-              </Button>
-            </div>
-            <SettingDialogButton />
-          </nav>
-          {children}
-          <div
-            aria-hidden
-            className="color-rays h-[400px] w-full mix-blend-multiply dark:mix-blend-darken"
-          />
-          <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
-            <hr className="border-border mb-5 border-t" />
-            <div className="text-muted-foreground">
-              &copy; 2025 Trung Ung. All rights reserved.
-            </div>
-          </footer>
-          <Toaster />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="sm:hidden"
+                  aria-label="Open menu"
+                >
+                  <PanelLeft className="!h-5 !w-5" />
+                </Button>
+                <div className="mr-auto hidden sm:inline-flex">
+                  <Button size="sm" variant="ghost" asChild className="text-md">
+                    <Link href="/">Home</Link>
+                  </Button>
+                  <Button size="sm" variant="ghost" asChild className="text-md">
+                    <Link href="/work">My work</Link>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    asChild
+                    className="text-md group"
+                  >
+                    <Link href="/cv">
+                      <Download className="duration-200 group-hover:translate-y-0.5" />
+                      Download CV
+                    </Link>
+                  </Button>
+                </div>
+                <SettingDialogButton />
+              </nav>
+              {children}
+              <div
+                aria-hidden
+                className="color-rays minimal:hidden force-motion-reduce:animate-none force-motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] h-[400px] w-full mix-blend-multiply motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] motion-reduce:animate-none dark:mix-blend-darken"
+              />
+              <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
+                <hr className="border-border mb-5 border-t" />
+                <div className="text-muted-foreground">
+                  &copy; 2025 Trung Ung. All rights reserved.
+                </div>
+              </footer>
+              <Toaster />
+            </MinimalModeProvider>
+          </MotionPreferenceProvider>
         </ThemeProvider>
       </body>
     </html>

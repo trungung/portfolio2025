@@ -93,8 +93,8 @@ export const SettingDialogButton = () => {
                 <SelectItem value="system">
                   <Laptop className="h-5 w-5" /> System
                 </SelectItem>
-                <SelectItem value="no-reference">
-                  <Sparkles className="h-5 w-5" /> No references
+                <SelectItem value="no-preference">
+                  <Sparkles className="h-5 w-5" /> No preference
                 </SelectItem>
                 <SelectItem value="reduce">
                   <DiamondMinus className="h-5 w-5" /> Reduce
