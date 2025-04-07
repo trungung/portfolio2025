@@ -9,6 +9,7 @@ import { SettingDialogButton } from "@/components/SettingDialogButton";
 import { ThemeProvider } from "next-themes";
 import { MotionPreferenceProvider } from "@/lib/providers/MotionPreferenceProvider";
 import { MinimalModeProvider } from "@/lib/providers/MinimalModeProvider";
+import { MotionAware } from "@/components/MotionAware";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -71,7 +72,16 @@ export default function RootLayout({
                     className="text-md group"
                   >
                     <Link href="/cv">
-                      <Download className="duration-200 group-hover:translate-y-0.5" />
+                      <MotionAware
+                        motionSafe={
+                          <Download
+                            className={
+                              "duration-200 group-hover:translate-y-0.5"
+                            }
+                          />
+                        }
+                        motionReduce={<Download />}
+                      />
                       Download CV
                     </Link>
                   </Button>

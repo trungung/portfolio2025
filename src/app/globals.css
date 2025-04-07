@@ -145,24 +145,12 @@
 
 @layer utilities {
   .shiny-hover {
-    @apply relative overflow-hidden;
-  }
-
-  .shiny-hover::before {
-    @apply pointer-events-none absolute top-0 left-[-75%] h-full w-1/2 rotate-12 bg-white opacity-20 blur-sm content-[''];
-  }
-
-  .shiny-hover:hover::before {
-    animation: shine 0.6s ease-in-out forwards;
-  }
-
-  @keyframes shine {
-    0% {
-      left: -75%;
-    }
-    100% {
-      left: 130%;
-    }
+    @apply relative before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit];
+    @apply before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/30)_50%,transparent_75%,transparent_100%)];
+    @apply dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)];
+    @apply before:bg-[length:250%_250%] before:bg-[position:200%_0] before:bg-no-repeat;
+    @apply before:[transition:background-position_0s_ease];
+    @apply hover:before:bg-[position:-100%_0] hover:before:duration-700;
   }
 
   .color-rays {

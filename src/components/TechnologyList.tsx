@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 type TechnologyButtonProps = {
   href: string;
@@ -25,10 +26,10 @@ const TechnologyButton = ({ href, icon, name }: TechnologyButtonProps) => {
         className="text-md group"
         tabIndex={-1}
       >
-        <a href={href} target="_blank" rel="noopener noreferrer">
+        <Link href={href} target="_blank" rel="noopener noreferrer">
           {icon}
           {name}
-        </a>
+        </Link>
       </Button>
     </motion.div>
   );

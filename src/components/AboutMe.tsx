@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import Link from "next/link";
 import { SectionHeader } from "./SectionHeader";
+import { MotionAware } from "@/components/MotionAware";
 
 export const AboutMe = () => {
   return (
@@ -23,12 +24,24 @@ export const AboutMe = () => {
         </p>
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
-        <Button asChild size="lg" className="group shiny-hover">
-          <a href="/cv.pdf" target="_blank">
-            <Download className="duration-200 group-hover:translate-y-0.5" />
-            Download CV
-          </a>
-        </Button>
+        <MotionAware
+          motionSafe={
+            <Button asChild size="lg" className="group shiny-hover">
+              <Link href="/cv.pdf" target="_blank">
+                <Download className="duration-200 group-hover:translate-y-0.5" />
+                Download CV
+              </Link>
+            </Button>
+          }
+          motionReduce={
+            <Button asChild size="lg">
+              <Link href="/cv.pdf" target="_blank">
+                <Download />
+                Download CV
+              </Link>
+            </Button>
+          }
+        />
         <Button variant="outline" asChild size="lg" className="group">
           <Link href="#contact">Contact me</Link>
         </Button>

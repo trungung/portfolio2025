@@ -16,6 +16,7 @@ import { useState, ReactNode } from "react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { toast } from "sonner";
 import { SectionHeader } from "./SectionHeader";
+import Link from "next/link";
 
 type ContactItemProps = {
   href: string;
@@ -53,10 +54,10 @@ const ContactItem = ({
   return (
     <div className="flex items-center gap-2">
       <Button variant="outline" asChild className="group">
-        <a href={href} target={target}>
+        <Link href={href} target={target}>
           {icon} {label}
           <ExternalLink className="duration-200 group-hover:translate-x-1" />
-        </a>
+        </Link>
       </Button>
       <Button
         variant="ghost"

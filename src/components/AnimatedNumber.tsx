@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
+import { MotionAware } from "./MotionAware";
 
 type AnimatedNumberProps = {
   from?: number;
@@ -69,8 +70,15 @@ export const AnimatedNumber = ({
   };
 
   return (
-    <span ref={elementRef} className={className}>
-      {formatter(displayValue)}
-    </span>
+    <>
+      <MotionAware
+        motionSafe={
+          <span ref={elementRef} className={className}>
+            {formatter(displayValue)}
+          </span>
+        }
+        motionReduce={<span className={className}>{formatter(to)}</span>}
+      />
+    </>
   );
 };

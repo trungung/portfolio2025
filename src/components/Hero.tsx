@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ScrambleHero } from "./ScrambleHero";
+import { MotionAware } from "./MotionAware";
 
 export const Hero = () => {
   return (
@@ -14,10 +15,19 @@ export const Hero = () => {
           are scalable, maintainable, and feel great to use.
         </p>
         <div className="mt-9 flex flex-row flex-wrap gap-4">
-          <Button asChild size="lg" className="group shiny-hover">
-            <Link href="#contact">Contact me</Link>
-          </Button>
-          <Button variant="outline" asChild size="lg" className="group">
+          <MotionAware
+            motionSafe={
+              <Button asChild size="lg" className="shiny-hover">
+                <Link href="#contact">Contact me</Link>
+              </Button>
+            }
+            motionReduce={
+              <Button asChild size="lg">
+                <Link href="#contact">Contact me</Link>
+              </Button>
+            }
+          />
+          <Button variant="outline" asChild size="lg" className="">
             <Link href="#about">More about me</Link>
           </Button>
         </div>
