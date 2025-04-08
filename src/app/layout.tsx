@@ -21,10 +21,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trung Ung | Portfolio",
+  title: "Trung | Portfolio",
   description:
     "Software engineer with 5 years of experience specializing in modern web applications. Explore my projects, skills, and professional journey.",
-  keywords: ["Trung Ung", "Portfolio", "Software Engineer", "Web Developer"],
+  keywords: ["Trung", "Portfolio", "Software Engineer", "Web Developer"],
 };
 
 export default function RootLayout({
@@ -88,7 +88,7 @@ export default function RootLayout({
               <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
                 <hr className="border-border mb-5 border-t" />
                 <div className="text-muted-foreground">
-                  &copy; 2025 Trung Ung. All rights reserved.
+                  &copy; 2025 Trung. All rights reserved.
                 </div>
               </footer>
               <Toaster />
