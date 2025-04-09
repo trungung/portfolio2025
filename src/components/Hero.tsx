@@ -8,7 +8,11 @@ export const Hero = () => {
     <section id="hero" className="mt-20 mb-16">
       <h1 className="text-4xl font-bold tracking-[-0.03em]">
         <MotionAware
-          motionSafe={<ScrambleHero text="Hey, I'm Trung" />}
+          motionSafe={
+            <>
+              Hey, <ScrambleHero text="I'm Trung" />
+            </>
+          }
           motionReduce={<span>Hey, I&apos;m Trung</span>}
         />
       </h1>
