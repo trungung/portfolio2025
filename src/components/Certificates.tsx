@@ -3,7 +3,6 @@ import { AzureIcon } from "../icons/azure";
 import { CalendarDays, ExternalLink } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
-import { MotionAware } from "./MotionAware";
 
 export const Certificates = () => {
   const certs = [
@@ -62,7 +61,7 @@ export const Certificates = () => {
       <ul className="mt-4 flex flex-col items-start gap-2">
         {certs.map((cert) => (
           <li key={cert.name}>
-            <HoverCard>
+            <HoverCard openDelay={200}>
               <HoverCardTrigger asChild>
                 <button
                   role="button"
