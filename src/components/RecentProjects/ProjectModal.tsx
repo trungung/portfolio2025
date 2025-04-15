@@ -3,26 +3,9 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "./ui/badge";
+import { Badge } from "../ui/badge";
 import { Gallery } from "./Galery";
-
-export type ProjectSource = {
-  name: string;
-  url: string;
-};
-
-export type Project = {
-  id: string;
-  duration: string;
-  modalId: string;
-  pictures: string[];
-  title: string;
-  description: string;
-  extendedDescription: React.ReactNode;
-  type: string;
-  sources: ProjectSource[];
-  stacks: string[];
-};
+import { Project } from "./project";
 
 interface ProjectModalProps {
   project: Project;
@@ -50,10 +33,8 @@ export const ProjectModal = ({
           {project.duration}
         </span>
 
-        {/* Image Gallery */}
         <Gallery pictures={project.pictures} title={project.title} />
 
-        {/* Project Description */}
         <div
           id={`dialog-description-${project.id}`}
           className="prose prose-sm dark:prose-invert max-w-none"
@@ -61,7 +42,6 @@ export const ProjectModal = ({
           {project.extendedDescription}
         </div>
 
-        {/* Tech Stack */}
         <div className="mt-6">
           <h3 className="mb-2 text-lg font-semibold">Technologies</h3>
           <div className="flex flex-wrap gap-2">
@@ -76,7 +56,6 @@ export const ProjectModal = ({
           </div>
         </div>
 
-        {/* Sources/Links */}
         {project.sources.length > 0 && (
           <div className="mt-6">
             <h3 className="mb-2 text-lg font-semibold">Links</h3>

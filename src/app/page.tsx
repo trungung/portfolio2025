@@ -3,7 +3,7 @@ import { Certificates } from "@/components/Certificates";
 import { ContactMe } from "@/components/ContactMe";
 import { Hero } from "@/components/Hero";
 import { Highlights } from "@/components/Highlights";
-import { RecentProjects } from "@/components/RecentProjects";
+import { RecentProjects } from "@/components/RecentProjects/RecentProjects";
 import { Technologies } from "@/components/Technologies";
 
 export default function Home() {

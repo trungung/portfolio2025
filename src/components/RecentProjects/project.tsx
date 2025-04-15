@@ -1,23 +1,24 @@
-"use client";
-
-import { useState } from "react";
-import {
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  Card,
-} from "@/components/ui/card";
-import { SectionHeader } from "./SectionHeader";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { ChevronRight } from "lucide-react";
-import { ProjectModal, Project } from "./ProjectModal";
-import { Badge } from "./ui/badge";
 import Link from "next/link";
 
-// Sample project data with the extended information
-const projects = [
+export type ProjectSource = {
+  name: string;
+  url: string;
+};
+
+export type Project = {
+  id: string;
+  duration: string;
+  modalId: string;
+  pictures: string[];
+  title: string;
+  description: string;
+  extendedDescription: React.ReactNode;
+  type: string;
+  sources: ProjectSource[];
+  stacks: string[];
+};
+
+export const projects = [
   {
     id: "customer-journey",
     duration: "01.12.2019 - present",
@@ -64,7 +65,7 @@ const projects = [
         </p>
       </>
     ),
-    type: "internal",
+    type: "nda",
     sources: [
       {
         name: "Venue page example",
@@ -406,83 +407,3 @@ const projects = [
     stacks: ["react", "react context", "sematic"],
   },
 ];
-export const RecentProjects = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  const openProjectModal = (project: Project) => {
-    setSelectedProject(project);
-  };
-
-  const closeProjectModal = () => {
-    setSelectedProject(null);
-  };
-
-  return (
-    <section id="projects" className="mt-20 mb-16 scroll-mt-20">
-      <SectionHeader title="Recent projects" />
-      <p className="mt-4 max-w-prose">
-        These are things I&apos;ve worked on across teams, companies, and my own
-        time.
-      </p>
-
-      <div className="relative mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {projects.map((project, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.4 }}
-          >
-            <Card
-              className={cn(
-                "group/card bg-background/80 relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border p-4 transition-shadow hover:shadow-xl",
-              )}
-            >
-              <div
-                className="force-motion-safe:inline force-motion-reduce:hidden pointer-events-none absolute inset-0 -z-10 hidden rounded-2xl opacity-0 transition-opacity duration-200 group-hover/card:opacity-100 motion-safe:inline motion-reduce:hidden"
-                style={{
-                  background:
-                    "linear-gradient(130deg, #7dd3fc, #c084fc, #facc15)",
-                  filter: "blur(30px)",
-                }}
-              ></div>
-
-              <CardHeader className="p-0">
-                <CardTitle className="text-lg font-semibold">
-                  {project.title}
-                  <Badge className="mt-1 block" variant="secondary">
-                    {project.type}
-                  </Badge>
-                </CardTitle>
-                <CardDescription className="mt-2 line-clamp-5 text-sm leading-relaxed">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-
-              <div>
-                <Button
-                  className="group"
-                  onClick={() => openProjectModal(project)}
-                  aria-label={`See more about ${project.title}`}
-                >
-                  See more
-                  <ChevronRight className="duration-200 group-hover:translate-x-1" />
-                </Button>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Project Modal */}
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          isOpen={!!selectedProject}
-          onClose={closeProjectModal}
-        />
-      )}
-    </section>
-  );
-};
