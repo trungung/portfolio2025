@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Project } from "./project";
 import { Badge } from "../ui/badge";
+import { useSettings } from "@/lib/store/settings";
 
 export const ProjectCard = ({
   project,
@@ -17,10 +18,10 @@ export const ProjectCard = ({
   onClick: (project: Project) => void;
 }) => {
   const hasImages = project.pictures && project.pictures.length > 0;
-
+  const { minimalMode } = useSettings();
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: minimalMode ? 1 : 0, y: minimalMode ? 0 : 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
@@ -46,9 +47,6 @@ export const ProjectCard = ({
         <div className="relative aspect-[5/3] w-full overflow-hidden">
           {hasImages && !project.isNda ? (
             <div className="relative h-full w-full">
-              {/* Gradient overlay that reveals on hover */}
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-30 transition-opacity duration-300 ease-in-out group-hover:opacity-70" />
-
               {/* Main image */}
               <Image
                 src={project.pictures[0]}
@@ -58,26 +56,18 @@ export const ProjectCard = ({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
                 priority={index < 4}
               />
-
-              {/* Duration "sticker" that slides in on hover */}
-              <div className="bg-background/80 absolute top-3 -right-full z-20 rounded-l-full px-3 py-1 text-xs font-medium backdrop-blur-sm transition-all duration-300 group-hover:right-0">
-                {project.duration}
-              </div>
             </div>
           ) : (
             <div className="relative h-full w-full">
               {/* nda placeholder image */}
               <Image
-                src="/images/nda-placeholder.png"
+                src="/images/placeholder-nda.png"
                 alt="nda Project"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover blur-sm"
+                className="scale-90 object-cover blur-sm"
                 priority={index < 4}
               />
-
-              {/* Semi-transparent overlay for better text readability */}
-              <div className="absolute inset-0 bg-black/10"></div>
 
               {/* nda indicator */}
               <div className="absolute inset-0 flex items-center justify-center">
@@ -85,13 +75,15 @@ export const ProjectCard = ({
                   <p className="text-sm font-medium">🔒 NDA Project</p>
                 </div>
               </div>
-
-              {/* Duration "sticker" that slides in on hover */}
-              <div className="bg-background/80 absolute top-3 -right-full z-20 rounded-l-full px-3 py-1 text-xs font-medium backdrop-blur-sm transition-all duration-300 group-hover:right-0">
-                {project.duration}
-              </div>
             </div>
           )}
+        </div>
+        <div
+          className={
+            "bg-background/80 minimal:right-0 absolute top-3 -right-full z-20 rounded-l-full px-3 py-1 text-xs font-medium backdrop-blur-sm transition-all duration-300 group-hover:right-0"
+          }
+        >
+          {project.duration}
         </div>
 
         {/* Content section with improved spacing */}
