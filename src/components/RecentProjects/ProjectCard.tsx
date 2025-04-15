@@ -3,9 +3,9 @@
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { Project } from "./project";
+import { Badge } from "../ui/badge";
 
 export const ProjectCard = ({
   project,
@@ -17,7 +17,6 @@ export const ProjectCard = ({
   onClick: (project: Project) => void;
 }) => {
   const hasImages = project.pictures && project.pictures.length > 0;
-  const isNda = project.type.includes("nda");
 
   return (
     <motion.div
@@ -45,7 +44,7 @@ export const ProjectCard = ({
       >
         {/* Thumbnail with layered depth effect */}
         <div className="relative aspect-[5/3] w-full overflow-hidden">
-          {hasImages && !isNda ? (
+          {hasImages && !project.isNda ? (
             <div className="relative h-full w-full">
               {/* Gradient overlay that reveals on hover */}
               <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-30 transition-opacity duration-300 ease-in-out group-hover:opacity-70" />
@@ -56,7 +55,7 @@ export const ProjectCard = ({
                 alt={`Thumbnail for ${project.title}`}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
                 priority={index < 4}
               />
 
@@ -83,7 +82,7 @@ export const ProjectCard = ({
               {/* nda indicator */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-background/60 rounded-lg px-4 py-2 shadow-sm backdrop-blur-sm">
-                  <p className="text-sm font-medium">🔒 nda Project</p>
+                  <p className="text-sm font-medium">🔒 NDA Project</p>
                 </div>
               </div>
 
@@ -93,16 +92,6 @@ export const ProjectCard = ({
               </div>
             </div>
           )}
-
-          {/* Project type badge positioned on top of the image */}
-          <div className="absolute top-3 left-3 z-20">
-            <Badge
-              variant={isNda ? "destructive" : "secondary"}
-              className="px-2 py-0.5 text-xs opacity-90"
-            >
-              {project.type}
-            </Badge>
-          </div>
         </div>
 
         {/* Content section with improved spacing */}
@@ -121,31 +110,25 @@ export const ProjectCard = ({
           <div className="mt-auto pt-4">
             <div className="flex flex-wrap gap-1.5">
               {project.stacks.slice(0, 3).map((tech, idx) => (
-                <motion.span
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + idx * 0.1, duration: 0.3 }}
                   viewport={{ once: true }}
-                  className="bg-background border-secondary/10 text-secondary-foreground hover:bg-secondary/5 flex items-center rounded-full border px-2.5 py-1 text-xs transition-colors duration-300"
                 >
-                  <span className="relative mr-1.5 flex h-1.5 w-1.5">
-                    <span className="bg-secondary/40 absolute inline-flex h-full w-full rounded-full opacity-75"></span>
-                    <span className="bg-secondary relative inline-flex h-1 w-1 rounded-full"></span>
-                  </span>
-                  {tech}
-                </motion.span>
+                  <Badge variant="outline" className="px-2.5 py-1 text-xs">
+                    {tech}
+                  </Badge>
+                </motion.div>
               ))}
               {project.stacks.length > 3 && (
-                <motion.span
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.3 }}
-                  viewport={{ once: true }}
-                  className="text-muted-foreground border-secondary/10 rounded-full border px-2.5 py-1 text-xs"
+                <Badge
+                  variant="outline"
+                  className="px-2.5 py-1 text-xs opacity-70"
                 >
                   +{project.stacks.length - 3}
-                </motion.span>
+                </Badge>
               )}
             </div>
           </div>

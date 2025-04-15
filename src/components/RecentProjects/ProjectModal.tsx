@@ -3,7 +3,6 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "../ui/badge";
 import { Gallery } from "./Galery";
 import { Project } from "./project";
 
@@ -26,7 +25,7 @@ export const ProjectModal = ({
         aria-describedby={`dialog-description-${project.id}`}
       >
         <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
-          {project.title} <Badge>{project.type}</Badge>
+          {project.title}
         </DialogTitle>
 
         <span className="text-muted-foreground text-xs font-medium">

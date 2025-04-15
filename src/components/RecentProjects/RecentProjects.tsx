@@ -46,7 +46,7 @@ export const RecentProjects = () => {
             className="px-6"
             variant="outline"
           >
-            {showAll ? "Show Less" : "Show All Projects"}
+            {showAll ? "Show Less" : "See All Projects"}
           </Button>
         </div>
       )}
