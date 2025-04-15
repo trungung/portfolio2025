@@ -12,14 +12,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
-  DiamondMinus,
   Laptop,
   Moon,
   RotateCcw,
   Settings,
   Sparkles,
   SunMoon,
-  Wind,
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -33,10 +31,9 @@ import { useSettings } from "@/lib/store/settings";
 import { useTheme } from "next-themes";
 
 export const SettingDialogButton = () => {
-  const { motion, setMotion, minimalMode, toggleMinimalMode } = useSettings();
+  const { minimalMode, toggleMinimalMode } = useSettings();
   const { theme, setTheme } = useTheme();
   const handleReset = () => {
-    setMotion("system");
     setTheme("system");
     if (minimalMode) toggleMinimalMode();
   };
@@ -59,8 +56,8 @@ export const SettingDialogButton = () => {
             <Settings className="h-5 w-5" /> Settings
           </DialogTitle>
           <DialogDescription>
-            Here is where you can shape the look and feel. Turn on dark mode,
-            toggle the hero background, or reduce motion if you prefer calm.
+            Choose what suits you. Turn on dark mode, toggle minimal mode, or
+            keep things as they are.
           </DialogDescription>
         </DialogHeader>
 
@@ -82,28 +79,6 @@ export const SettingDialogButton = () => {
                 </SelectItem>
                 <SelectItem value="dark">
                   <Moon className="h-5 w-5" /> Dark
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center justify-between gap-2 py-4">
-            <span className="flex items-center gap-2 font-medium">
-              <Wind className="h-5 w-5" /> Motion reduce
-            </span>
-            <Select value={motion} onValueChange={setMotion}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Motion reduce" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="system">
-                  <Laptop className="h-5 w-5" /> System
-                </SelectItem>
-                <SelectItem value="no-preference">
-                  <Sparkles className="h-5 w-5" /> No preference
-                </SelectItem>
-                <SelectItem value="reduce">
-                  <DiamondMinus className="h-5 w-5" /> Reduce
                 </SelectItem>
               </SelectContent>
             </Select>
