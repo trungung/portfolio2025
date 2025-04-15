@@ -18,8 +18,8 @@ export const Hero = () => {
       </h1>
       <div className="max-w-prose">
         <p className="mt-2 text-lg">
-          I&apos;m a fullstack developer building modern web applications that
-          are scalable, maintainable, and feel great to use.
+          I&apos;m a <b>fullstack developer</b> based in <b>Helsinki</b>. I help
+          teams ship fast, clean, and reliable web apps.
         </p>
         <div className="mt-9 flex flex-row flex-wrap gap-4">
           <MotionAware
