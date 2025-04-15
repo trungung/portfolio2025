@@ -109,18 +109,14 @@ export const ProjectCard = ({
           {/* Tech stack with animated reveal */}
           <div className="mt-auto pt-4">
             <div className="flex flex-wrap gap-1.5">
-              {project.stacks.slice(0, 3).map((tech, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + idx * 0.1, duration: 0.3 }}
-                  viewport={{ once: true }}
+              {project.stacks.slice(0, 3).map((tech) => (
+                <Badge
+                  key={tech}
+                  variant="outline"
+                  className="px-2.5 py-1 text-xs"
                 >
-                  <Badge variant="outline" className="px-2.5 py-1 text-xs">
-                    {tech}
-                  </Badge>
-                </motion.div>
+                  {tech}
+                </Badge>
               ))}
               {project.stacks.length > 3 && (
                 <Badge
