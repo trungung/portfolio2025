@@ -113,7 +113,7 @@ export const ContactMe = () => {
           className="duration-200 group-hover:-rotate-12"
         />
       ),
-      label: "https://www.linkedin.com/in/trung-ung/",
+      label: "linkedin.com/in/trung-ung/",
       target: "_blank",
       context: "LinkedIn profile",
     },
@@ -121,7 +121,7 @@ export const ContactMe = () => {
       href: "https://github.com/ung-trung",
       copyText: "https://github.com/ung-trung",
       icon: <SiGithub className="duration-200 group-hover:-rotate-12" />,
-      label: "https://github.com/ung-trung",
+      label: "github.com/ung-trung",
       target: "_blank",
       context: "GitHub profile",
     },
