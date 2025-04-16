@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -17,18 +17,31 @@ import { type CarouselApi } from "@/components/ui/carousel";
 interface GalleryProps {
   pictures: string[];
   title: string;
+  onGridViewChange?: (isGridView: boolean) => void;
 }
 
-export const Gallery = ({ pictures, title }: GalleryProps) => {
+export const Gallery = ({
+  pictures,
+  title,
+  onGridViewChange,
+}: GalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isGridView, setIsGridView] = useState(true);
+  const [isGridView, _setIsGridView] = useState(true);
+  const setIsGridView = useCallback(
+    (value: boolean) => {
+      _setIsGridView(value);
+      onGridViewChange?.(value);
+    },
+    [onGridViewChange],
+  );
+
   const [api, setApi] = useState<CarouselApi>();
 
   // Reset state when gallery pictures change
   useEffect(() => {
     setActiveImageIndex(0);
     setIsGridView(true);
-  }, [pictures]);
+  }, [pictures, setIsGridView]);
 
   // Sync carousel with activeImageIndex
   useEffect(() => {

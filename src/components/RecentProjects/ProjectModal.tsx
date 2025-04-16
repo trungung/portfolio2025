@@ -7,6 +7,7 @@ import { Gallery } from "./Galery";
 import { Project } from "./project";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { Badge } from "../ui/badge";
+import { useCallback, useState } from "react";
 
 interface ProjectModalProps {
   project: Project;
@@ -19,12 +20,19 @@ export const ProjectModal = ({
   isOpen,
   onClose,
 }: ProjectModalProps) => {
+  const [shouldCloseOnEscape, setShouldCloseOnEscape] = useState(true);
+  const onGridViewChange = useCallback((isGridView: boolean) => {
+    setShouldCloseOnEscape(!isGridView);
+  }, []);
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
         className="max-h-[90vh] gap-0 overflow-y-auto sm:max-w-3xl"
         aria-labelledby={`dialog-title-${project.id}`}
         aria-describedby={`dialog-description-${project.id}`}
+        onEscapeKeyDown={(e) => {
+          if (shouldCloseOnEscape) e.preventDefault();
+        }}
       >
         <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
           {project.title}
@@ -43,7 +51,11 @@ export const ProjectModal = ({
         </section>
 
         {project.pictures.length > 0 && (
-          <Gallery pictures={project.pictures} title={project.title} />
+          <Gallery
+            pictures={project.pictures}
+            title={project.title}
+            onGridViewChange={onGridViewChange}
+          />
         )}
 
         <div
