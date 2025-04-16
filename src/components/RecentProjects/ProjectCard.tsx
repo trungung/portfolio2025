@@ -22,7 +22,7 @@ export const ProjectCard = ({
   const cardContent = (
     <Card
       className={cn(
-        "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-md border py-0 transition-all duration-300",
+        "group relative flex h-full cursor-pointer flex-col overflow-hidden border py-0 transition-all duration-300",
         "hover:border-primary/70 p-3",
       )}
       onClick={() => onClick(project)}

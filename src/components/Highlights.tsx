@@ -1,5 +1,6 @@
 import { Award, Briefcase, PackageOpen, ShieldCheck } from "lucide-react";
 import { AnimatedNumber } from "./AnimatedNumber";
+import Link from "next/link";
 
 export const Highlights = () => {
   return (
@@ -9,23 +10,23 @@ export const Highlights = () => {
           <Briefcase className="inline-block" />{" "}
           <AnimatedNumber delay={0.1} to={5} />+ years experience
         </div>
-        <a
+        <Link
           href="#certificates"
           className="hover:text-primary-foreground text-xs font-bold"
         >
           <ShieldCheck className="inline-block" /> Azure & AWS certified
-        </a>
+        </Link>
         <div className="hover:text-primary-foreground text-xs font-bold">
           <Award className="inline-block" />{" "}
           <AnimatedNumber delay={0.1} to={2} />× award winner
         </div>
-        <a
+        <Link
           href="#projects"
           className="hover:text-primary-foreground text-xs font-bold"
         >
           <PackageOpen className="inline-block" />{" "}
           <AnimatedNumber delay={0.1} to={6} />+ products delivered{" "}
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -141,7 +141,7 @@ export const Gallery = ({ pictures, title }: GalleryProps) => {
 
       {/* Grid View */}
       {isGridView && (
-        <div className="mt-8 grid gap-4">
+        <div className="mt-7 grid gap-4">
           {pictures.length === 1 ? (
             // Single image layout - full width, taller
             <motion.div

@@ -60,7 +60,7 @@ export default function RootLayout({
                   <Link href="/">Home</Link>
                 </Button>
                 <Button size="sm" variant="ghost" asChild className="text-md">
-                  <Link href="/work">My work</Link>
+                  <Link href="#projects">My work</Link>
                 </Button>
                 <Button
                   size="sm"
