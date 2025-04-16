@@ -18,8 +18,8 @@ export const AboutMe = () => {
         <p className="mt-4">
           My work has improved pricing operations, modernized hotel booking
           systems, and helped scale SaaS products. I&apos;ve also{" "}
-          <b>mentored junior developers</b> and thrive in fast-moving,
-          collaborative teams where ideas quickly turn into real impact.
+          <b>mentored junior developers</b> and enjoy working closely with
+          teammates to bring ideas to life.
         </p>
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
