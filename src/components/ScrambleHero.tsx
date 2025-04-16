@@ -17,11 +17,7 @@ export const ScrambleHero = ({ text }: { text: string }) => {
 
   return (
     <>
-      <span
-        ref={ref}
-        className="inline-block min-w-[15ch]"
-        aria-hidden="true"
-      />
+      <span ref={ref} className="inline-block" aria-hidden="true" />
       <span className="sr-only">{text}</span>
     </>
   );
