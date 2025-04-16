@@ -22,7 +22,7 @@ export const ProjectModal = ({
 }: ProjectModalProps) => {
   const [shouldCloseOnEscape, setShouldCloseOnEscape] = useState(true);
   const onGridViewChange = useCallback((isGridView: boolean) => {
-    setShouldCloseOnEscape(!isGridView);
+    setShouldCloseOnEscape(isGridView);
   }, []);
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -31,7 +31,7 @@ export const ProjectModal = ({
         aria-labelledby={`dialog-title-${project.id}`}
         aria-describedby={`dialog-description-${project.id}`}
         onEscapeKeyDown={(e) => {
-          if (shouldCloseOnEscape) e.preventDefault();
+          if (!shouldCloseOnEscape) e.preventDefault();
         }}
       >
         <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
