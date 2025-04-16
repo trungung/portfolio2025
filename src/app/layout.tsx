@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import { SettingDialogButton } from "@/components/SettingDialogButton";
 import { ThemeProvider } from "next-themes";
 import { MinimalModeProvider } from "@/lib/providers/MinimalModeProvider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="!scroll-smooth">
+      {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID &&
+        process.env.NODE_ENV === "production" && (
+          <GoogleAnalytics
+            gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID!}
+          />
+        )}
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-[url('/noise.png')] bg-repeat px-6 antialiased dark:bg-none`}
       >
