@@ -58,8 +58,8 @@ export const Gallery = ({ pictures, title }: GalleryProps) => {
   // Get visible images for grid view (limit to 3 for 4 images, 5 for more)
   const getVisibleImages = () => {
     if (pictures.length <= 3) return pictures;
-    if (pictures.length === 4) return pictures.slice(0, 3);
-    return pictures.slice(0, 5);
+    // if (pictures.length === 4) return pictures.slice(0, 3);
+    return pictures.slice(0, 3);
   };
 
   // Calculate if there are hidden images
@@ -141,7 +141,7 @@ export const Gallery = ({ pictures, title }: GalleryProps) => {
 
       {/* Grid View */}
       {isGridView && (
-        <div className="grid gap-4 p-4">
+        <div className="mt-8 grid gap-4">
           {pictures.length === 1 ? (
             // Single image layout - full width, taller
             <motion.div

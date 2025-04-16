@@ -23,7 +23,7 @@ export const ProjectCard = ({
     <Card
       className={cn(
         "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-md border py-0 transition-all duration-300",
-        "hover:border-primary/20 hover:-translate-y-1 hover:shadow-md",
+        "hover:border-primary/70 p-3",
       )}
       onClick={() => onClick(project)}
       tabIndex={0}
@@ -37,7 +37,7 @@ export const ProjectCard = ({
       aria-label={`View details for ${project.title}`}
     >
       {/* Thumbnail with layered depth effect */}
-      <div className="relative aspect-[5/3] w-full overflow-hidden">
+      <div className="relative aspect-[5/3] w-full overflow-hidden rounded-sm">
         {hasImages && !project.isNda ? (
           <div className="relative h-full w-full">
             {/* Main image */}
@@ -58,7 +58,7 @@ export const ProjectCard = ({
               alt="nda Project"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="scale-90 object-cover blur-sm"
+              className="scale-90 object-cover blur-sm transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
               priority={index < 4}
             />
 
@@ -80,12 +80,12 @@ export const ProjectCard = ({
       </div>
 
       {/* Content section with improved spacing */}
-      <div className="flex flex-1 flex-col px-5 pb-3">
+      <div className="3 flex flex-1 flex-col px-2">
         {/* Title that grows slightly on hover */}
         <h3 className="text-lg leading-tight font-semibold">{project.title}</h3>
 
         {/* Description with slightly increased visibility on hover */}
-        <p className="text-muted-foreground mt-2 line-clamp-2 text-sm transition-opacity duration-300">
+        <p className="text-muted-foreground mt-2 line-clamp-3 text-sm transition-opacity duration-300">
           {project.description}
         </p>
 
@@ -122,7 +122,7 @@ export const ProjectCard = ({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.1, duration: 0.4 }}
+      transition={{ delay: index * 0.1, duration: 0.3 }}
       className="h-full"
     >
       {cardContent}

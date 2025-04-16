@@ -22,34 +22,39 @@ export const RecentProjects = () => {
   const displayedProjects = showAll ? projects : projects.slice(0, 6);
 
   return (
-    <section id="projects" className="mt-20 mb-16 scroll-mt-20">
-      <SectionHeader title="Recent projects" />
-      <p className="mt-4 max-w-prose">
-        Here are a few highlights of projects I&apos;ve worked on lately.
-      </p>
-
-      <div className="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
-        {displayedProjects.map((project, i) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            index={i}
-            onClick={openProjectModal}
-          />
-        ))}
+    <section
+      id="projects"
+      className="relative right-1/2 left-1/2 mt-20 mr-[-50vw] mb-16 ml-[-50vw] w-screen scroll-mt-20 px-4"
+    >
+      <div className="mx-auto max-w-screen-md">
+        <SectionHeader title="Recent projects" />
+        <p className="mt-4 max-w-prose">
+          Here are a few highlights of projects I&apos;ve worked on lately.
+        </p>
       </div>
-
-      {projects.length > 6 && (
-        <div className="mt-8 flex justify-center">
-          <Button
-            onClick={() => setShowAll(!showAll)}
-            className="px-6"
-            variant="outline"
-          >
-            {showAll ? "Show Less" : "See All Projects"}
-          </Button>
+      <div className="mx-auto max-w-screen-md lg:max-w-screen-lg">
+        <div className="grid grid-cols-1 gap-6 pt-12 pb-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {displayedProjects.map((project, i) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+              onClick={openProjectModal}
+            />
+          ))}
         </div>
-      )}
+        {projects.length > 6 && (
+          <div className="mt-8 flex justify-center">
+            <Button
+              onClick={() => setShowAll(!showAll)}
+              className="px-6"
+              variant="outline"
+            >
+              {showAll ? "Show Less" : "See All Projects"}
+            </Button>
+          </div>
+        )}
+      </div>
 
       {selectedProject && (
         <ProjectModal

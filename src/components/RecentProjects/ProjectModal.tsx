@@ -5,6 +5,8 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Gallery } from "./Galery";
 import { Project } from "./project";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { Badge } from "../ui/badge";
 
 interface ProjectModalProps {
   project: Project;
@@ -27,32 +29,28 @@ export const ProjectModal = ({
         <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
           {project.title}
         </DialogTitle>
+        <DialogDescription> {project.duration}</DialogDescription>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.stacks.map((tech, index) => (
+            <Badge variant="outline" key={index} className="text-sm">
+              {tech}
+            </Badge>
+          ))}
+        </div>
+        <section className="prose prose-sm dark:prose-invert">
+          <h3 className="mt-7">Quick summary</h3>
+          <blockquote>{project.quickSummary}</blockquote>
+        </section>
 
-        <span className="text-muted-foreground text-xs font-medium">
-          {project.duration}
-        </span>
-
-        <Gallery pictures={project.pictures} title={project.title} />
+        {project.pictures.length > 0 && (
+          <Gallery pictures={project.pictures} title={project.title} />
+        )}
 
         <div
           id={`dialog-description-${project.id}`}
-          className="prose prose-sm dark:prose-invert max-w-none"
+          className="prose prose-sm dark:prose-invert"
         >
           {project.extendedDescription}
-        </div>
-
-        <div className="mt-6">
-          <h3 className="mb-2 text-lg font-semibold">Technologies</h3>
-          <div className="flex flex-wrap gap-2">
-            {project.stacks.map((tech, index) => (
-              <span
-                key={index}
-                className="bg-secondary/30 hover:bg-secondary/50 rounded-full px-3 py-1 text-sm transition-all"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
         </div>
 
         {project.sources.length > 0 && (
