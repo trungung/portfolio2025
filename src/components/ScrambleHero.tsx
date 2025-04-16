@@ -1,11 +1,14 @@
 "use client";
 import { useScramble } from "use-scramble";
+import { useSettings } from "@/lib/store/settings";
 
 export const ScrambleHero = ({ text }: { text: string }) => {
+  const { minimalMode } = useSettings();
+
   const { ref } = useScramble({
     text,
     range: [65, 125],
-    speed: 1,
+    speed: minimalMode ? 0 : 1, // Disable animation in minimal mode
     tick: 1,
     step: 5,
     scramble: 5,
@@ -13,6 +16,7 @@ export const ScrambleHero = ({ text }: { text: string }) => {
     chance: 1,
     overdrive: false,
     overflow: false,
+    playOnMount: !minimalMode, // Don't play animation if in minimal mode
   });
 
   return (

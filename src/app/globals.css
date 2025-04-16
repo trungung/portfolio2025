@@ -152,6 +152,7 @@
     @apply before:bg-[length:250%_250%] before:bg-[position:200%_0] before:bg-no-repeat;
     @apply before:[transition:background-position_0s_ease];
     @apply hover:before:bg-[position:-100%_0] hover:before:duration-700;
+    @apply before:will-change-[background-position];
   }
 
   .color-rays {
