@@ -58,7 +58,7 @@ export const Hero = () => {
   return (
     <section className="relative">
       <div id="hero" className="mt-20 mb-16">
-        <h1 className="flex items-center gap-4 text-4xl font-bold tracking-[-0.03em]">
+        <h1 className="flex flex-wrap items-center gap-4 text-4xl font-bold tracking-[-0.03em]">
           <span className="minimal:hidden">
             Hey, I&apos;m{" "}
             <span className="rounded-xl bg-gray-500/10 px-4 py-2 backdrop-blur-sm dark:bg-gray-200/10">
