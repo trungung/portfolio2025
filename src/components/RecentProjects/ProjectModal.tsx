@@ -31,7 +31,8 @@ export const ProjectModal = ({
         aria-labelledby={`dialog-title-${project.id}`}
         aria-describedby={`dialog-description-${project.id}`}
         onEscapeKeyDown={(e) => {
-          if (!shouldCloseOnEscape) e.preventDefault();
+          if (shouldCloseOnEscape) return;
+          e.preventDefault();
         }}
       >
         <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
@@ -66,7 +67,7 @@ export const ProjectModal = ({
         </div>
 
         {project.sources.length > 0 && (
-          <div className="mt-6">
+          <div className="mt-7">
             <h3 className="mb-2 text-lg font-semibold">Links</h3>
             <div className="flex flex-wrap gap-3">
               {project.sources.map((source, index) => (
