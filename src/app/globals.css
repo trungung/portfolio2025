@@ -155,26 +155,39 @@
     @apply before:will-change-[background-position];
   }
 
+  /* Replace your current color-rays implementation with this */
   .color-rays {
-    @apply pointer-events-none absolute top-0 left-0 z-0 overflow-hidden bg-[image:var(--color-gradient)] bg-[length:180%_180%] opacity-40 blur-[80px];
-    @apply will-change-[background-position];
-    @apply force-motion-reduce:!bg-none force-motion-reduce:!bg-gradient-to-tr force-motion-reduce:from-background/5 force-motion-reduce:to-primary/10 force-motion-reduce:!blur-[100px] force-motion-reduce:!opacity-30;
+    @apply pointer-events-none absolute top-0 left-0 z-0 overflow-hidden opacity-40 blur-[80px];
+    @apply will-change-transform; /* Change to transform instead of background-position */
+    @apply force-motion-reduce:!bg-gradient-to-tr force-motion-reduce:from-background/5 force-motion-reduce:to-primary/10 force-motion-reduce:!blur-[100px] force-motion-reduce:!opacity-30;
   }
 
-  .animate-rays {
-    @apply minimal:animate-none animate-[slide-rays_8s_ease-in-out_infinite];
-    transform: translateZ(0);
+  .color-rays::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-image: var(--color-gradient);
+    background-size: 180% 180%;
+    width: 200%;
+    height: 200%;
   }
 
-  @keyframes slide-rays {
+  .animate-rays::before {
+    @apply minimal:animate-none animate-[transform-rays_8s_ease-in-out_infinite];
+  }
+
+  @keyframes transform-rays {
     0% {
-      background-position: 0% 100%;
+      transform: translate3d(25%, 25%, 0);
     }
     50% {
-      background-position: 100% 0%;
+      transform: translate3d(-25%, -25%, 0);
     }
     100% {
-      background-position: 0% 100%;
+      transform: translate3d(25%, 25%, 0);
     }
   }
 }
