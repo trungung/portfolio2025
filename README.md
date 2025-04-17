@@ -1,84 +1,101 @@
-# Trung's Portfolio (2025 Edition)
+# Trung Ung | Portfolio 2025
 
-## ✨ About This Portfolio
+> Where code meets creativity in Helsinki 🇫🇮 | Available at [trungung.com](https://trungung.com)
 
-Welcome to my 2025 portfolio – a showcase of my work as a full-stack developer based in Helsinki, Finland.  
-This site highlights not only my projects, but also my approach to building fast, accessible, and reliable web applications with modern tools and thoughtful design.
+![Portfolio Preview](/public/images/portfolio-2025-1.png)
+![Portfolio Preview DarkMode](/public/images/portfolio-2025-2.png)
 
-## 🖼️ Preview
+## 👋 Hello there!
 
-![Portfolio Homepage](/public/images/portfolio-2025-1.png)
+Welcome to the codebase behind my personal slice of the internet. This portfolio isn't just a showcase of my work—it's a playground where I've implemented modern web technologies while telling my story as a developer.
 
-![Portfolio Homepage DarkMode](/public/images/portfolio-2025-2.png)
+I built this site with three goals in mind:
 
-## 🌐 Live Site
+1. Create something visually engaging that still loads lightning-fast
+2. Show off my code architecture and problem-solving approach
+3. Make something that's genuinely fun to interact with
 
-[trungung.com](https://trungung.com)
+Feel free to explore the code, "borrow" any techniques you find interesting, or reach out if you want to chat about web development, collaborations, or job opportunities!
 
-## 🚀 Technical Highlights
+## ✨ Featured Projects
 
-### 🧰 Cutting-Edge Tech Stack
+The portfolio showcases various projects I've worked on, from client work to personal experiments. Each project card reveals:
 
-- **Next.js 14+ & React 19** – Leveraging the latest React features, including Server Components, for enhanced performance and developer experience
-- **Tailwind CSS v4** – Using custom variants, theme tokens, and the inline theme system for utility-first styling
-- **TypeScript** – Enforcing type safety and scalable architecture across the entire codebase
+- Visual previews with interactive galleries
+- Tech stack details and implementation highlights
+- My role and the problems I solved
+- Live links where available (some projects are under NDA)
 
-### 🎨 Visual Effects & Animations
+## 🛠️ Tech Stack & Implementation
 
-- **Shine Hover Effect** – Custom CSS animations that create a dynamic light sweep on hoverable elements
-- **Color Rays Background** – Animated gradient rays with customizable blend modes and performance optimizations
-- **SVG Line Drawing Animation** – Elegant SVG path animations that draw and fill my name with a smooth, sequential reveal effect using Framer Motion
-- **Dynamic Project Cards** – Smooth, staggered animations to reveal project details interactively
+This site represents my technical philosophy: modern, performant, accessible, and maintainable code.
 
-### ♿ Accessibility & Performance
+### Core Technologies
 
-- **WCAG Compliance** – Fully accessible interface with semantic markup, ARIA labels, and keyboard navigation
-- **Minimal Mode** – Toggle to disable animations for users who prefer a simplified experience
-- **Motion Preference Support** – Honors system settings for reduced motion, enhancing accessibility
-- **Optimized Image Loading** – Next.js `Image` component with blur placeholders and priority loading for performance
+- **Next.js 15** with App Router, Server Components, and built-in optimizations
+- **React 19** leveraging the latest hooks, patterns, and rendering optimizations
+- **TypeScript** for type safety and better developer experience
+- **Tailwind CSS v4** with custom design system and utility extensions
 
-### 🧩 Interactive Features
+### UI Components & Interactions
 
-- **Audio Name Pronunciation** – Clickable audio component to help pronounce my name correctly
-- **Theme Switching** – Smooth light/dark mode toggle with system preference detection
-- **Project Gallery** – Interactive image viewer to explore project screenshots and mockups
-- **Responsive Design** – Fully responsive layout tailored for desktops, tablets, and mobile devices
+- Custom animations with **Framer Motion** including sequenced reveals
+- **Radix UI** primitives for accessible interactive elements
+- Responsive design with desktop-first approach but mobile-optimized experience
+- Theme switching with system preference detection via `next-themes`
 
-## 🔧 Getting Started
+### Developer Experience
+
+- Type-safe component props throughout
+- Component composition patterns for reusability
+- Performance optimizations for animations and image loading
+- Accessibility baked in from the start, not tacked on later
+
+### Fun Details
+
+- Audio name pronunciation guide
+- "Minimal mode" toggle for users who prefer simpler interfaces
+- Reduced motion support for those with vestibular disorders
+- Easter eggs hidden throughout the site (can you find them all?)
+
+## 🚀 Running Locally
+
+Want to see how it all works under the hood? Clone the repo and play around!
 
 ```bash
-# Requirements
-Node.js 18+ and npm
+# Clone the repo
+git clone https://github.com/ung-trung/portfolio2025.git
 
 # Install dependencies
 npm install
 
-# Run development server
+# Start the development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
 ```
 
-## 🔍 Project Structure
+The site will be available at http://localhost:3000
+
+## 📁 Project Structure
 
 ```
 /src
-  /app        # Next.js App Router pages and layouts
-  /components # Reusable UI components
-  /lib        # Utility functions and hooks
-  /icons      # Custom icon components
-  /assets     # Static assets
+  /app          # Next.js App Router pages and layouts
+  /components   # Reusable UI components
+    /ui         # Base UI components (buttons, cards, etc.)
+    /RecentProjects # Project showcase components
+  /lib          # Utility functions, hooks, and shared logic
+  /icons        # Custom icon components
+  /assets       # Static assets
 ```
 
-## 📱 Connect With Me
+## 🤝 Let's Connect
 
-- LinkedIn: [linkedin.com/in/trung-ung](https://linkedin.com/in/trung-ung)
-- GitHub: [github.com/ung-trung](https://github.com/ung-trung)
+I'm always open to interesting conversations, collaboration opportunities, or new challenges!
 
-## 📄 License
+- 💼 [LinkedIn](https://linkedin.com/in/trung-ung)
+- 🐙 [GitHub](https://github.com/ung-trung)
+- 📧 Email: ungkientrung@gmail.com
+
+## 📋 License
 
 MIT © Trung Ung
