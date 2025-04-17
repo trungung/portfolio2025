@@ -192,9 +192,9 @@ export const projects: Project[] = [
     isNda: true,
   },
   {
-    id: "dashboard",
+    id: "venue-sale-management",
     duration: "01.11.2019 - 15.04.2022",
-    pictures: ["/images/dashboard-2.png", "/images/dashboard-1.png"],
+    pictures: ["/images/venue-sale-management-2.png", "/images/venue-sale-management-1.png"],
     title: "Venue & Sales Management",
     description:
       "Award-winning hotel venue platform, rebuilt with smoother UX and modern React.",
@@ -282,7 +282,7 @@ export const projects: Project[] = [
     stacks: ["react", "redux", "formik", "mui", "vue", "vuex", "bootstrap"],
   },
   {
-    id: "booking-widget",
+    id: "booking-engine",
     duration: "01.10.2019 - 15.04.2022",
     pictures: [
       "/images/booking-widget-1.png",
