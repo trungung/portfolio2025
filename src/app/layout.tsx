@@ -9,6 +9,7 @@ import { SettingDialogButton } from "@/components/SettingDialogButton";
 import { ThemeProvider } from "next-themes";
 import { MinimalModeProvider } from "@/lib/providers/MinimalModeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,6 +96,7 @@ export default function RootLayout({
             <Toaster />
           </MinimalModeProvider>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
