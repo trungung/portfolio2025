@@ -51,7 +51,7 @@ export const ProjectModal = ({
           <blockquote>{project.quickSummary}</blockquote>
         </section>
 
-        {project.pictures.length > 0 && (
+        {!project.isNda && project.pictures.length > 0 && (
           <Gallery
             pictures={project.pictures}
             title={project.title}

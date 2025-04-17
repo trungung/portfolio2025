@@ -22,7 +22,7 @@ export const projects: Project[] = [
   {
     id: "global-pricing-platform",
     duration: "Nov 2022 - Mar 2024",
-    pictures: [],
+    pictures: ["/images/global-pricing-platform-1.png"],
     title: "Global Pricing Platform",
     description:
       "A pricing tool for a global energy organization, tailored per region.",
@@ -110,7 +110,7 @@ export const projects: Project[] = [
   {
     id: "devops-foundation",
     duration: "Apr 2022 - Oct 2022",
-    pictures: [],
+    pictures: ["/images/devops-foundation-1.png"],
     title: "DevOps Foundation",
     description:
       "An internal application focused on secure Azure integration and testing automation.",

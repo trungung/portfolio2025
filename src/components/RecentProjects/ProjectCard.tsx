@@ -38,38 +38,37 @@ export const ProjectCard = ({
     >
       {/* Thumbnail with layered depth effect */}
       <div className="relative aspect-[5/3] w-full overflow-hidden rounded-sm">
-        {hasImages && !project.isNda ? (
-          <div className="relative h-full w-full">
-            {/* Main image */}
+        <div className="relative h-full w-full">
+          {hasImages ? (
             <Image
               src={project.pictures[0]}
               alt={`Thumbnail for ${project.title}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
+              className={cn(
+                "object-cover transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90",
+                project.isNda && "blur-[2px]",
+              )}
               priority={index < 4}
             />
-          </div>
-        ) : (
-          <div className="relative h-full w-full">
-            {/* nda placeholder image */}
+          ) : (
             <Image
               src="/images/placeholder-nda.png"
               alt="nda Project"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="scale-90 object-cover blur-sm transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
+              className="object-cover blur-sm transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90"
               priority={index < 4}
             />
-
-            {/* nda indicator */}
+          )}
+          {project.isNda && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-background/60 rounded-lg px-4 py-2 shadow-sm backdrop-blur-sm">
                 <p className="text-sm font-medium">🔒 NDA Project</p>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       <div
         className={
