@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trung's Portfolio (2025 Edition)
 
-## Getting Started
+## ✨ About This Portfolio
 
-First, run the development server:
+Welcome to my 2025 portfolio – a showcase of my work as a full-stack developer based in Helsinki, Finland.  
+This site highlights not only my projects, but also my approach to building fast, accessible, and reliable web applications with modern tools and thoughtful design.
+
+## 🖼️ Preview
+
+![Portfolio Homepage](/public/images/portfolio-2025-1.png)
+
+![Portfolio Homepage DarkMode](/public/images/portfolio-2025-2.png)
+
+## 🌐 Live Site
+
+[trungung.com](https://trungung.com)
+
+## 🚀 Technical Highlights
+
+### 🧰 Cutting-Edge Tech Stack
+
+- **Next.js 14+ & React 19** – Leveraging the latest React features, including Server Components, for enhanced performance and developer experience
+- **Tailwind CSS v4** – Using custom variants, theme tokens, and the inline theme system for utility-first styling
+- **TypeScript** – Enforcing type safety and scalable architecture across the entire codebase
+
+### 🎨 Visual Effects & Animations
+
+- **Shine Hover Effect** – Custom CSS animations that create a dynamic light sweep on hoverable elements
+- **Color Rays Background** – Animated gradient rays with customizable blend modes and performance optimizations
+- **Text Scramble Animation** – Engaging scrambled-text transitions using the `use-scramble` library
+- **Dynamic Project Cards** – Smooth, staggered animations to reveal project details interactively
+
+### ♿ Accessibility & Performance
+
+- **WCAG Compliance** – Fully accessible interface with semantic markup, ARIA labels, and keyboard navigation
+- **Minimal Mode** – Toggle to disable animations for users who prefer a simplified experience
+- **Motion Preference Support** – Honors system settings for reduced motion, enhancing accessibility
+- **Optimized Image Loading** – Next.js `Image` component with blur placeholders and priority loading for performance
+
+### 🧩 Interactive Features
+
+- **Audio Name Pronunciation** – Clickable audio component to help pronounce my name correctly
+- **Theme Switching** – Smooth light/dark mode toggle with system preference detection
+- **Project Gallery** – Interactive image viewer to explore project screenshots and mockups
+- **Responsive Design** – Fully responsive layout tailored for desktops, tablets, and mobile devices
+
+## 🔧 Getting Started
 
 ```bash
+# Requirements
+Node.js 18+ and npm
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔍 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+/src
+  /app        # Next.js App Router pages and layouts
+  /components # Reusable UI components
+  /lib        # Utility functions and hooks
+  /icons      # Custom icon components
+  /assets     # Static assets
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📱 Connect With Me
 
-## Learn More
+- LinkedIn: [linkedin.com/in/trung-ung](https://linkedin.com/in/trung-ung)
+- GitHub: [github.com/ung-trung](https://github.com/ung-trung)
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © Trung Ung
