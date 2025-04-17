@@ -94,8 +94,16 @@ export default function RootLayout({
             {children}
             <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
               <hr className="border-border mb-5 border-t" />
-              <div className="text-muted-foreground">
-                &copy; 2025 Trung. All rights reserved.
+              <div className="text-muted-foreground align-center flex justify-between text-sm">
+                <span>&copy; 2019 - 2025 | Trung Ung</span>
+                <span>
+                  <Link
+                    href="https://github.com/ung-trung/portfolio2025"
+                    target="_blank"
+                  >
+                    View Source
+                  </Link>
+                </span>
               </div>
             </footer>
             <Toaster />
