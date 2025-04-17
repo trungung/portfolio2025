@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Download, PanelLeft } from "lucide-react";
+import { Download } from "lucide-react";
 import { Toaster } from "sonner";
 import { SettingDialogButton } from "@/components/SettingDialogButton";
 import { ThemeProvider } from "next-themes";
@@ -56,12 +56,17 @@ export default function RootLayout({
                 TU.
               </Link>
               <Button
+                size="sm"
                 variant="ghost"
-                size="icon"
-                className="sm:hidden"
-                aria-label="Open menu"
+                asChild
+                className="text-md group sm:hidden"
               >
-                <PanelLeft className="!h-5 !w-5" />
+                <Link href="/cv">
+                  <Download
+                    className={"duration-200 group-hover:translate-y-0.5"}
+                  />
+                  Download CV
+                </Link>
               </Button>
               <div className="mr-auto hidden sm:inline-flex">
                 <Button size="sm" variant="ghost" asChild className="text-md">
