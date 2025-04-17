@@ -27,7 +27,7 @@ This site highlights not only my projects, but also my approach to building fast
 
 - **Shine Hover Effect** – Custom CSS animations that create a dynamic light sweep on hoverable elements
 - **Color Rays Background** – Animated gradient rays with customizable blend modes and performance optimizations
-- **Text Scramble Animation** – Engaging scrambled-text transitions using the `use-scramble` library
+- **SVG Line Drawing Animation** – Elegant SVG path animations that draw and fill my name with a smooth, sequential reveal effect using Framer Motion
 - **Dynamic Project Cards** – Smooth, staggered animations to reveal project details interactively
 
 ### ♿ Accessibility & Performance
