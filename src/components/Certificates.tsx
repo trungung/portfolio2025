@@ -63,19 +63,20 @@ export const Certificates = () => {
           <li key={cert.name}>
             <HoverCard openDelay={200}>
               <HoverCardTrigger asChild>
-                <button
+                <a
+                  href={cert.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   role="button"
                   aria-label={`More info about ${cert.name} - Issued date: ${cert.issuedDate} - Credential ID: ${cert.credentialId}`}
                   className="group inline-flex items-center gap-2 transition hover:text-yellow-600"
                 >
                   {cert.icon}
-                  <span className="underline decoration-dotted underline-offset-4">
-                    {cert.name}
-                  </span>
+                  <span>{cert.name}</span>
                   <span className="hidden transition-transform group-hover:translate-x-1 sm:inline-block">
                     <ExternalLink size={12} />
                   </span>
-                </button>
+                </a>
               </HoverCardTrigger>
               <HoverCardContent className="border-border w-80 rounded-md border p-4 shadow-xl">
                 <div className="space-y-3 text-sm">
