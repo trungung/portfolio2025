@@ -157,6 +157,13 @@
 
   .color-rays {
     @apply pointer-events-none absolute top-0 left-0 z-0 overflow-hidden bg-[image:var(--color-gradient)] bg-[length:180%_180%] opacity-40 blur-[80px];
+    @apply will-change-[background-position];
+    @apply force-motion-reduce:!bg-none force-motion-reduce:!bg-gradient-to-tr force-motion-reduce:from-background/5 force-motion-reduce:to-primary/10 force-motion-reduce:!blur-[100px] force-motion-reduce:!opacity-30;
+  }
+
+  .animate-rays {
+    @apply minimal:animate-none animate-[slide-rays_8s_ease-in-out_infinite];
+    transform: translateZ(0);
   }
 
   @keyframes slide-rays {

@@ -86,10 +86,6 @@ export default function RootLayout({
               <SettingDialogButton />
             </nav>
             {children}
-            <div
-              aria-hidden
-              className="color-rays minimal:hidden force-motion-reduce:animate-none force-motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] h-[400px] w-full mix-blend-multiply motion-safe:animate-[slide-rays_8s_ease-in-out_infinite] motion-reduce:animate-none dark:mix-blend-darken"
-            />
             <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
               <hr className="border-border mb-5 border-t" />
               <div className="text-muted-foreground">

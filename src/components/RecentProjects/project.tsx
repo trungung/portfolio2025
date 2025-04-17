@@ -109,7 +109,7 @@ export const projects: Project[] = [
   },
   {
     id: "devops-foundation",
-    duration: "Apr 2023 - Jul 2023",
+    duration: "Apr 2023 - Aug 2023",
     pictures: [],
     title: "DevOps Foundation",
     description:
