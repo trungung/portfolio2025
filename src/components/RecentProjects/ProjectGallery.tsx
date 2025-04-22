@@ -14,17 +14,17 @@ import {
 } from "@/components/ui/carousel";
 import { type CarouselApi } from "@/components/ui/carousel";
 
-interface GalleryProps {
+interface ProjectGalleryProps {
   pictures: string[];
   title: string;
   onGridViewChange?: (isGridView: boolean) => void;
 }
 
-export const Gallery = ({
+export const ProjectGallery = ({
   pictures,
   title,
   onGridViewChange,
-}: GalleryProps) => {
+}: ProjectGalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isGridView, _setIsGridView] = useState(true);
   const setIsGridView = useCallback(

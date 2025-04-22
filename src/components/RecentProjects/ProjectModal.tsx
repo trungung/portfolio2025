@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Gallery } from "./Galery";
+import { ProjectGallery } from "./ProjectGallery";
 import { Project } from "./project";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { Badge } from "../ui/badge";
@@ -52,7 +52,7 @@ export const ProjectModal = ({
         </section>
 
         {!project.isNda && project.pictures.length > 0 && (
-          <Gallery
+          <ProjectGallery
             pictures={project.pictures}
             title={project.title}
             onGridViewChange={onGridViewChange}
