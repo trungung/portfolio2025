@@ -25,6 +25,17 @@ The portfolio showcases various projects I've worked on, from client work to per
 - Tech stack details and implementation highlights
 - My role and the problems I solved
 - Live links where available (some projects are under NDA)
+- Rich content through MDX for detailed project descriptions
+
+### MDX Project Documentation
+
+Each project features detailed markdown content powered by next-mdx-remote:
+
+- Write rich, structured content in MDX format
+- Customize the styling and behavior of markdown elements
+- Embed interactive components within project descriptions
+- Automatic syntax highlighting for code snippets
+- Optimized for both performance and developer experience
 
 ## 🛠️ Tech Stack & Implementation
 
@@ -36,6 +47,13 @@ This site represents my technical philosophy: modern, performant, accessible, an
 - **React 19** leveraging the latest hooks, patterns, and rendering optimizations
 - **TypeScript** for type safety and better developer experience
 - **Tailwind CSS v4** with custom design system and utility extensions
+- **next-mdx-remote** for optimized MDX rendering
+- **gray-matter** for frontmatter parsing in project files
+
+### Content & Documentation
+
+- **MDX** for rich, component-enhanced markdown content
+- Dynamic content loading with fallback states
 
 ### UI Components & Interactions
 
@@ -82,7 +100,8 @@ The site will be available at http://localhost:3000
   /app          # Next.js App Router pages and layouts
   /components   # Reusable UI components
     /ui         # Base UI components (buttons, cards, etc.)
-    /RecentProjects # Project showcase components
+    /RecentProjects  # Project showcase components
+      /project-content  # MDX files for project descriptions
   /lib          # Utility functions, hooks, and shared logic
   /icons        # Custom icon components
   /assets       # Static assets
