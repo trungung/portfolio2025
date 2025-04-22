@@ -64,7 +64,7 @@ export const ProjectCard = ({
           {project.frontmatter.isNda && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-background/60 rounded-lg px-4 py-2 shadow-sm backdrop-blur-sm">
-                <p className="text-sm font-medium">🔒 NDA Project</p>
+                <p className="text-sm font-semibold">🔒 NDA Project</p>
               </div>
             </div>
           )}

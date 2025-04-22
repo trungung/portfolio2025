@@ -46,7 +46,7 @@ export const ProjectModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="max-h-[90vh] gap-0 overflow-y-auto sm:max-w-3xl"
+        className="max-h-[90vh] gap-0 overflow-y-auto font-mono sm:max-w-3xl"
         aria-labelledby={`dialog-title-${project.slug}`}
         aria-describedby={`dialog-description-${project.slug}`}
         onEscapeKeyDown={(e) => {
@@ -54,8 +54,13 @@ export const ProjectModal = ({
           e.preventDefault();
         }}
       >
-        <DialogTitle className="flex items-center gap-2 text-xl font-bold md:text-2xl">
-          {project.frontmatter.title}
+        <DialogTitle className="flex items-center gap-4 text-xl font-bold md:text-2xl">
+          {project.frontmatter.title}{" "}
+          {project.frontmatter.isNda && (
+            <Badge className="bg-yellow-500 text-sm text-black">
+              NDA Project
+            </Badge>
+          )}
         </DialogTitle>
         <DialogDescription> {project.frontmatter.duration}</DialogDescription>
         <div className="mt-4 flex flex-wrap gap-2">
