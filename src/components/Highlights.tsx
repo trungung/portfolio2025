@@ -8,7 +8,7 @@ export const Highlights = () => {
       <div className="text-primary-foreground/70 flex flex-col justify-between gap-4 sm:flex-row">
         <div className="hover:text-primary-foreground text-xs font-bold">
           <Briefcase className="inline-block" />{" "}
-          <AnimatedNumber delay={0.1} to={5} />+ years experience
+          <AnimatedNumber delay={0.2} to={5} />+ years experience
         </div>
         <Link
           href="#certificates"
@@ -18,14 +18,14 @@ export const Highlights = () => {
         </Link>
         <div className="hover:text-primary-foreground text-xs font-bold">
           <Award className="inline-block" />{" "}
-          <AnimatedNumber delay={0.1} to={2} />× award winner
+          <AnimatedNumber delay={0.2} to={2} />× award winner
         </div>
         <Link
           href="#projects"
           className="hover:text-primary-foreground text-xs font-bold"
         >
           <PackageOpen className="inline-block" />{" "}
-          <AnimatedNumber delay={0.1} to={6} />+ products delivered{" "}
+          <AnimatedNumber delay={0.2} to={6} />+ products delivered{" "}
         </Link>
       </div>
     </section>
