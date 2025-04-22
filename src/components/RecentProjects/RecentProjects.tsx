@@ -5,9 +5,13 @@ import { SectionHeader } from "../SectionHeader";
 import { Button } from "../ui/button";
 import { ProjectModal } from "./ProjectModal";
 import { ProjectCard } from "./ProjectCard";
-import { Project, projects } from "./project";
+import { Project } from "@/lib/projects";
 
-export const RecentProjects = () => {
+type RecentProjectsProps = {
+  projects: Project[];
+};
+
+export const RecentProjects = ({ projects }: RecentProjectsProps) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
 
@@ -36,7 +40,7 @@ export const RecentProjects = () => {
         <div className="grid grid-cols-1 gap-6 pt-12 pb-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {displayedProjects.map((project, i) => (
             <ProjectCard
-              key={project.id}
+              key={project.slug}
               project={project}
               index={i}
               onClick={openProjectModal}
