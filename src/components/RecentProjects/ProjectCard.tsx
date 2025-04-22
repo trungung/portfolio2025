@@ -47,7 +47,6 @@ export const ProjectCard = ({
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className={cn(
                 "object-cover transition-transform duration-700 ease-out group-hover:scale-105 dark:brightness-90",
-                project.frontmatter.isNda && "blur-[2px]",
               )}
               priority={index < 4}
             />
