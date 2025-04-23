@@ -131,7 +131,7 @@ export const ContactMe = () => {
       <SectionHeader title="Contact me" />
       <div className="max-w-prose">
         <p className="mt-4">
-          Let’s make something great together. Whether it&apos;s building a
+          Let&apos;s make something great together. Whether it&apos;s building a
           product, solving a real problem, or exploring an idea. I&apos;d love
           to hear from you.
         </p>

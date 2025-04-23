@@ -63,7 +63,7 @@ export const ProjectModal = ({
           )}
         </DialogTitle>
         <DialogDescription> {project.frontmatter.duration}</DialogDescription>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex max-w-prose flex-wrap gap-2">
           {project.frontmatter.stacks.map((tech, index) => (
             <Badge variant="outline" key={index} className="text-sm">
               {tech}
