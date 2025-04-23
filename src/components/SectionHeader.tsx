@@ -14,7 +14,7 @@ export const SectionHeader = ({ title }: { title: string }) => {
         initial={{ scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
         transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
         aria-hidden="true"
       />
 
