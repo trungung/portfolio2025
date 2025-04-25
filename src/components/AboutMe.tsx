@@ -24,10 +24,10 @@ export const AboutMe = () => {
       </div>
       <div className="mt-9 flex flex-row flex-wrap gap-4">
         <Button asChild size="lg" className="group shiny-hover">
-          <Link href="/cv.pdf" target="_blank">
+          <a href="/Trung-Ung-CV.pdf" download="Trung-Ung-CV">
             <Download className="duration-200 group-hover:translate-y-0.5" />
             Download CV
-          </Link>
+          </a>
         </Button>
         <Button variant="outline" asChild size="lg" className="group">
           <Link href="#contact">Contact me</Link>

@@ -62,12 +62,12 @@ export default function RootLayout({
                 asChild
                 className="text-md group sm:hidden"
               >
-                <Link href="/cv">
+                <a href="/Trung-Ung-CV.pdf" download="Trung-Ung-CV">
                   <Download
                     className={"duration-200 group-hover:translate-y-0.5"}
                   />
                   Download CV
-                </Link>
+                </a>
               </Button>
               <div className="mr-auto hidden sm:inline-flex">
                 <Button size="sm" variant="ghost" asChild className="text-md">
@@ -82,12 +82,12 @@ export default function RootLayout({
                   asChild
                   className="text-md group"
                 >
-                  <Link href="/cv">
+                  <a href="/Trung-Ung-CV.pdf" download="Trung-Ung-CV">
                     <Download
                       className={"duration-200 group-hover:translate-y-0.5"}
                     />
                     Download CV
-                  </Link>
+                  </a>
                 </Button>
               </div>
               <SettingDialogButton />
