@@ -20,95 +20,64 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Message, useChat } from "@ai-sdk/react";
 
-type MessageType = {
-  id: string;
-  content: string;
-  role: "user" | "assistant";
-  timestamp: Date;
+const formatTime = (date: Date | undefined) => {
+  return date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+};
+const greetingMessage: Message = {
+  id: "welcome",
+  content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
+  role: "assistant",
 };
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [showQuickQuestions, setShowQuickQuestions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const hasInitialMessage = useRef(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { messages, input, handleInputChange, handleSubmit, status, error } =
+    useChat({
+      api: "/api/chat",
+      initialMessages: [],
+    });
 
   const hasUserMessages = messages.some((message) => message.role === "user");
 
   useEffect(() => {
-    if (messagesEndRef.current && open) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (!open) return;
+    if (!scrollRef.current) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+    const isAtBottom = scrollHeight - scrollTop - clientHeight < 50; // 50px tolerance
+
+    if (isAtBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, open]);
 
   useEffect(() => {
-    if (open && inputRef.current && !isTyping) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [open, isTyping]);
-
-  useEffect(() => {
-    if (open && !hasInitialMessage.current && messages.length === 0) {
-      setIsTyping(true);
+    if (open) {
       setTimeout(() => {
-        setMessages([
-          {
-            id: "welcome",
-            content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
-            role: "assistant",
-            timestamp: new Date(),
-          },
-        ]);
-        setIsTyping(false);
-        hasInitialMessage.current = true;
-        setShowQuickQuestions(true);
-      }, 1500);
+        if (inputRef.current && status === "ready") {
+          inputRef.current.focus();
+        }
+        if (messagesEndRef.current && status === "ready") {
+          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
     }
-  }, [open, messages.length]);
+  }, [open, status]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!input.trim()) return;
-
-    const userMessage: MessageType = {
-      id: `user-${Date.now()}`,
-      content: input,
-      role: "user",
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsTyping(true);
-
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-
+  const submitQuickQuestion = (question: string) => {
+    const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+    handleInputChange({
+      target: { value: question },
+    } as React.ChangeEvent<HTMLTextAreaElement>);
     setTimeout(() => {
-      const botResponse: MessageType = {
-        id: `assistant-${Date.now()}`,
-        content:
-          "I'm just a dummy chatbot for now. When fully implemented, I'll be able to tell you all about Trung's skills and projects! 🤖",
-        role: "assistant",
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, botResponse]);
-      setIsTyping(false);
-
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }, 1500);
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      handleSubmit(fakeEvent);
+    }, 50);
   };
 
   return (
@@ -141,7 +110,7 @@ export default function ChatWidget() {
               </PopoverClose>
             </CardHeader>
 
-            <ScrollArea className="h-[350px] px-4 shadow-sm">
+            <ScrollArea className="h-[350px] px-4 shadow-sm" ref={scrollRef}>
               <CardContent className="px-1">
                 <div
                   className="flex flex-col space-y-4"
@@ -149,7 +118,7 @@ export default function ChatWidget() {
                   aria-live="polite"
                   aria-label="Chat messages"
                 >
-                  {messages.map((message) => (
+                  {[greetingMessage, ...messages].map((message) => (
                     <div
                       key={message.id}
                       className={cn(
@@ -176,14 +145,14 @@ export default function ChatWidget() {
                           {message.content}
                         </div>
                         <span className="text-muted-foreground mt-1 px-1 text-xs">
-                          {formatTime(message.timestamp)}
+                          {formatTime(message.createdAt)}
                         </span>
                       </div>
                     </div>
                   ))}
 
                   <AnimatePresence>
-                    {isTyping && (
+                    {status === "submitted" && (
                       <div className="flex justify-start">
                         <div className="bg-muted rounded-lg px-3 py-2">
                           <div className="flex space-x-1">
@@ -195,6 +164,16 @@ export default function ChatWidget() {
                       </div>
                     )}
                   </AnimatePresence>
+
+                  {error && (
+                    <div className="flex justify-center">
+                      <div className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-600">
+                        Error:{" "}
+                        {error.message ||
+                          "Something went wrong. Please try again."}
+                      </div>
+                    </div>
+                  )}
 
                   <div ref={messagesEndRef} />
                 </div>
@@ -208,7 +187,7 @@ export default function ChatWidget() {
                 className="relative flex w-full flex-col space-y-2"
               >
                 <AnimatePresence>
-                  {!hasUserMessages && showQuickQuestions && (
+                  {!hasUserMessages && (
                     <motion.div
                       className="absolute -top-46 left-0 flex flex-col px-2"
                       initial={{ opacity: 0, y: 10 }}
@@ -238,17 +217,7 @@ export default function ChatWidget() {
                             variant="outline"
                             size="sm"
                             className="rounded-full text-sm"
-                            onClick={() => {
-                              setInput(question);
-                              setTimeout(() => {
-                                const event = new Event("submit", {
-                                  cancelable: true,
-                                });
-                                document
-                                  .getElementById("chat-form")
-                                  ?.dispatchEvent(event);
-                              }, 50);
-                            }}
+                            onClick={() => submitQuickQuestion(question)}
                           >
                             {question}
                           </Button>
@@ -261,15 +230,15 @@ export default function ChatWidget() {
                   <Textarea
                     placeholder="Type your message..."
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={handleInputChange}
                     className="bg-muted h-[64px] w-full resize-none border-0 pr-12"
-                    disabled={isTyping}
+                    disabled={status !== "ready"}
                     aria-label="Chat message"
                     ref={inputRef}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
-                        if (input.trim() && !isTyping) {
+                        if (input.trim() && status === "ready") {
                           handleSubmit(e);
                         }
                       }
@@ -278,7 +247,7 @@ export default function ChatWidget() {
                   <Button
                     type="submit"
                     size="icon"
-                    disabled={!input.trim() || isTyping}
+                    disabled={!input.trim() || status !== "ready"}
                     className="group absolute right-2 bottom-2"
                     aria-label="Send message"
                   >
