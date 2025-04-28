@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { MessageCircle, Send, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -22,9 +22,15 @@ import {
 } from "@/components/ui/popover";
 import { Message, useChat } from "@ai-sdk/react";
 
-const formatTime = (date: Date | undefined) => {
-  return date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-};
+const QUICK_QUESTIONS = [
+  "What are you working on now?",
+  "What technologies do you use?",
+  "Tell me a fun project story",
+];
+
+const formatTime = (date?: Date) =>
+  date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) ?? "";
+
 const greetingMessage: Message = {
   id: "welcome",
   content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
@@ -37,47 +43,46 @@ export default function ChatWidget() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, status, error } =
-    useChat({
-      api: "/api/chat",
-      initialMessages: [],
+  const {
+    messages,
+    input,
+    status,
+    error,
+    append,
+    handleInputChange,
+    handleSubmit,
+  } = useChat({
+    api: "/api/chat",
+    initialMessages: [],
+  });
+
+  const hasUserMessages = messages.some((m) => m.role === "user");
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    if (open && scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
+      if (isAtBottom) scrollToBottom();
+    }
+  }, [messages, open, scrollToBottom]);
+
+  useEffect(() => {
+    if (open && status === "ready") {
+      inputRef.current?.focus();
+      scrollToBottom();
+    }
+  }, [open, status, scrollToBottom]);
+
+  const submitQuickQuestion = async (question: string) => {
+    append({
+      id: "quick-question",
+      content: question,
+      role: "user",
     });
-
-  const hasUserMessages = messages.some((message) => message.role === "user");
-
-  useEffect(() => {
-    if (!open) return;
-    if (!scrollRef.current) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-    const isAtBottom = scrollHeight - scrollTop - clientHeight < 50; // 50px tolerance
-
-    if (isAtBottom) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, open]);
-
-  useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        if (inputRef.current && status === "ready") {
-          inputRef.current.focus();
-        }
-        if (messagesEndRef.current && status === "ready") {
-          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-    }
-  }, [open, status]);
-
-  const submitQuickQuestion = (question: string) => {
-    const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-    handleInputChange({
-      target: { value: question },
-    } as React.ChangeEvent<HTMLTextAreaElement>);
-    setTimeout(() => {
-      handleSubmit(fakeEvent);
-    }, 50);
   };
 
   return (
@@ -92,81 +97,94 @@ export default function ChatWidget() {
             <MessageCircle className="h-6 w-6 group-hover:translate-y-0.5" />
           </Button>
         </PopoverTrigger>
+
         <PopoverContent
           side="top"
           align="end"
-          className="w-[360px] border-none p-0 shadow-lg sm:w-[400px]"
+          className="w-[360px] border-none p-0 shadow-lg sm:w-[440px]"
           sideOffset={16}
         >
-          <Card className="w-full overflow-hidden rounded-md border-none pt-0 font-mono">
+          <Card className="overflow-hidden rounded-md border-none pt-0 font-mono">
             <CardHeader className="bg-primary text-primary-foreground flex items-center justify-between py-4">
               <CardTitle>Chat with TrungBot</CardTitle>
-              <PopoverClose
-                className="text-primary-foreground hover:bg-primary/90 flex h-8 w-8 items-center justify-center rounded-full"
-                onClick={() => setOpen(false)}
-                aria-label="Close chat"
-              >
+              <PopoverClose className="hover:bg-primary/90 flex h-8 w-8 items-center justify-center rounded-full">
                 <X className="h-4 w-4" />
               </PopoverClose>
             </CardHeader>
 
-            <ScrollArea className="h-[350px] px-4 shadow-sm" ref={scrollRef}>
+            <ScrollArea className="h-[350px] px-4" ref={scrollRef}>
               <CardContent className="px-1">
                 <div
-                  className="flex flex-col space-y-4"
                   role="log"
                   aria-live="polite"
                   aria-label="Chat messages"
+                  className="flex flex-col space-y-4"
                 >
-                  {[greetingMessage, ...messages].map((message) => (
+                  {[greetingMessage, ...messages].map((msg) => (
                     <div
-                      key={message.id}
+                      key={msg.id}
                       className={cn(
                         "flex",
-                        message.role === "user"
-                          ? "justify-end"
-                          : "justify-start",
+                        msg.role === "user" ? "justify-end" : "justify-start",
                       )}
                     >
                       <div
                         className={cn(
                           "flex max-w-[85%] flex-col",
-                          message.role === "user" ? "items-end" : "items-start",
+                          msg.role === "user" ? "items-end" : "items-start",
                         )}
                       >
                         <div
+                          role="status"
+                          aria-live="polite"
                           className={cn(
                             "rounded-lg px-3 py-2 break-words",
-                            message.role === "user"
+                            msg.role === "user"
                               ? "bg-primary text-primary-foreground"
                               : "bg-muted",
                           )}
                         >
-                          {message.content}
+                          {msg.content}
                         </div>
                         <span className="text-muted-foreground mt-1 px-1 text-xs">
-                          {formatTime(message.createdAt)}
+                          {formatTime(msg.createdAt)}
                         </span>
                       </div>
                     </div>
                   ))}
 
-                  <AnimatePresence>
-                    {status === "submitted" && (
-                      <div className="flex justify-start">
-                        <div className="bg-muted rounded-lg px-3 py-2">
-                          <div className="flex space-x-1">
-                            <div className="bg-primary/60 h-2 w-2 animate-bounce rounded-full" />
-                            <div className="bg-primary/60 h-2 w-2 animate-bounce rounded-full delay-150" />
-                            <div className="bg-primary/60 h-2 w-2 animate-bounce rounded-full delay-300" />
-                          </div>
+                  {status === "submitted" && (
+                    <div className="flex justify-start">
+                      <div
+                        className="bg-muted rounded-lg px-3 py-2"
+                        role="status"
+                        aria-live="polite"
+                      >
+                        <span className="sr-only">TrungBot is typing...</span>{" "}
+                        <div className="flex space-x-1">
+                          {[0, 150, 300].map((delay) => (
+                            <motion.div
+                              key={delay}
+                              className="bg-primary/60 h-2 w-2 rounded-full"
+                              animate={{ y: [0, -3, 0] }}
+                              transition={{
+                                repeat: Infinity,
+                                duration: 0.6,
+                                delay: delay / 1000,
+                              }}
+                            />
+                          ))}
                         </div>
                       </div>
-                    )}
-                  </AnimatePresence>
+                    </div>
+                  )}
 
                   {error && (
-                    <div className="flex justify-center">
+                    <div
+                      className="flex justify-center"
+                      role="alert"
+                      aria-live="assertive"
+                    >
                       <div className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-600">
                         Error:{" "}
                         {error.message ||
@@ -189,7 +207,7 @@ export default function ChatWidget() {
                 <AnimatePresence>
                   {!hasUserMessages && (
                     <motion.div
-                      className="absolute -top-46 left-0 flex flex-col px-2"
+                      className="absolute -top-48 left-0 flex flex-col px-2"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{
@@ -207,40 +225,36 @@ export default function ChatWidget() {
                         Let&apos;s dive in
                       </motion.p>
                       <div className="flex flex-wrap gap-2">
-                        {[
-                          "What are you working on now?",
-                          "What technologies do you use?",
-                          "Tell me a fun project story",
-                        ].map((question) => (
+                        {QUICK_QUESTIONS.map((q) => (
                           <Button
-                            key={question}
+                            key={q}
+                            type="button"
                             variant="outline"
                             size="sm"
                             className="rounded-full text-sm"
-                            onClick={() => submitQuickQuestion(question)}
+                            onClick={() => submitQuickQuestion(q)}
                           >
-                            {question}
+                            {q}
                           </Button>
                         ))}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
+
                 <div className="relative flex-1">
                   <Textarea
                     placeholder="Type your message..."
                     value={input}
                     onChange={handleInputChange}
-                    className="bg-muted h-[64px] w-full resize-none border-0 pr-12"
+                    ref={inputRef}
                     disabled={status !== "ready"}
                     aria-label="Chat message"
-                    ref={inputRef}
+                    className="bg-muted h-[64px] w-full resize-none border-0 pr-12"
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
-                        if (input.trim() && status === "ready") {
-                          handleSubmit(e);
-                        }
+                        if (input.trim()) handleSubmit(e);
                       }
                     }}
                   />
