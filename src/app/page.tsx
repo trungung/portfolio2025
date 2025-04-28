@@ -1,5 +1,6 @@
 import { AboutMe } from "@/components/AboutMe";
 import { Certificates } from "@/components/Certificates";
+import ChatWidget from "@/components/ChatWidget";
 import { ContactMe } from "@/components/ContactMe";
 import { Hero } from "@/components/Hero";
 import { Highlights } from "@/components/Highlights";
@@ -19,6 +20,7 @@ export default function Home() {
       <Technologies />
       <Certificates />
       <ContactMe />
+      <ChatWidget />
     </main>
   );
 }
