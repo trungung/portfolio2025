@@ -2,9 +2,11 @@ import fs from "fs/promises";
 
 export const CONFIG = {
   CHUNK_SIZE: 150,
+  CHUNK_OVERLAP: 0.5,
   DATA_FOLDER: "./data",
   VECTORS_FILE: "./src/vectors/trungbot-vectors.json",
-  TOP_K_CHUNKS: 10,
+  SUPPORTED_EXTENSIONS: [".txt", ".md", ".mdx"],
+  TOP_K_CHUNKS: 5,
   CONFIDENCE_THRESHOLD: 0.7,
   CHAT_MODEL: "deepseek-chat",
   SYSTEM_PROMPT_TEMPLATES: {
@@ -28,21 +30,62 @@ export type EmbeddedChunk = Readonly<{
   title?: string;
 }>;
 
-export const chunkText = (
+export function cosineSimilarity(
+  vec1: Record<string, number>,
+  vec2: Record<string, number>,
+): number {
+  const keys = Object.keys(vec1).filter((key) => key in vec2);
+
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
+
+  for (const key of keys) {
+    dotProduct += vec1[key] * vec2[key];
+    normA += Math.pow(vec1[key], 2);
+    normB += Math.pow(vec2[key], 2);
+  }
+
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+export function chunkTextWithOverlap(
   text: string,
   chunkSize = CONFIG.CHUNK_SIZE,
-): ReadonlyArray<string> => {
+  overlapPercentage = CONFIG.CHUNK_OVERLAP,
+): ReadonlyArray<string> {
   const words = text.split(/\s+/);
+  const overlap = Math.floor(chunkSize * overlapPercentage);
+  const stride = chunkSize - overlap;
 
-  return Array.from({ length: Math.ceil(words.length / chunkSize) }, (_, i) =>
-    words.slice(i * chunkSize, (i + 1) * chunkSize).join(" "),
-  );
-};
+  if (words.length <= chunkSize) return [words.join(" ")];
 
-export const ensureFolderExists = async (folderPath: string): Promise<void> => {
+  const chunks: string[] = [];
+  for (let i = 0; i < words.length - overlap; i += stride) {
+    const chunk = words
+      .slice(i, Math.min(i + chunkSize, words.length))
+      .join(" ");
+    chunks.push(chunk);
+  }
+
+  return chunks;
+}
+
+export function extractTopicsFromChunks(chunks: EmbeddedChunk[]): string[] {
+  const topics = new Set<string>();
+
+  chunks.forEach((chunk) => {
+    if (chunk.category) topics.add(chunk.category);
+    if (chunk.title) topics.add(chunk.title);
+  });
+
+  return Array.from(topics);
+}
+
+export async function ensureFolderExists(folderPath: string): Promise<void> {
   try {
     await fs.mkdir(folderPath, { recursive: true });
   } catch (error) {
     console.error("❌ Error creating folder:", error);
   }
-};
+}

@@ -3,10 +3,9 @@ import { streamText } from "ai";
 import { NextRequest } from "next/server";
 import { EmbeddedChunk, CONFIG } from "@/lib/embed/utils";
 import {
-  retrieveTopRelevantChunks,
-  evaluateTopics,
+  evaluateQueryTopics,
+  retrieveWithContext,
 } from "@/lib/embed/retriever";
-import { embedText } from "@/lib/embed/embedder";
 
 const createSystemPrompt = (
   chunks: ReadonlyArray<EmbeddedChunk>,
@@ -59,15 +58,15 @@ export async function POST(req: NextRequest) {
       (msg: { role: string; content: string }) => msg.role === "user",
     )?.content ?? "";
 
-  const queryEmbedding = await embedText(lastUserMessage);
-  const topChunks = await retrieveTopRelevantChunks(
+  const topChunks = await retrieveWithContext(
     lastUserMessage,
+    messages,
     CONFIG.TOP_K_CHUNKS,
   );
 
-  const { isConfident, relatedTopics } = evaluateTopics(
+  const { isConfident, relatedTopics } = await evaluateQueryTopics(
+    lastUserMessage,
     topChunks,
-    queryEmbedding,
   );
 
   const system = createSystemPrompt(topChunks, isConfident, relatedTopics);
