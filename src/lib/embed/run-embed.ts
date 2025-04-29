@@ -1,79 +1,92 @@
 import fs from "fs/promises";
 import path from "path";
-import { chunkText, EmbeddedChunk, ensureFolderExists } from "./utils";
+import matter from "gray-matter";
+import { chunkText, EmbeddedChunk, ensureFolderExists, CONFIG } from "./utils";
 import { embedText } from "./embedder";
+import removeMarkdown from "remove-markdown";
 
-export const dataFolderPath = "./data";
-export const outputFilePath = "./src/vectors/trungbot-vectors.json";
+const DATA_FOLDER = CONFIG.DATA_FOLDER;
+const OUTPUT_FILE = CONFIG.VECTORS_FILE;
 
-async function listValidFiles(folderPath: string): Promise<string[]> {
-  const files = await fs.readdir(folderPath);
-  return files.filter(
-    (file) =>
-      file.endsWith(".txt") || file.endsWith(".md") || file.endsWith(".mdx"),
-  );
-}
-
-async function processFile(
-  filePath: string,
-  fileName: string,
-): Promise<EmbeddedChunk[]> {
-  const text = await fs.readFile(filePath, "utf-8");
-  const chunks = chunkText(text, 300);
-
-  const embeddedChunks: EmbeddedChunk[] = [];
-
-  for (let i = 0; i < chunks.length; i++) {
-    const embedding = await embedText(chunks[i]);
-    embeddedChunks.push({
-      id: `${fileName}_chunk_${i}`,
-      text: chunks[i],
-      embedding,
-      source: fileName,
-    });
-    console.log(`✅ Embedded chunk ${i + 1}/${chunks.length} from ${fileName}`);
-  }
-
-  return embeddedChunks;
-}
-
-async function processAllFiles(folderPath: string): Promise<EmbeddedChunk[]> {
-  const fileNames = await listValidFiles(folderPath);
-
-  if (fileNames.length === 0) {
-    console.log("⚠️ No valid input files found in /data/");
-    return [];
-  }
-
-  const allChunks: EmbeddedChunk[] = [];
-
-  for (const fileName of fileNames) {
-    const filePath = path.join(folderPath, fileName);
-    console.log(`📄 Processing file: ${fileName}`);
-    const chunks = await processFile(filePath, fileName);
-    allChunks.push(...chunks);
-  }
-
-  return allChunks;
-}
-
-async function saveVectors(
-  vectors: EmbeddedChunk[],
-  outputPath: string,
-): Promise<void> {
-  await ensureFolderExists(path.dirname(outputPath));
-  await fs.writeFile(outputPath, JSON.stringify(vectors, null, 2), "utf-8");
-  console.log(`✅ Saved all vectors to ${outputPath}`);
-}
-
-async function main() {
+async function main(): Promise<void> {
   try {
-    const vectors = await processAllFiles(dataFolderPath);
-    if (vectors.length > 0) {
-      await saveVectors(vectors, outputFilePath);
+    const files = await fs.readdir(DATA_FOLDER);
+    const validFiles = files.filter((file) =>
+      [".txt", ".md", ".mdx"].some((ext) => file.endsWith(ext)),
+    );
+
+    if (validFiles.length === 0) {
+      console.log("⚠️ No valid input files found in /data/");
+      return;
+    }
+
+    const allChunks: EmbeddedChunk[] = [];
+
+    for (const fileName of validFiles) {
+      const filePath = path.join(DATA_FOLDER, fileName);
+      console.log(`📄 Processing file: ${fileName}`);
+
+      const fileContent = await fs.readFile(filePath, "utf-8");
+
+      let text: string;
+      let title: string;
+      let category: string;
+
+      if (fileName.endsWith(".mdx") || fileName.endsWith(".md")) {
+        const { data, content } = matter(fileContent);
+        text = removeMarkdown(content);
+        title = data.title ?? fileName;
+
+        category =
+          (data.category ??
+          (fileName.endsWith(".md") || fileName.endsWith(".mdx")))
+            ? "project"
+            : fileName.includes("cv")
+              ? "cv"
+              : fileName.includes("faq")
+                ? "faq"
+                : "general";
+      } else {
+        text = fileContent;
+        title = fileName;
+        category = fileName.includes("cv")
+          ? "cv"
+          : fileName.includes("faq")
+            ? "faq"
+            : "general";
+      }
+
+      const chunks = chunkText(text, CONFIG.CHUNK_SIZE);
+
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        const embedding = await embedText(chunk);
+        console.log(
+          `✅ Embedded chunk ${i + 1}/${chunks.length} from ${fileName}`,
+        );
+
+        allChunks.push({
+          id: `${fileName}_chunk_${i}`,
+          text: chunk,
+          embedding,
+          source: fileName,
+          category,
+          title,
+        });
+      }
+    }
+
+    if (allChunks.length > 0) {
+      await ensureFolderExists(path.dirname(OUTPUT_FILE));
+      await fs.writeFile(
+        OUTPUT_FILE,
+        JSON.stringify(allChunks, null, 2),
+        "utf-8",
+      );
+      console.log(`✅ Saved ${allChunks.length} vectors to ${OUTPUT_FILE}`);
     }
   } catch (error) {
-    console.error("❌ Error processing files:", error);
+    console.error("❌ Error:", error);
   }
 }
 
