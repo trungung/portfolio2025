@@ -24,8 +24,8 @@ import { Message, useChat } from "@ai-sdk/react";
 
 const QUICK_QUESTIONS = [
   "What tools do you use?",
-  "Share a project you're proud of",
-  "What are you working on now?",
+  "What's a project you love?",
+  "Tell me about yourself",
 ];
 
 const formatTime = (date?: Date) =>
