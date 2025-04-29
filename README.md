@@ -35,16 +35,17 @@ You’re welcome to dive into the code, borrow ideas, or reach out if you'd like
 
 The portfolio features **TrungBot**, an intelligent AI chat assistant that enhances visitor interaction:
 
-- **Context-Aware Chat**: Powered by Retrieval-Augmented Generation (RAG) to deliver accurate, personalized answers about my skills, experience, and projects.
+- **Context-Aware Chat**: Powered by Retrieval-Augmented Generation (RAG) with conversation history awareness for coherent multi-turn dialogues.
+- **Optimized Semantic Chunking**: Using high-overlap (70%) text processing for better context preservation and query relevance.
 - **Real-Time Semantic Search**: Using vector embeddings (MiniLM + Transformers.js) for lightning-fast, relevant retrieval.
 - **Natural Conversational UX**: Streaming responses for a fluid, human-like chat experience powered by DeepSeek Chat.
 
 ### 🧠 RAG Architecture Highlights
 
-- **Document Chunking**: Semantic preprocessing for efficient retrieval
-- **Embedding Generation**: Real-time MiniLM vectors via Transformers.js
-- **Cosine Similarity Search**: Instant, accurate context fetching
-- **Grounded LLM Responses**: Minimized hallucinations through augmented input
+- **Conversational Memory**: Enhanced query understanding that considers previous exchanges
+- **Query Expansion**: Intelligent incorporation of conversation context for better search relevance
+- **Advanced Text Preprocessing**: High-overlap content chunking that preserves semantic connections
+- **Confidence-Based Responses**: Smart evaluation of matching quality for appropriate answers
 
 > TrungBot demonstrates production-ready techniques for context-aware assistants that are fast, scalable, and accurate.
 
