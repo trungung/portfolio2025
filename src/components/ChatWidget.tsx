@@ -23,9 +23,9 @@ import {
 import { Message, useChat } from "@ai-sdk/react";
 
 const QUICK_QUESTIONS = [
+  "What tools do you use?",
+  "Share a project you're proud of",
   "What are you working on now?",
-  "What technologies do you use?",
-  "Tell me a fun project story",
 ];
 
 const formatTime = (date?: Date) =>
@@ -91,10 +91,10 @@ export default function ChatWidget() {
         <PopoverTrigger asChild>
           <Button
             size="icon"
-            className="group h-12 w-12 rounded-full shadow-lg"
+            className="group h-12 w-12 rounded-full shadow-lg sm:h-14 sm:w-14"
             aria-label="Open chat"
           >
-            <MessageCircle className="h-6 w-6 group-hover:translate-y-0.5" />
+            <MessageCircle className="h-6 w-6 group-hover:translate-y-0.5 sm:h-8 sm:w-8" />
           </Button>
         </PopoverTrigger>
 
@@ -201,7 +201,11 @@ export default function ChatWidget() {
             <CardFooter className="bg-card px-3">
               <form
                 id="chat-form"
-                onSubmit={handleSubmit}
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                  inputRef.current?.focus();
+                  scrollToBottom();
+                }}
                 className="relative flex w-full flex-col space-y-2"
               >
                 <AnimatePresence>
@@ -254,7 +258,13 @@ export default function ChatWidget() {
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
-                        if (input.trim()) handleSubmit(e);
+                        if (input.trim()) {
+                          handleSubmit(e);
+                          inputRef.current?.focus();
+                          setTimeout(() => {
+                            scrollToBottom();
+                          }, 50);
+                        }
                       }
                     }}
                   />
