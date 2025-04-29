@@ -23,9 +23,9 @@ import {
 import { Message, useChat } from "@ai-sdk/react";
 
 const QUICK_QUESTIONS = [
-  "What tools do you use?",
-  "What's a project you love?",
   "Tell me about yourself",
+  "What tools do you use often?",
+  "Which project makes you proud?",
 ];
 
 const formatTime = (date?: Date) =>
@@ -59,7 +59,9 @@ export default function ChatWidget() {
   const hasUserMessages = messages.some((m) => m.role === "user");
 
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   }, []);
 
   useEffect(() => {
@@ -261,9 +263,7 @@ export default function ChatWidget() {
                         if (input.trim()) {
                           handleSubmit(e);
                           inputRef.current?.focus();
-                          setTimeout(() => {
-                            scrollToBottom();
-                          }, 50);
+                          scrollToBottom();
                         }
                       }
                     }}
