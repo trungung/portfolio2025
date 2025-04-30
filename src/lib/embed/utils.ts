@@ -7,7 +7,7 @@ export const CONFIG = {
   VECTORS_FILE: "./src/vectors/trungbot-vectors.json",
   SUPPORTED_EXTENSIONS: [".txt", ".md", ".mdx"],
   TOP_K_CHUNKS: 5,
-  CONFIDENCE_THRESHOLD: 0.7,
+  CONFIDENCE_THRESHOLD: 0.8,
   CHAT_MODEL: "deepseek-chat",
   SYSTEM_PROMPT_TEMPLATES: {
     NO_ANSWER:
