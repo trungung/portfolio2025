@@ -183,9 +183,7 @@ export default function ChatWidget() {
                             )}
                           >
                             <div className="break-words whitespace-pre-wrap">
-                              {typeof message.content === "string"
-                                ? message.content
-                                : ""}
+                              {message.content}
                             </div>
                           </div>
                           <span className="text-muted-foreground mt-1 flex px-1 text-xs">
