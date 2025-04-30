@@ -7,17 +7,17 @@ export const CONFIG = {
   VECTORS_FILE: "./src/vectors/trungbot-vectors.json",
   SUPPORTED_EXTENSIONS: [".txt", ".md", ".mdx"],
   TOP_K_CHUNKS: 5,
-  CONFIDENCE_THRESHOLD: 0.8,
+  CONFIDENCE_THRESHOLD: 0.83,
   CHAT_MODEL: "deepseek-chat",
   SYSTEM_PROMPT_TEMPLATES: {
     NO_ANSWER:
-      "I couldn't find details on that in Trung's documents. Want to try asking it another way?",
+      "I couldn't find anything about that in Trung's documents, so I'd rather not guess. Feel free to ask something else.",
     UNCLEAR_WITH_TOPICS:
-      "I'm not sure what exactly you're looking for. Would you like to learn about any of these related topics: [topics]?",
+      "I'm not totally sure what you mean, but here are a few things I can talk about: [topics]. Want to check one of those out?",
     SLIGHT_MATCH:
-      "This might be related: [summary]. Let me know if you'd like more info.",
+      "This isn't a perfect match, but it might be loosely related: [summary]. If it's not what you meant, just point me in the right direction.",
     REPHRASING_REQUEST:
-      "I'm having a bit of trouble understanding. Could you try rephrasing your question?",
+      "I didn't quite catch that. Mind rephrasing the question or giving me a bit more detail?",
   },
 };
 
