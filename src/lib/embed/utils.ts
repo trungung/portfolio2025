@@ -1,13 +1,13 @@
 import fs from "fs/promises";
 
 export const CONFIG = {
-  CHUNK_SIZE: 150,
-  CHUNK_OVERLAP: 0.5,
+  CHUNK_SIZE: 100,
+  CHUNK_OVERLAP: 0.35,
   DATA_FOLDER: "./data",
   VECTORS_FILE: "./src/vectors/trungbot-vectors.json",
   SUPPORTED_EXTENSIONS: [".txt", ".md", ".mdx"],
-  TOP_K_CHUNKS: 5,
-  CONFIDENCE_THRESHOLD: 0.83,
+  TOP_K_CHUNKS: 6,
+  CONFIDENCE_THRESHOLD: 0.85,
   CHAT_MODEL: "deepseek-chat",
   SYSTEM_PROMPT_TEMPLATES: {
     NO_ANSWER:

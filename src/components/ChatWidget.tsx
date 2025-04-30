@@ -188,38 +188,42 @@ export default function ChatWidget() {
                           </div>
                           <span className="text-muted-foreground mt-1 flex px-1 text-xs">
                             {formatTime(message.createdAt)}
-                            {message.role === "assistant" && usage && (
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <span className="text-muted-foreground ml-2 inline-flex cursor-help items-center text-xs">
-                                      <Info className="h-3 w-3" />
-                                    </span>
-                                  </TooltipTrigger>
-                                  <TooltipContent
-                                    side="top"
-                                    className="text-xs"
-                                  >
-                                    <div className="flex flex-col space-y-1">
-                                      <div>
-                                        Input: {usage?.promptTokens || 0} tokens
+                            <span className="hidden sm:flex">
+                              {message.role === "assistant" && usage && (
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className="text-muted-foreground ml-2 inline-flex cursor-help items-center text-xs">
+                                        <Info className="h-3 w-3" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent
+                                      side="top"
+                                      className="text-xs"
+                                    >
+                                      <div className="flex flex-col space-y-1">
+                                        <div>
+                                          Input: {usage?.promptTokens || 0}{" "}
+                                          tokens
+                                        </div>
+                                        <div>
+                                          Output: {usage?.completionTokens || 0}{" "}
+                                          tokens
+                                        </div>
+                                        <div>
+                                          Total: {usage?.totalTokens || 0}{" "}
+                                          tokens
+                                        </div>
+                                        <div>
+                                          Estimated cost: $
+                                          {calculateCost(usage).toFixed(4)}
+                                        </div>
                                       </div>
-                                      <div>
-                                        Output: {usage?.completionTokens || 0}{" "}
-                                        tokens
-                                      </div>
-                                      <div>
-                                        Total: {usage?.totalTokens || 0} tokens
-                                      </div>
-                                      <div>
-                                        Estimated cost: $
-                                        {calculateCost(usage).toFixed(4)}
-                                      </div>
-                                    </div>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            )}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              )}
+                            </span>
                           </span>
                         </div>
                       </div>
@@ -284,7 +288,7 @@ export default function ChatWidget() {
                 <AnimatePresence>
                   {!hasUserMessages && (
                     <motion.div
-                      className="absolute -top-48 left-0 flex flex-col px-2"
+                      className="absolute -top-42 left-0 flex flex-col px-2"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{

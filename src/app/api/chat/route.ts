@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
         model: deepseek(CONFIG.CHAT_MODEL),
         system,
         messages,
-        temperature: 0.5,
+        temperature: 0.6,
         maxTokens: 2000,
 
         onFinish({ usage }) {
