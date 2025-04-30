@@ -80,7 +80,7 @@ This project reflects my technical philosophy: modern, performant, accessible, a
 ### UI & Interaction
 
 - Animated reveals and transitions via **Framer Motion**
-- **Radix UI** primitives for accessible, high-quality components
+- **Shadcn UI** primitives for accessible, high-quality components
 - Responsive design: desktop-first, mobile-optimized
 - Theme switching with system preference detection via `next-themes`
 
