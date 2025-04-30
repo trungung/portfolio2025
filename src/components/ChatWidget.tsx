@@ -123,7 +123,7 @@ export default function ChatWidget() {
         <PopoverTrigger asChild>
           <Button
             size="icon"
-            className="group h-12 w-12 rounded-full shadow-lg sm:h-14 sm:w-14"
+            className="group h-12 w-12 rounded-full sm:h-14 sm:w-14"
             aria-label="Open chat"
           >
             <MessageCircle className="h-6 w-6 group-hover:translate-y-0.5 sm:h-8 sm:w-8" />
@@ -133,7 +133,7 @@ export default function ChatWidget() {
         <PopoverContent
           side="top"
           align="end"
-          className="w-[360px] border-none p-0 shadow-lg sm:w-[440px]"
+          className="w-[360px] border-none p-0 sm:w-[440px]"
           sideOffset={16}
         >
           <Card className="overflow-hidden rounded-md border-none pt-0 font-mono">
