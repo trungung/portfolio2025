@@ -21,20 +21,51 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Message, useChat } from "@ai-sdk/react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
-const QUICK_QUESTIONS = [
+const QUICK_PROMPTS = [
   "Tell me about yourself",
   "What tools do you use often?",
   "Which project makes you proud?",
 ];
 
+const DEEPSEEK_PRICES = {
+  input: 0.27,
+  input_cached: 0.07,
+  output: 1.1,
+};
+
+const calculateCost = (usage: MessageWithUsage["usage"]) => {
+  if (!usage) return 0;
+  return (
+    ((DEEPSEEK_PRICES.input / 1000000) * usage.promptTokens * 2) / 3 +
+    ((DEEPSEEK_PRICES.input / 1000000) * usage.promptTokens * 1) / 3 +
+    (DEEPSEEK_PRICES.output / 1000000) * usage.completionTokens
+  );
+};
+
 const formatTime = (date?: Date) =>
   date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) ?? "";
 
-const greetingMessage: Message = {
-  id: "welcome",
-  content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
+interface MessageWithUsage extends Message {
+  usage?: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+  };
+}
+
+const greetingMessage: MessageWithUsage = {
+  id: "greeting",
   role: "assistant",
+  content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
+  createdAt: new Date(),
 };
 
 export default function ChatWidget() {
@@ -44,23 +75,66 @@ export default function ChatWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const {
-    messages,
+    messages: rawMessages,
     input,
-    status,
-    error,
-    append,
     handleInputChange,
     handleSubmit,
+    error,
+    append,
+    status,
   } = useChat({
     api: "/api/chat",
     initialMessages: [],
+    onFinish: (_, options) => {
+      if (options.usage) {
+        setMessagesWithUsage((prev) => {
+          const lastMessage = prev[prev.length - 1];
+          if (lastMessage && lastMessage.role === "assistant") {
+            return prev.slice(0, -1).concat({
+              ...lastMessage,
+              usage: {
+                promptTokens: options.usage?.promptTokens || 0,
+                completionTokens: options.usage?.completionTokens || 0,
+                totalTokens: options.usage?.totalTokens || 0,
+              },
+            });
+          }
+          return prev;
+        });
+      }
+    },
   });
+
+  const [messagesWithUsage, setMessagesWithUsage] = useState<
+    MessageWithUsage[]
+  >([]);
+
+  useEffect(() => {
+    setMessagesWithUsage((prev) => {
+      const newMessages = [...rawMessages];
+
+      return newMessages.map((msg) => {
+        const existingMsg = prev.find((m) => m.id === msg.id);
+        if (existingMsg && existingMsg.usage) {
+          return { ...msg, usage: existingMsg.usage };
+        }
+        return msg;
+      });
+    });
+  }, [rawMessages]);
+
+  const messages = messagesWithUsage;
 
   const hasUserMessages = messages.some((m) => m.role === "user");
 
   const scrollToBottom = useCallback(() => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
+  }, []);
+  const focusInput = useCallback(() => {
+    setTimeout(() => {
+      inputRef.current?.focus();
     }, 50);
   }, []);
 
@@ -74,15 +148,15 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (open && status === "ready") {
-      inputRef.current?.focus();
+      focusInput();
       scrollToBottom();
     }
-  }, [open, status, scrollToBottom]);
+  }, [open, status, scrollToBottom, focusInput]);
 
-  const submitQuickQuestion = async (question: string) => {
+  const submitQuickPrompt = async (prompt: string) => {
     append({
-      id: "quick-question",
-      content: question,
+      id: "quick-prompt",
+      content: prompt,
       role: "user",
     });
   };
@@ -122,38 +196,74 @@ export default function ChatWidget() {
                   aria-label="Chat messages"
                   className="flex flex-col space-y-4"
                 >
-                  {[greetingMessage, ...messages].map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={cn(
-                        "flex",
-                        msg.role === "user" ? "justify-end" : "justify-start",
-                      )}
-                    >
+                  {[greetingMessage, ...messages].map(
+                    ({ id, role, content, usage, createdAt }) => (
                       <div
+                        key={id}
                         className={cn(
-                          "flex max-w-[85%] flex-col",
-                          msg.role === "user" ? "items-end" : "items-start",
+                          "flex",
+                          role === "user" ? "justify-end" : "justify-start",
                         )}
                       >
                         <div
-                          role="status"
-                          aria-live="polite"
                           className={cn(
-                            "rounded-lg px-3 py-2 break-words",
-                            msg.role === "user"
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-muted",
+                            "flex max-w-[85%] flex-col",
+                            role === "user" ? "items-end" : "items-start",
                           )}
                         >
-                          {msg.content}
+                          <div
+                            role="status"
+                            aria-live="polite"
+                            className={cn(
+                              "rounded-lg px-3 py-2 break-words",
+                              role === "user"
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-muted",
+                            )}
+                          >
+                            <div className="break-words whitespace-pre-wrap">
+                              {typeof content === "string" ? content : ""}
+                            </div>
+                          </div>
+                          <span className="text-muted-foreground mt-1 flex px-1 text-xs">
+                            {formatTime(createdAt)}
+                            {role === "assistant" && usage && (
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <span className="text-muted-foreground ml-2 inline-flex cursor-help items-center text-xs">
+                                      <Info className="h-3 w-3" />
+                                    </span>
+                                  </TooltipTrigger>
+                                  <TooltipContent
+                                    side="top"
+                                    className="text-xs"
+                                  >
+                                    <div className="flex flex-col space-y-1">
+                                      <div>
+                                        Input: {usage?.promptTokens || 0} tokens
+                                      </div>
+                                      <div>
+                                        Output: {usage?.completionTokens || 0}{" "}
+                                        tokens
+                                      </div>
+                                      <div>
+                                        Total: {usage?.totalTokens || 0} tokens
+                                      </div>
+                                      <div>
+                                        Estimated cost: $
+                                        {calculateCost(usage).toFixed(4)}
+                                      </div>
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            )}
+                          </span>
                         </div>
-                        <span className="text-muted-foreground mt-1 px-1 text-xs">
-                          {formatTime(msg.createdAt)}
-                        </span>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
 
                   {status === "submitted" && (
                     <div className="flex justify-start">
@@ -205,7 +315,7 @@ export default function ChatWidget() {
                 id="chat-form"
                 onSubmit={(e) => {
                   handleSubmit(e);
-                  inputRef.current?.focus();
+                  focusInput();
                   scrollToBottom();
                 }}
                 className="relative flex w-full flex-col space-y-2"
@@ -231,16 +341,16 @@ export default function ChatWidget() {
                         Let&apos;s dive in
                       </motion.p>
                       <div className="flex flex-wrap gap-2">
-                        {QUICK_QUESTIONS.map((q) => (
+                        {QUICK_PROMPTS.map((p) => (
                           <Button
-                            key={q}
+                            key={p}
                             type="button"
                             variant="outline"
                             size="sm"
                             className="rounded-full text-sm"
-                            onClick={() => submitQuickQuestion(q)}
+                            onClick={() => submitQuickPrompt(p)}
                           >
-                            {q}
+                            {p}
                           </Button>
                         ))}
                       </div>
@@ -262,7 +372,7 @@ export default function ChatWidget() {
                         e.preventDefault();
                         if (input.trim()) {
                           handleSubmit(e);
-                          inputRef.current?.focus();
+                          focusInput();
                           scrollToBottom();
                         }
                       }
