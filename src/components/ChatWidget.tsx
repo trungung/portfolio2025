@@ -28,6 +28,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { LanguageModelUsage } from "ai";
+import { parseMessageUsage } from "@/lib/chat/utils";
 
 const QUICK_PROMPTS = [
   "Tell me about yourself",
@@ -41,7 +43,7 @@ const DEEPSEEK_PRICES = {
   output: 1.1,
 };
 
-const calculateCost = (usage: MessageWithUsage["usage"]) => {
+const calculateCost = (usage: LanguageModelUsage | undefined) => {
   if (!usage) return 0;
   return (
     ((DEEPSEEK_PRICES.input / 1000000) * usage.promptTokens * 2) / 3 +
@@ -53,15 +55,7 @@ const calculateCost = (usage: MessageWithUsage["usage"]) => {
 const formatTime = (date?: Date) =>
   date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) ?? "";
 
-interface MessageWithUsage extends Message {
-  usage?: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
-}
-
-const greetingMessage: MessageWithUsage = {
+const greetingMessage: Message = {
   id: "greeting",
   role: "assistant",
   content: "Hi! I'm TrungBot 🤖 Ask me anything about my work.",
@@ -75,7 +69,7 @@ export default function ChatWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const {
-    messages: rawMessages,
+    messages,
     input,
     handleInputChange,
     handleSubmit,
@@ -85,45 +79,7 @@ export default function ChatWidget() {
   } = useChat({
     api: "/api/chat",
     initialMessages: [],
-    onFinish: (_, options) => {
-      if (options.usage) {
-        setMessagesWithUsage((prev) => {
-          const lastMessage = prev[prev.length - 1];
-          if (lastMessage && lastMessage.role === "assistant") {
-            return prev.slice(0, -1).concat({
-              ...lastMessage,
-              usage: {
-                promptTokens: options.usage?.promptTokens || 0,
-                completionTokens: options.usage?.completionTokens || 0,
-                totalTokens: options.usage?.totalTokens || 0,
-              },
-            });
-          }
-          return prev;
-        });
-      }
-    },
   });
-
-  const [messagesWithUsage, setMessagesWithUsage] = useState<
-    MessageWithUsage[]
-  >([]);
-
-  useEffect(() => {
-    setMessagesWithUsage((prev) => {
-      const newMessages = [...rawMessages];
-
-      return newMessages.map((msg) => {
-        const existingMsg = prev.find((m) => m.id === msg.id);
-        if (existingMsg && existingMsg.usage) {
-          return { ...msg, usage: existingMsg.usage };
-        }
-        return msg;
-      });
-    });
-  }, [rawMessages]);
-
-  const messages = messagesWithUsage;
 
   const hasUserMessages = messages.some((m) => m.role === "user");
 
@@ -196,19 +152,24 @@ export default function ChatWidget() {
                   aria-label="Chat messages"
                   className="flex flex-col space-y-4"
                 >
-                  {[greetingMessage, ...messages].map(
-                    ({ id, role, content, usage, createdAt }) => (
+                  {[greetingMessage, ...messages].map((message) => {
+                    const usage = parseMessageUsage(message);
+                    return (
                       <div
-                        key={id}
+                        key={message.id}
                         className={cn(
                           "flex",
-                          role === "user" ? "justify-end" : "justify-start",
+                          message.role === "user"
+                            ? "justify-end"
+                            : "justify-start",
                         )}
                       >
                         <div
                           className={cn(
                             "flex max-w-[85%] flex-col",
-                            role === "user" ? "items-end" : "items-start",
+                            message.role === "user"
+                              ? "items-end"
+                              : "items-start",
                           )}
                         >
                           <div
@@ -216,18 +177,20 @@ export default function ChatWidget() {
                             aria-live="polite"
                             className={cn(
                               "rounded-lg px-3 py-2 break-words",
-                              role === "user"
+                              message.role === "user"
                                 ? "bg-primary text-primary-foreground"
                                 : "bg-muted",
                             )}
                           >
                             <div className="break-words whitespace-pre-wrap">
-                              {typeof content === "string" ? content : ""}
+                              {typeof message.content === "string"
+                                ? message.content
+                                : ""}
                             </div>
                           </div>
                           <span className="text-muted-foreground mt-1 flex px-1 text-xs">
-                            {formatTime(createdAt)}
-                            {role === "assistant" && usage && (
+                            {formatTime(message.createdAt)}
+                            {message.role === "assistant" && usage && (
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
@@ -262,8 +225,8 @@ export default function ChatWidget() {
                           </span>
                         </div>
                       </div>
-                    ),
-                  )}
+                    );
+                  })}
 
                   {status === "submitted" && (
                     <div className="flex justify-start">
@@ -347,7 +310,7 @@ export default function ChatWidget() {
                             type="button"
                             variant="outline"
                             size="sm"
-                            className="rounded-full text-sm"
+                            className="rounded-full"
                             onClick={() => submitQuickPrompt(p)}
                           >
                             {p}

@@ -1,11 +1,12 @@
 import { deepseek } from "@ai-sdk/deepseek";
-import { streamText } from "ai";
+import { createDataStreamResponse, streamText } from "ai";
 import { NextRequest } from "next/server";
 import { EmbeddedChunk, CONFIG } from "@/lib/embed/utils";
 import {
   evaluateQueryTopics,
   retrieveWithContext,
 } from "@/lib/embed/retriever";
+import { MessageAnnotationSchema } from "@/lib/chat/utils";
 
 const createSystemPrompt = (
   chunks: ReadonlyArray<EmbeddedChunk>,
@@ -69,13 +70,31 @@ export async function POST(req: NextRequest) {
 
   const system = createSystemPrompt(topChunks, isConfident, relatedTopics);
 
-  const result = streamText({
-    model: deepseek(CONFIG.CHAT_MODEL),
-    system,
-    messages,
-    temperature: 0.5,
-    maxTokens: 2000,
-  });
+  return createDataStreamResponse({
+    execute: (dataStream) => {
+      const result = streamText({
+        model: deepseek(CONFIG.CHAT_MODEL),
+        system,
+        messages,
+        temperature: 0.5,
+        maxTokens: 2000,
 
-  return result.toDataStreamResponse();
+        onFinish({ usage }) {
+          const annotationData = { usage };
+          const result = MessageAnnotationSchema.safeParse(annotationData);
+
+          if (result.success) {
+            dataStream.writeMessageAnnotation(result.data);
+          } else {
+            console.error("Invalid annotation data:", result.error);
+            dataStream.writeMessageAnnotation({ usage });
+          }
+        },
+      });
+      result.mergeIntoDataStream(dataStream);
+    },
+    onError: (error) => {
+      return error instanceof Error ? error.message : String(error);
+    },
+  });
 }
