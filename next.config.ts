@@ -11,5 +11,6 @@ const withMDX = createMDX({
 
 export default withMDX({
   // Other Next.js config options
+  serverExternalPackages: ["hnswlib-node"],
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 });

@@ -1,23 +1,15 @@
 import { deepseek } from "@ai-sdk/deepseek";
 import { createDataStreamResponse, streamText } from "ai";
 import { NextRequest } from "next/server";
-import { EmbeddedChunk, CONFIG } from "@/lib/embed/utils";
-import {
-  evaluateQueryTopics,
-  retrieveWithContext,
-} from "@/lib/embed/retriever";
 import { MessageAnnotationSchema } from "@/lib/chat/utils";
 
-const createSystemPrompt = (
-  chunks: ReadonlyArray<EmbeddedChunk>,
-  isConfident: boolean,
-  relatedTopics: ReadonlyArray<string>,
-): string => {
-  const context = chunks.map((chunk) => chunk.text).join("\n\n");
-  let relatedTopicsContext = "";
-  if (!isConfident && relatedTopics.length > 0) {
-    relatedTopicsContext = `\n\nRelated topics that might be helpful: ${relatedTopics.join(", ")}`;
-  }
+import { Document } from "@langchain/core/documents";
+import { retriever } from "@/lib/vectorStore/retriever";
+
+export const runtime = "nodejs";
+
+const createSystemPrompt = (chunks: ReadonlyArray<Document>): string => {
+  const context = chunks.map((chunk) => chunk.pageContent).join("\n\n");
 
   return `
 You are TrungBot, chatting on behalf of Trung and speaking in Trung's voice (first person).
@@ -32,20 +24,8 @@ If you accidentally use any forbidden formatting or symbols, immediately rephras
 
 Only respond using information from Trung's provided context. Never make anything up.
 
-If you can't find an answer:
-${CONFIG.SYSTEM_PROMPT_TEMPLATES.NO_ANSWER}
-
-If the question is unclear and related topics are provided:
-${CONFIG.SYSTEM_PROMPT_TEMPLATES.UNCLEAR_WITH_TOPICS}
-
-If something seems slightly related:
-${CONFIG.SYSTEM_PROMPT_TEMPLATES.SLIGHT_MATCH}
-
-If the question is off-topic or unclear multiple times:
-${CONFIG.SYSTEM_PROMPT_TEMPLATES.REPHRASING_REQUEST}
-
 The real context starts below:
-${context}${relatedTopicsContext}
+${context}
 `;
 };
 
@@ -57,23 +37,12 @@ export async function POST(req: NextRequest) {
       (msg: { role: string; content: string }) => msg.role === "user",
     )?.content ?? "";
 
-  const topChunks = await retrieveWithContext(
-    lastUserMessage,
-    messages,
-    CONFIG.TOP_K_CHUNKS,
-  );
-
-  const { isConfident, relatedTopics } = await evaluateQueryTopics(
-    lastUserMessage,
-    topChunks,
-  );
-
-  const system = createSystemPrompt(topChunks, isConfident, relatedTopics);
-
+  const topChunks = await retriever.invoke(lastUserMessage);
+  const system = createSystemPrompt(topChunks);
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: deepseek(CONFIG.CHAT_MODEL),
+        model: deepseek("deepseek-chat"),
         system,
         messages,
         temperature: 0.6,
