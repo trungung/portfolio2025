@@ -27,5 +27,5 @@ import { chunkMarkdown, CONFIG } from "./utils";
     fs.mkdirSync(CONFIG.OUTPUT_DIR, { recursive: true });
   await store.save(CONFIG.OUTPUT_DIR);
 
-  console.log("✅ Saved Faiss index to", CONFIG.OUTPUT_DIR);
+  console.log("✅ Saved HNSW index to", CONFIG.OUTPUT_DIR);
 })();
