@@ -35,19 +35,15 @@ You’re welcome to dive into the code, borrow ideas, or reach out if you'd like
 
 The portfolio features **TrungBot**, an intelligent AI chat assistant that enhances visitor interaction:
 
-- **Context-Aware Chat**: Powered by Retrieval-Augmented Generation (RAG) with conversation history awareness for coherent multi-turn dialogues.
-- **Optimized Semantic Chunking**: Using high-overlap (70%) text processing for better context preservation and query relevance.
-- **Real-Time Semantic Search**: Using vector embeddings (MiniLM + Transformers.js) for lightning-fast, relevant retrieval.
-- **Natural Conversational UX**: Streaming responses for a fluid, human-like chat experience powered by DeepSeek Chat.
-
 ### 🧠 RAG Architecture Highlights
 
-- **Conversational Memory**: Enhanced query understanding that considers previous exchanges
-- **Query Expansion**: Intelligent incorporation of conversation context for better search relevance
-- **Advanced Text Preprocessing**: High-overlap content chunking that preserves semantic connections
-- **Confidence-Based Responses**: Smart evaluation of matching quality for appropriate answers
-
-> TrungBot demonstrates production-ready techniques for context-aware assistants that are fast, scalable, and accurate.
+- **LangChain Vector Store**: Built with LangChain's document loading, chunking, and embedding pipeline for flexible, production-ready RAG implementation.
+- **HNSWLib Local Vector Database**: Efficient, persistent local vector storage with hierarchical navigable small world (HNSW) algorithm for blazing-fast approximate nearest neighbor search.
+- **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries rather than arbitrary token counts.
+- **Metadata-Enhanced Retrieval**: Each chunk contains rich metadata including section breadcrumbs, source information, and document hierarchy for improved context preservation.
+- **Conversational Context Tracking**: Structured multi-turn conversation history tracking that provides clear relative message positioning for improved context retention.
+- **Multi-Message Retrieval**: Enhanced vector search using contextual information from previous exchanges in the conversation.
+- **Transformers.js Integration**: Browser-compatible embedding generation without external API dependencies.
 
 ---
 
@@ -150,7 +146,7 @@ The site will be available at http://localhost:3000
     /RecentProjects  # Project showcase UI
       /project-content  # MDX files for project details
   /lib          # Utility functions and logic
-    /embed      # Embedding + retrieval system
+    /vectorStore      # Embedding + retrieval system
   /vectors      # Precomputed chatbot embeddings
   /icons        # Custom SVG icons
   /assets       # Static assets (images, etc.)
