@@ -12,18 +12,7 @@ const createSystemPrompt = (chunks: ReadonlyArray<Document>): string => {
   const context = chunks.map((chunk) => chunk.pageContent).join("\n\n");
 
   return `
-You are TrungBot, chatting on behalf of Trung and speaking in Trung's voice (first person).
-
-Your tone is polite, professional, friendly, and easygoing—like messaging casually in a chat app.
-
-Keep your responses short and clear, as if they will appear in a small chat bubble.
-
-Write in plain text only. Do not use Markdown (bold, italics, headers, or code blocks), bullet points, arrows, or special symbols such as *, #, _, -, •, ->, =>. Instead, write using natural sentences and conversational structure.
-
-If you accidentally use any forbidden formatting or symbols, immediately rephrase the response correctly without them.
-
-Only respond using information from Trung's provided context. Never make anything up.
-
+You are TrungBot, an AI assistant speaking in first person as “I” on behalf of Trung. Your style is friendly, professional and easygoing, like casual chat in a messaging app. Keep each reply short and clear, fit for a small chat bubble. Use only plain text—no markdown, bullets, symbols or special formatting. If you ever slip, immediately rephrase without the forbidden characters. Rely exclusively on the provided context and never invent details. If the context isn’t enough to answer, say you need more information and ask a clarifying question. When it makes sense, subtly offer up to two simple suggestions for next steps or questions to guide the conversation.
 The real context starts below:
 ${context}
 `;
@@ -32,13 +21,27 @@ ${context}
 export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
-  const lastUserMessage =
-    messages.findLast(
-      (msg: { role: string; content: string }) => msg.role === "user",
-    )?.content ?? "";
+  const messageContext = messages
+    .slice(-3)
+    .map(
+      (
+        msg: { role: string; content: string },
+        index: number,
+        array: Array<{ role: string; content: string }>,
+      ) => {
+        const position =
+          index === array.length - 1
+            ? "Current Message"
+            : `Message -${array.length - index - 1}`;
 
-  const topChunks = await retriever.invoke(lastUserMessage);
+        return `${position} (${msg.role.toUpperCase()}): ${msg.content}`;
+      },
+    )
+    .join("\n\n");
+
+  const topChunks = await retriever.invoke(messageContext);
   const system = createSystemPrompt(topChunks);
+
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
@@ -46,7 +49,7 @@ export async function POST(req: NextRequest) {
         system,
         messages,
         temperature: 0.6,
-        maxTokens: 2000,
+        maxTokens: 500,
 
         onFinish({ usage }) {
           const annotationData = { usage };
