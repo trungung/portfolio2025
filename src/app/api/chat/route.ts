@@ -2,11 +2,8 @@ import { deepseek } from "@ai-sdk/deepseek";
 import { createDataStreamResponse, streamText } from "ai";
 import { NextRequest } from "next/server";
 import { MessageAnnotationSchema } from "@/lib/chat/utils";
-
 import { Document } from "@langchain/core/documents";
 import { retriever } from "@/lib/vectorStore/retriever";
-
-export const runtime = "nodejs";
 
 const createSystemPrompt = (chunks: ReadonlyArray<Document>): string => {
   const context = chunks.map((chunk) => chunk.pageContent).join("\n\n");

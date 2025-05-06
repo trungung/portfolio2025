@@ -38,12 +38,12 @@ The portfolio features **TrungBot**, an intelligent AI chat assistant that enhan
 ### 🧠 RAG Architecture Highlights
 
 - **LangChain Vector Store**: Built with LangChain's document loading, chunking, and embedding pipeline for flexible, production-ready RAG implementation.
-- **HNSWLib Local Vector Database**: Efficient, persistent local vector storage with hierarchical navigable small world (HNSW) algorithm for blazing-fast approximate nearest neighbor search.
+- **Upstash Vector Database**: Serverless, fully-managed vector database with sub-millisecond latency and built-in indexing for lightning-fast semantic search without deployment size constraints.
 - **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries rather than arbitrary token counts.
 - **Metadata-Enhanced Retrieval**: Each chunk contains rich metadata including section breadcrumbs, source information, and document hierarchy for improved context preservation.
 - **Conversational Context Tracking**: Structured multi-turn conversation history tracking that provides clear relative message positioning for improved context retention.
 - **Multi-Message Retrieval**: Enhanced vector search using contextual information from previous exchanges in the conversation.
-- **Transformers.js Integration**: Browser-compatible embedding generation without external API dependencies.
+- **Transformers.js Integration**: Browser-compatible embedding generation using MiniLM (384 dimensions) for optimal performance in edge environments.
 
 ---
 
