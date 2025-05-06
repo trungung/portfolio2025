@@ -62,7 +62,7 @@ export default function ChatWidget() {
     status,
   } = useChat({
     api: "/api/chat",
-    initialMessages: [],
+    initialMessages: [greetingMessage],
   });
 
   const hasUserMessages = messages.some((m) => m.role === "user");
@@ -136,7 +136,7 @@ export default function ChatWidget() {
                   aria-label="Chat messages"
                   className="flex flex-col space-y-4"
                 >
-                  {[greetingMessage, ...messages].map((message) => {
+                  {messages.map((message) => {
                     const usage = parseMessageUsage(message);
                     return (
                       <div
@@ -292,7 +292,7 @@ export default function ChatWidget() {
                             type="button"
                             variant="outline"
                             size="sm"
-                            className="rounded-full"
+                            className="text-muted-foreground rounded-full"
                             onClick={() => submitQuickPrompt(p)}
                           >
                             {p}
