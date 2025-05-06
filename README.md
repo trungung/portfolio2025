@@ -63,7 +63,7 @@ This project reflects my technical philosophy: modern, performant, accessible, a
 ### AI & NLP Features
 
 - **@ai-sdk/react** — Streaming chat UI with `useChat` hook
-- **@ai-sdk/deepseek** — High-quality LLM integration
+- **@ai-sdk/azure** — Azure OpenAI GPT-4.1-mini integration
 - **Upstash Vector** — Serverless vector database with direct integration
 - **Edge Runtime** — Next.js Edge Runtime for minimal serverless function size
 - **Custom Chunking** — Smart document processing with semantic splitting

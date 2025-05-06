@@ -1,10 +1,10 @@
-import { deepseek } from "@ai-sdk/deepseek";
 import { createDataStreamResponse, streamText } from "ai";
 import { NextRequest } from "next/server";
 import { MessageAnnotationSchema } from "@/lib/chat/utils";
 import { getStore } from "@/lib/vectorStore/store";
 import { QueryResult } from "@upstash/vector";
 import { Metadata } from "@/lib/vectorStore/type";
+import { azure } from "@ai-sdk/azure";
 
 const createSystemPrompt = (chunks: QueryResult<Metadata>[]): string => {
   const context = chunks.map((chunk) => chunk.data).join("\n\n");
@@ -36,22 +36,21 @@ export async function POST(req: NextRequest) {
       },
     )
     .join("\n\n");
-
   const index = getStore();
   const topChunks = await index.query({
     data: messageContext,
     topK: 5,
+    includeData: true,
   });
   const system = createSystemPrompt(topChunks);
 
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: deepseek("deepseek-chat"),
+        model: azure("gpt-4.1-mini"),
         system,
         messages,
         temperature: 0.6,
-        maxTokens: 500,
 
         onFinish({ usage }) {
           const annotationData = { usage };

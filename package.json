@@ -10,7 +10,9 @@
     "build:vector": "tsx src/lib/vectorStore/build"
   },
   "dependencies": {
+    "@ai-sdk/azure": "^1.3.22",
     "@ai-sdk/deepseek": "^0.2.13",
+    "@ai-sdk/google": "^1.2.15",
     "@ai-sdk/react": "^1.2.9",
     "@icons-pack/react-simple-icons": "^12.4.0",
     "@mdx-js/loader": "^3.1.0",
