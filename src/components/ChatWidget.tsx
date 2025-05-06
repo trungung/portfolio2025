@@ -28,7 +28,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { LanguageModelUsage } from "ai";
 import { parseMessageUsage } from "@/lib/chat/utils";
 
 const QUICK_PROMPTS = [
@@ -36,21 +35,6 @@ const QUICK_PROMPTS = [
   "What tools do you use often?",
   "Which project makes you proud?",
 ];
-
-const DEEPSEEK_PRICES = {
-  input: 0.27,
-  input_cached: 0.07,
-  output: 1.1,
-};
-
-const calculateCost = (usage: LanguageModelUsage | undefined) => {
-  if (!usage) return 0;
-  return (
-    ((DEEPSEEK_PRICES.input / 1000000) * usage.promptTokens * 2) / 3 +
-    ((DEEPSEEK_PRICES.input / 1000000) * usage.promptTokens * 1) / 3 +
-    (DEEPSEEK_PRICES.output / 1000000) * usage.completionTokens
-  );
-};
 
 const formatTime = (date?: Date) =>
   date?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) ?? "";
@@ -213,10 +197,6 @@ export default function ChatWidget() {
                                         <div>
                                           Total: {usage?.totalTokens || 0}{" "}
                                           tokens
-                                        </div>
-                                        <div>
-                                          Estimated cost: $
-                                          {calculateCost(usage).toFixed(4)}
                                         </div>
                                       </div>
                                     </TooltipContent>
