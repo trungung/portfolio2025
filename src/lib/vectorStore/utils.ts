@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import { Parent, RootContent, Root } from "mdast";
-import { Document } from "@langchain/core/documents";
+import { UpstashDocument } from "./type";
 
 export const CONFIG = {
   MAX_CHARS: 500,
@@ -19,11 +19,11 @@ function toText(node: RootContent | Parent): string {
   return "";
 }
 
-export function chunkMarkdown(rawMd: string, file: string): Document[] {
+export function chunkMarkdown(rawMd: string, file: string) {
   const { content, data: meta } = matter(rawMd);
   const root = unified().use(remarkParse).parse(content) as Root;
 
-  const chunks: Document[] = [];
+  const chunks: UpstashDocument[] = [];
   let headings: string[] = [];
   let buf: string[] = [];
   let idx = 0;
@@ -40,7 +40,8 @@ export function chunkMarkdown(rawMd: string, file: string): Document[] {
     const pageContent = prefixLines.join("\n") + "\n\n" + buf.join("\n").trim();
 
     chunks.push({
-      pageContent,
+      id: `${file}-${idx}`,
+      data: pageContent,
       metadata: {
         source: file,
         chunkIndex: idx++,

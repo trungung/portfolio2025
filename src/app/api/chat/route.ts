@@ -2,11 +2,12 @@ import { deepseek } from "@ai-sdk/deepseek";
 import { createDataStreamResponse, streamText } from "ai";
 import { NextRequest } from "next/server";
 import { MessageAnnotationSchema } from "@/lib/chat/utils";
-import { Document } from "@langchain/core/documents";
-import { retriever } from "@/lib/vectorStore/retriever";
+import { getStore } from "@/lib/vectorStore/store";
+import { QueryResult } from "@upstash/vector";
+import { Metadata } from "@/lib/vectorStore/type";
 
-const createSystemPrompt = (chunks: ReadonlyArray<Document>): string => {
-  const context = chunks.map((chunk) => chunk.pageContent).join("\n\n");
+const createSystemPrompt = (chunks: QueryResult<Metadata>[]): string => {
+  const context = chunks.map((chunk) => chunk.data).join("\n\n");
 
   return `
 You are TrungBot, an AI assistant speaking in first person as “I” on behalf of Trung. Your style is friendly, professional and easygoing, like casual chat in a messaging app. Keep each reply short and clear, fit for a small chat bubble. Use only plain text—no markdown, bullets, symbols or special formatting. If you ever slip, immediately rephrase without the forbidden characters. Rely exclusively on the provided context and never invent details. If the context isn’t enough to answer, say you need more information and ask a clarifying question. When it makes sense, subtly offer up to two simple suggestions for next steps or questions to guide the conversation.
@@ -36,7 +37,11 @@ export async function POST(req: NextRequest) {
     )
     .join("\n\n");
 
-  const topChunks = await retriever.invoke(messageContext);
+  const index = getStore();
+  const topChunks = await index.query({
+    data: messageContext,
+    topK: 5,
+  });
   const system = createSystemPrompt(topChunks);
 
   return createDataStreamResponse({

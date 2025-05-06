@@ -12,10 +12,7 @@
   "dependencies": {
     "@ai-sdk/deepseek": "^0.2.13",
     "@ai-sdk/react": "^1.2.9",
-    "@huggingface/transformers": "^3.5.1",
     "@icons-pack/react-simple-icons": "^12.4.0",
-    "@langchain/community": "^0.3.42",
-    "@langchain/core": "^0.3.53",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.3.1",
@@ -34,6 +31,7 @@
     "ai": "^4.3.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.6.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.487.0",

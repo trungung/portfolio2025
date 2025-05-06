@@ -37,13 +37,13 @@ The portfolio features **TrungBot**, an intelligent AI chat assistant that enhan
 
 ### 🧠 RAG Architecture Highlights
 
-- **LangChain Vector Store**: Built with LangChain's document loading, chunking, and embedding pipeline for flexible, production-ready RAG implementation.
-- **Upstash Vector Database**: Serverless, fully-managed vector database with sub-millisecond latency and built-in indexing for lightning-fast semantic search without deployment size constraints.
-- **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries rather than arbitrary token counts.
+- **Upstash Vector Direct Integration**: Serverless vector database with direct API integration (no middleware) for edge-compatible search with sub-millisecond latency.
+- **Vercel-Optimized Architecture**: Completely serverless implementation designed specifically for Vercel's Edge runtime, eliminating the 250MB function size limit issue.
+- **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries.
 - **Metadata-Enhanced Retrieval**: Each chunk contains rich metadata including section breadcrumbs, source information, and document hierarchy for improved context preservation.
 - **Conversational Context Tracking**: Structured multi-turn conversation history tracking that provides clear relative message positioning for improved context retention.
 - **Multi-Message Retrieval**: Enhanced vector search using contextual information from previous exchanges in the conversation.
-- **Transformers.js Integration**: Browser-compatible embedding generation using MiniLM (384 dimensions) for optimal performance in edge environments.
+- **Build-time Processing Pipeline**: Document embedding and vector generation during build time, with zero runtime embedding overhead or dependencies.
 
 ---
 
@@ -64,8 +64,10 @@ This project reflects my technical philosophy: modern, performant, accessible, a
 
 - **@ai-sdk/react** — Streaming chat UI with `useChat` hook
 - **@ai-sdk/deepseek** — High-quality LLM integration
-- **Transformers.js** — Local, efficient embedding generation
-- **Edge-optimized AI** — Next.js-friendly vector retrieval
+- **Upstash Vector** — Serverless vector database with direct integration
+- **Edge Runtime** — Next.js Edge Runtime for minimal serverless function size
+- **Custom Chunking** — Smart document processing with semantic splitting
+- **Hybrid Search** — Context-aware vector search with multi-turn conversations
 
 ### Content & Documentation
 
@@ -147,7 +149,6 @@ The site will be available at http://localhost:3000
       /project-content  # MDX files for project details
   /lib          # Utility functions and logic
     /vectorStore      # Embedding + retrieval system
-  /vectors      # Precomputed chatbot embeddings
   /icons        # Custom SVG icons
   /assets       # Static assets (images, etc.)
 ```
