@@ -5,6 +5,7 @@ import { getStore } from "@/lib/vectorStore/store";
 import { QueryResult } from "@upstash/vector";
 import { Metadata } from "@/lib/vectorStore/type";
 import { azure } from "@ai-sdk/azure";
+import { CONFIG } from "@/lib/vectorStore/utils";
 
 const createSystemPrompt = (chunks: QueryResult<Metadata>[]): string => {
   const context = chunks.map((chunk) => chunk.data).join("\n\n");
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
   const index = getStore();
   const topChunks = await index.query({
     data: messageContext,
-    topK: 5,
+    topK: CONFIG.K,
     includeData: true,
   });
   const system = createSystemPrompt(topChunks);
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: azure("gpt-4.1-mini"),
+        model: azure("gpt-4.1"),
         system,
         messages,
         temperature: 0.6,
