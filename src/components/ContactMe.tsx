@@ -91,14 +91,14 @@ export const ContactMe = () => {
     },
     {
       href: "tel:+358469305489",
-      copyText: "+358 46 930 5489",
+      copyText: "+358 45 333 7868",
       icon: (
         <span>
           <Phone className="group-hover:hidden" />
           <PhoneCall className="hidden group-hover:block" />
         </span>
       ),
-      label: "+358 46 930 5489",
+      label: "+358 45 333 7868",
       context: "Phone number",
     },
     {
