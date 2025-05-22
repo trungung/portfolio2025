@@ -122,7 +122,7 @@ Want to explore under the hood? Set it up locally:
 
 ```bash
 # Clone the repo
-git clone https://github.com/ung-trung/portfolio2025.git
+git clone https://github.com/trungung/portfolio2025.git
 
 # Install dependencies
 npm install
@@ -158,7 +158,7 @@ The site will be available at http://localhost:3000
 I'm always open to interesting conversations, collaboration opportunities, or new challenges!
 
 - 💼 [LinkedIn](https://linkedin.com/in/trung-ung)
-- 🐙 [GitHub](https://github.com/ung-trung)
+- 🐙 [GitHub](https://github.com/trungung)
 - 📧 Email: ungkientrung@gmail.com
 
 ## 📋 License

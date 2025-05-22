@@ -132,7 +132,7 @@ const buttons = [
     name: "Git",
   },
   {
-    href: "https://github.com/ung-trung",
+    href: "https://github.com/trungung",
     icon: (
       <SiGithub
         // color="default"

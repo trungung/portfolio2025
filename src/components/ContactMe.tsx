@@ -118,8 +118,8 @@ export const ContactMe = () => {
       context: "LinkedIn profile",
     },
     {
-      href: "https://github.com/ung-trung",
-      copyText: "https://github.com/ung-trung",
+      href: "https://github.com/trungung",
+      copyText: "https://github.com/trungung",
       icon: <SiGithub className="duration-200 group-hover:-rotate-12" />,
       label: "github.com/ung-trung",
       target: "_blank",

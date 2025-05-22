@@ -99,7 +99,7 @@ export default function RootLayout({
                 <span>&copy; 2019 - 2025 | Trung Ung</span>
                 <span>
                   <Link
-                    href="https://github.com/ung-trung/portfolio2025"
+                    href="https://github.com/trungung/portfolio2025"
                     target="_blank"
                   >
                     View Source
