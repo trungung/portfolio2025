@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: azure("gpt-4.1"),
+        model: azure("gpt-4.1-nano"),
         system,
         messages,
         temperature: 0.7,
