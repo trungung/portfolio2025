@@ -11,6 +11,7 @@ import { MinimalModeProvider } from "@/lib/providers/MinimalModeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import ChatWidget from "@/components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +44,7 @@ export default function RootLayout({
           />
         )}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-[url('/noise.png')] bg-repeat px-6 antialiased dark:bg-none`}
+        className={`${geistSans.variable} ${geistMono.variable} px-6 antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -93,6 +94,7 @@ export default function RootLayout({
               <SettingDialogButton />
             </nav>
             {children}
+            <ChatWidget />
             <footer className="mx-auto w-full max-w-screen-md pb-9 font-mono tracking-tight">
               <hr className="border-border mb-5 border-t" />
               <div className="text-muted-foreground align-center flex justify-between text-sm">
