@@ -121,7 +121,7 @@ export const ContactMe = () => {
       href: "https://github.com/trungung",
       copyText: "https://github.com/trungung",
       icon: <SiGithub className="duration-200 group-hover:-rotate-12" />,
-      label: "github.com/ung-trung",
+      label: "github.com/trungung",
       target: "_blank",
       context: "GitHub profile",
     },
