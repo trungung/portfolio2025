@@ -33,8 +33,13 @@ My personal portfolio showcases my work and technical philosophy: modern, perfor
 
 ### 🧠 RAG Architecture Highlights
 
+**RAG System Overview**
 ![RAG System Overview](./public/images/trungbot-chat.png)
+_High-level overview of the RAG-based chatbot and retrieval pipeline._
+
+**Context-Preserved Chunking**
 ![Context-Preserved Chunking](./public/images/trungbot-markdown-to-vectordb.png)
+_Diagram of the chunking and metadata enrichment process for markdown content._
 
 - **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries.
 - **Metadata-Enhanced Retrieval**: Each chunk contains rich metadata including section breadcrumbs, source information, and document hierarchy for improved context preservation.
