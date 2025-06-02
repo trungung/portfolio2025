@@ -33,6 +33,9 @@ My personal portfolio showcases my work and technical philosophy: modern, perfor
 
 ### 🧠 RAG Architecture Highlights
 
+![RAG System Overview](./public/images/trungbot-chat.png)
+![Context-Preserved Chunking](./public/images/trungbot-markdown-to-vectordb.png)
+
 - **Smart Semantic Chunking**: Custom document processing that preserves heading hierarchies, maintains document structure, and creates semantically meaningful chunks based on natural paragraph boundaries.
 - **Metadata-Enhanced Retrieval**: Each chunk contains rich metadata including section breadcrumbs, source information, and document hierarchy for improved context preservation.
 - **Multi-Message Retrieval**: Enhanced vector search using contextual information from previous exchanges in the conversation.
