@@ -78,7 +78,7 @@ npm install
 npm run dev
 
 # Optional: Generate chatbot embeddings
-npm run embed
+npm run build
 
 # Production build
 npm run build
