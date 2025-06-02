@@ -1,53 +1,66 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import { z } from "zod";
+import type { ComponentType } from "react";
 
-export interface ProjectFrontmatter {
-  index: number;
-  title: string;
-  duration: string;
-  stacks: string[];
-  isNda: boolean;
-  thumbnail: string;
-  pictures: string[];
-  sources: {
-    name: string;
-    url: string;
-  }[];
-  cardDescription: string;
-  quickSummary: string;
-}
+export const ProjectMetaSchema = z.object({
+  index: z.number(),
+  title: z.string(),
+  duration: z.string(),
+  stacks: z.array(z.string()),
+  isNda: z.boolean().optional(),
+  thumbnail: z.string(),
+  pictures: z.array(z.string()),
+  sources: z.array(
+    z.object({
+      name: z.string(),
+      url: z.string(),
+    }),
+  ),
+  cardDescription: z.string(),
+  quickSummary: z.string(),
+});
 
-export interface Project {
-  slug: string;
-  frontmatter: ProjectFrontmatter;
-  content: string;
-}
+export const ProjectListItemSchema = z.object({
+  slug: z.string(),
+  meta: ProjectMetaSchema,
+});
 
-export function getProjects(): Project[] {
-  const projectDirectory = path.join(
-    process.cwd(),
-    "src/components/RecentProjects/project-content",
-  );
+export const ProjectDetailSchema = z.object({
+  slug: z.string(),
+  meta: ProjectMetaSchema,
+  content: z.custom<ComponentType>(),
+});
 
+export type ProjectMeta = z.infer<typeof ProjectMetaSchema>;
+export type ProjectListItem = z.infer<typeof ProjectListItemSchema>;
+export type ProjectDetail = z.infer<typeof ProjectDetailSchema>;
+
+const PROJECT_PATH = path.join(process.cwd(), "src/content/projects");
+
+export async function getProjectList(): Promise<ProjectListItem[]> {
   const mdxFiles = fs
-    .readdirSync(projectDirectory)
+    .readdirSync(PROJECT_PATH)
     .filter((file) => file.endsWith(".mdx"));
 
-  const projects = mdxFiles.map((fileName) => {
+  const projectsPromises = mdxFiles.map(async (fileName) => {
     const slug = fileName.replace(/\.mdx$/, "");
 
-    const filePath = path.join(projectDirectory, fileName);
-    const fileContent = fs.readFileSync(filePath, "utf8");
+    const projectModule = await import(`@/content/projects/${fileName}`);
 
-    const { data, content } = matter(fileContent);
+    if (!projectModule || !projectModule.metadata) {
+      throw new Error(
+        `Failed to load project metadata: ${slug}. MDX module or its metadata export is missing.`,
+      );
+    }
 
-    return {
-      slug,
-      frontmatter: data as ProjectFrontmatter,
-      content,
-    };
+    const project = { meta: projectModule.metadata, slug };
+    const parsedProject = ProjectListItemSchema.parse(project);
+
+    return parsedProject;
   });
 
-  return projects.sort((a, b) => a.frontmatter.index - b.frontmatter.index);
+  const projects = await Promise.all(projectsPromises);
+
+  return projects.sort((a, b) => a.meta.index - b.meta.index);
 }

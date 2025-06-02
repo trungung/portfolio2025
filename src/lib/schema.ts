@@ -1,20 +1,20 @@
-import { BlogPost } from "./blogs";
+import { BlogDetail } from "./blogs";
 
-export function generateBlogSchema(blog: BlogPost, url: string) {
+export function generateBlogSchema(blog: BlogDetail, url: string) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": blog.title,
-    "description": blog.description,
-    "image": blog.coverImage,
-    "datePublished": blog.date,
-    "mainEntityOfPage": {
+    headline: blog.meta.title,
+    description: blog.meta.description,
+    image: blog.meta.coverImage,
+    datePublished: blog.meta.date,
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": url
+      "@id": url,
     },
-    "author": {
+    author: {
       "@type": "Person",
-      "name": "Trung Ung" // Replace with your actual name
-    }
+      name: "Trung Ung",
+    },
   };
 }

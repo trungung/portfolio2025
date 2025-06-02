@@ -5,18 +5,20 @@ import { SectionHeader } from "../SectionHeader";
 import { Button } from "../ui/button";
 import { ProjectModal } from "./ProjectModal";
 import { ProjectCard } from "./ProjectCard";
-import { Project } from "@/lib/projects";
+import { ProjectListItem } from "@/lib/projects";
 
 type RecentProjectsProps = {
-  projects: Project[];
+  projects: ProjectListItem[];
 };
 
 export const RecentProjects = ({ projects }: RecentProjectsProps) => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] =
+    useState<ProjectListItem | null>(null);
+
   const [showAll, setShowAll] = useState(false);
 
-  const openProjectModal = (project: Project) => {
-    setSelectedProject(project);
+  const openProjectModal = (projectMetadata: ProjectListItem) => {
+    setSelectedProject(projectMetadata);
   };
 
   const closeProjectModal = () => {

@@ -6,18 +6,16 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { useSettings } from "@/lib/store/settings";
-import { Project } from "@/lib/projects";
+import { ProjectListItem } from "@/lib/projects";
 
-export const ProjectCard = ({
-  project,
-  index,
-  onClick,
-}: {
-  project: Project;
+type ProjectCardProps = {
+  project: ProjectListItem;
   index: number;
-  onClick: (project: Project) => void;
-}) => {
-  const hasThumbnail = !!project.frontmatter.thumbnail;
+  onClick: (project: ProjectListItem) => void;
+};
+
+export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
+  const hasThumbnail = !!project.meta.thumbnail;
   const { minimalMode } = useSettings();
   const cardContent = (
     <Card
@@ -34,15 +32,14 @@ export const ProjectCard = ({
         }
       }}
       role="button"
-      aria-label={`View details for ${project.frontmatter.title}`}
+      aria-label={`View details for ${project.meta.title}`}
     >
-      {/* Thumbnail with layered depth effect */}
       <div className="relative aspect-[5/3] w-full overflow-hidden rounded-sm">
         <div className="relative h-full w-full">
           {hasThumbnail ? (
             <Image
-              src={project.frontmatter.thumbnail}
-              alt={`Thumbnail for ${project.frontmatter.title}`}
+              src={project.meta.thumbnail}
+              alt={`Thumbnail for ${project.meta.title}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className={cn(
@@ -60,7 +57,7 @@ export const ProjectCard = ({
               priority={index < 4}
             />
           )}
-          {project.frontmatter.isNda && (
+          {project.meta.isNda && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-background/60 rounded-lg px-4 py-2 shadow-sm backdrop-blur-sm">
                 <p className="text-sm font-semibold">🔒 NDA Project</p>
@@ -74,25 +71,25 @@ export const ProjectCard = ({
           "bg-background/80 minimal:right-0 absolute top-3 -right-full z-20 rounded-l-full px-3 py-1 text-xs font-medium backdrop-blur-sm transition-all duration-300 group-hover:right-0"
         }
       >
-        {project.frontmatter.duration}
+        {project.meta.duration}
       </div>
 
       {/* Content section with improved spacing */}
       <div className="3 flex flex-1 flex-col px-2">
         {/* Title that grows slightly on hover */}
         <h3 className="text-lg leading-tight font-semibold">
-          {project.frontmatter.title}
+          {project.meta.title}
         </h3>
 
         {/* Description with slightly increased visibility on hover */}
         <p className="text-muted-foreground mt-2 line-clamp-3 text-sm transition-opacity duration-300">
-          {project.frontmatter.cardDescription}
+          {project.meta.cardDescription}
         </p>
 
         {/* Tech stack with animated reveal */}
         <div className="mt-auto pt-4">
           <div className="flex flex-wrap gap-1.5">
-            {project.frontmatter.stacks.slice(0, 3).map((tech) => (
+            {project.meta.stacks.slice(0, 3).map((tech) => (
               <Badge
                 key={tech}
                 variant="outline"
@@ -101,12 +98,12 @@ export const ProjectCard = ({
                 {tech}
               </Badge>
             ))}
-            {project.frontmatter.stacks.length > 3 && (
+            {project.meta.stacks.length > 3 && (
               <Badge
                 variant="outline"
                 className="px-2.5 py-1 text-xs opacity-70"
               >
-                +{project.frontmatter.stacks.length - 3}
+                +{project.meta.stacks.length - 3}
               </Badge>
             )}
           </div>

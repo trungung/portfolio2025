@@ -1,19 +1,18 @@
 import Link from "next/link";
-import { getAllBlogs } from "@/lib/blogs";
+import { getBlogList } from "@/lib/blogs";
 import Image from "next/image";
 
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams?: { tag?: string };
+  searchParams?: Promise<{ tag?: string }>;
 }) {
-  const blogs = getAllBlogs();
-  const searchP = await searchParams;
-  const selectedTag = searchP?.tag || null;
+  const blogs = await getBlogList();
+  const selectedTag = (await searchParams)?.tag || null;
 
   const filteredBlogs = selectedTag
     ? blogs.filter((blog) =>
-        blog.tags
+        blog.meta.tags
           .map((t) => t.toLowerCase())
           .includes(selectedTag.toLowerCase()),
       )
@@ -33,7 +32,7 @@ export default async function BlogsPage({
 
       <div className="divide-line mb-16 divide-y">
         {filteredBlogs.map((blog) => {
-          const date = new Date(blog.date);
+          const date = new Date(blog.meta.date);
           const formattedDate = date.toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
@@ -44,18 +43,18 @@ export default async function BlogsPage({
             <Link
               href={`/blog/${blog.slug}`}
               key={blog.slug}
-              aria-label={blog.title}
+              aria-label={blog.meta.title}
               className="group grid grid-cols-1 grid-rows-1 gap-6 py-5 sm:grid-cols-[3fr_1fr]"
             >
               <div>
                 <h2 className="mb-3 flex items-start gap-1">
                   <span className="text-xl leading-tight font-bold tracking-tight sm:text-2xl">
-                    {blog.title}
+                    {blog.meta.title}
                   </span>
                 </h2>
-                {blog.description && (
+                {blog.meta.description && (
                   <p className="text-muted-foreground group-hover:text-foreground line-clamp-3 text-sm">
-                    <span>{blog.description}</span>
+                    <span>{blog.meta.description}</span>
                   </p>
                 )}
                 <div className="text-muted-foreground group-hover:text-foreground mt-2.5 text-xs">
@@ -65,8 +64,8 @@ export default async function BlogsPage({
               <div className="flex h-full w-full">
                 <div className="block size-24 h-full w-full overflow-hidden rounded-xl">
                   <Image
-                    src={blog.coverImage}
-                    alt={blog.title}
+                    src={blog.meta.coverImage}
+                    alt={blog.meta.title}
                     width={200}
                     height={200}
                     className="h-full w-full rounded-xl object-cover transition-all duration-700 ease-out group-hover:scale-105 sm:size-36"

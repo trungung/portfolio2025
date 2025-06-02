@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
 import { z } from "zod";
+import type { ComponentType } from "react";
 
-export const BlogFrontmatterSchema = z.object({
+export const BlogMetaSchema = z.object({
   title: z.string(),
   date: z.string(),
   description: z.string(),
@@ -12,65 +12,75 @@ export const BlogFrontmatterSchema = z.object({
   coverImage: z.string(),
 });
 
-export type BlogFrontmatter = z.infer<typeof BlogFrontmatterSchema>;
+export const BlogListItemSchema = z.object({
+  slug: z.string(),
+  meta: BlogMetaSchema,
+});
 
-export type BlogPost = BlogFrontmatter & {
-  slug: string;
-  content: string;
-};
+export const BlogDetailSchema = z.object({
+  slug: z.string(),
+  meta: BlogMetaSchema,
+  content: z.custom<ComponentType>(),
+});
+
+export type BlogMeta = z.infer<typeof BlogMetaSchema>;
+export type BlogListItem = z.infer<typeof BlogListItemSchema>;
+export type BlogDetail = z.infer<typeof BlogDetailSchema>;
 
 const BLOGS_PATH = path.join(process.cwd(), "src/content/blogs");
 
-export function getBlogSlugs(): string[] {
-  const files = fs.readdirSync(BLOGS_PATH);
-  return files
-    .filter((file) => /\.(mdx|md)$/.test(file))
-    .map((file) => file.replace(/\.(mdx|md)$/, ""));
-}
+export const getBlogSlugs = (): string[] => {
+  return fs
+    .readdirSync(BLOGS_PATH)
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => file.replace(/\.mdx$/, ""));
+};
 
-export function getBlogBySlug(slug: string): BlogPost {
-  const filePath = path.join(BLOGS_PATH, `${slug}.mdx`);
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(fileContent);
+export const getBlogBySlug = async (slug: string): Promise<BlogDetail> => {
+  const fileName = `${slug}.mdx`;
+  const blogModule = await import(`@/content/blogs/${fileName}`);
 
-  const frontmatter = BlogFrontmatterSchema.parse(data);
+  if (!blogModule || !blogModule.metadata || !blogModule.default) {
+    throw new Error(
+      `Failed to load blog post: ${slug}. MDX module or its exports are missing.`,
+    );
+  }
 
-  return {
-    ...frontmatter,
+  const blog = {
     slug,
-    content,
+    meta: blogModule.metadata,
+    content: blogModule.default,
   };
-}
 
-export function getAllBlogs(publishedOnly: boolean = true): BlogPost[] {
+  const parsedBlog = BlogDetailSchema.parse(blog);
+
+  return parsedBlog;
+};
+
+export const getBlogList = async (
+  publishedOnly = true,
+): Promise<BlogListItem[]> => {
   const slugs = getBlogSlugs();
-  const blogs = slugs.map((slug) => getBlogBySlug(slug));
 
-  const filteredBlogs = publishedOnly
-    ? blogs.filter((blog) => blog.published)
-    : blogs;
-  return filteredBlogs.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-}
+  const blogsPromises = slugs.map(async (slug) => {
+    const blogModule = await import(`@/content/blogs/${slug}.mdx`);
+    if (!blogModule || !blogModule.metadata) {
+      throw new Error(
+        `Failed to load blog metadata: ${slug}. MDX module or its metadata export is missing.`,
+      );
+    }
+    const blog = { slug, meta: blogModule.metadata };
+    const parsedBlog = BlogListItemSchema.parse(blog);
 
-export function getRecentBlogs(count: number = 3): BlogPost[] {
-  return getAllBlogs().slice(0, count);
-}
-
-export function getBlogsByTag(tag: string): BlogPost[] {
-  return getAllBlogs().filter((blog) =>
-    blog.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase()),
-  );
-}
-
-export function getAllTags(): string[] {
-  const blogs = getAllBlogs();
-  const tagsSet = new Set<string>();
-
-  blogs.forEach((blog) => {
-    blog.tags.forEach((tag) => tagsSet.add(tag.toLowerCase()));
+    return parsedBlog;
   });
 
-  return Array.from(tagsSet);
-}
+  const blogs = await Promise.all(blogsPromises);
+
+  return blogs
+    .filter((blog) => (publishedOnly ? blog.meta.published : true))
+    .sort(
+      (a, b) =>
+        new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime(),
+    );
+};

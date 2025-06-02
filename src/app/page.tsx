@@ -5,11 +5,11 @@ import { Hero } from "@/components/Hero";
 import { Highlights } from "@/components/Highlights";
 import { RecentProjects } from "@/components/RecentProjects/RecentProjects";
 import { Technologies } from "@/components/Technologies";
-import { getProjects } from "@/lib/projects";
+import { getProjectList } from "@/lib/projects";
 
-const projects = getProjects();
+export default async function Home() {
+  const projects = await getProjectList();
 
-export default function Home() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-screen-md font-mono">
       <Hero />
