@@ -29,7 +29,7 @@ My personal portfolio showcases my work and technical philosophy: modern, perfor
 TrungBot is an AI assistant leveraging RAG architecture to provide context-aware responses and improve user experience. Trungbot can answer questions about my work, projects, blogs and technical interests,...
 
 - **Vector Store:** Upstash Vector with direct API integration
-- **Language Model:** Azure OpenAI GPT-4.1-mini via @ai-sdk
+- **Language Model:** Azure OpenAI GPT-4.1 via @ai-sdk
 - **Edge Deployment:** Vercel Edge Runtime for serverless execution
 - **Build-time Processing:** Document embedding with zero runtime overhead
 
